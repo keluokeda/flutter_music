@@ -113,79 +113,90 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            title: const Text('扫码登录'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/app/login');
-            },
-          ),
-          ListTile(
-            title: const Text('检查登录状态'),
-            onTap: () async {
-              final result = await HttpService.instance.getLoginStatus();
-              if (kDebugMode) {
-                print('登录状态结果 $result');
-              }
-            },
-          ),
-          ListTile(
-            title: const Text('用户退出'),
-            onTap: () async {
-              final result = await HttpService.instance.logout();
-              if (kDebugMode) {
-                print('登出结果 $result');
-              }
-            },
-          ),
-          ListTile(
-            title: const Text('消息列表'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/app/messages');
-            },
-          ),
-          ListTile(
-            title: const Text('每日推荐'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/recommend/songs');
-            },
-          ),
-          ListTile(
-            title: const Text('专辑详情'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/app/album', arguments: 16357);
-            },
-          ),
-          ListTile(
-            title: const Text('用户歌单'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/user/playlist', arguments: 16357);
-            },
-          ),
-          ListTile(
-            title: const Text('歌单广场'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/playlist/square', arguments: 8256084515);
-            },
-          ),
-          ListTile(
-            title: const Text('切换主题'),
-            onTap: () {
-              context.read<ThemeViewModel>().toggleTheme();
-            },
-          ),
-          ListTile(
-            title: const Text('歌手详情'),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/artist/detail', arguments: 5427);
-            },
-          ),
-        ],
-      ),
+      body: Consumer<MusicViewModel>(builder: (context, viewModel, _) {
+        return Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  ListTile(
+                    title: const Text('扫码登录'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/app/login');
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('检查登录状态'),
+                    onTap: () async {
+                      final result =
+                          await HttpService.instance.getLoginStatus();
+                      if (kDebugMode) {
+                        print('登录状态结果 $result');
+                      }
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('用户退出'),
+                    onTap: () async {
+                      final result = await HttpService.instance.logout();
+                      if (kDebugMode) {
+                        print('登出结果 $result');
+                      }
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('消息列表'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/app/messages');
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('每日推荐'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/recommend/songs');
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('专辑详情'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed('/app/album', arguments: 16357);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('用户歌单'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed('/user/playlist', arguments: 16357);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌单广场'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed('/playlist/square', arguments: 8256084515);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('切换主题'),
+                    onTap: () {
+                      context.read<ThemeViewModel>().toggleTheme();
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌手详情'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed('/artist/detail', arguments: 5427);
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        );
+      }),
     );
   }
 }

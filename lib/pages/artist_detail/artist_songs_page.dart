@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music/pages/artist_detail/artist_songs_view_model.dart';
+import 'package:music/widget/song_list_header_tile.dart';
 import 'package:music/widget/song_list_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -29,9 +30,11 @@ class _ArtistSongsPageState extends State<ArtistSongsPage>
           }
           return ListView(
             children: [
-              ListTile(
+              SongListHeaderTile(playAll: () {
 
-              ),
+              }, download: () {
+
+              }, list: () {}),
               ...data
                   .map((e) => e.toSongItem())
                   .map((e) => SongListTile(e, null))

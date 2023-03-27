@@ -94,8 +94,10 @@ class SongListTile extends StatelessWidget {
                         .pushNamed('/playlist/selected');
                     final id = result as int?;
                     if (id != null) {
-                      musicViewModel.insertMusicToPlaylist(
-                          id, songItem.id.toString(), true);
+                      // musicViewModel.insertMusicToPlaylist(
+                      //     id, songItem.id.toString(), true);
+                      musicViewModel.insertOrRemoveMusicListToPlaylist(
+                          [songItem.id], id, true);
                     }
                   },
                   leading: const Icon(Icons.add_photo_alternate_outlined),

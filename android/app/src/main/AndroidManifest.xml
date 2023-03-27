@@ -2,6 +2,7 @@
     package="com.ke.music">
     <application
         android:label="music"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -5,7 +5,11 @@ class SongListHeaderTile extends StatelessWidget {
   final VoidCallback download;
   final VoidCallback list;
 
-  const SongListHeaderTile(this.playAll, this.download, this.list, {super.key});
+  const SongListHeaderTile(
+      {required this.playAll,
+      required this.download,
+      required this.list,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

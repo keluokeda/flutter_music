@@ -6,7 +6,7 @@ import 'package:music/main.dart';
 import 'package:oktoast/oktoast.dart';
 
 class MusicViewModel extends ChangeNotifier {
-  final AudioPlayer audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   ///往歌单插入或删除一组歌曲
   Future<bool> insertOrRemoveMusicListToPlaylist(
@@ -20,18 +20,8 @@ class MusicViewModel extends ChangeNotifier {
     return result;
   }
 
-  ///往歌单插入或删除一首歌曲
-  @Deprecated('弃用')
-  Future<bool> insertMusicToPlaylist(
-      int playlistId, String tracks, bool insert) async {
-    final result = await HttpService.instance
-        .insertOrRemoveMusicToPlaylist(playlistId, tracks, insert);
-    showToast(result ? '收藏成功' : '收藏失败');
-    if (result) {
-      eventBus.fire(PlaylistSongsUpdatedEvent(playlistId));
-    }
-    return result;
-  }
+  ///当前播放状态
+  PlayerState get state => _audioPlayer.state;
 
   MusicViewModel() {
     const AudioContext audioContext = AudioContext(
@@ -45,9 +35,9 @@ class MusicViewModel extends ChangeNotifier {
       android: AudioContextAndroid(
         isSpeakerphoneOn: true,
         stayAwake: true,
-        contentType: AndroidContentType.sonification,
-        usageType: AndroidUsageType.assistanceSonification,
-        audioFocus: AndroidAudioFocus.none,
+        contentType: AndroidContentType.music,
+        usageType: AndroidUsageType.media,
+        audioFocus: AndroidAudioFocus.gain,
       ),
     );
     AudioPlayer.global.setGlobalAudioContext(audioContext);
@@ -57,9 +47,23 @@ class MusicViewModel extends ChangeNotifier {
   void playMusic(int id) async {
     final playUrl = await _getSongUrl(id);
     if (playUrl != null) {
-      await audioPlayer.play(UrlSource(playUrl));
+      await _audioPlayer.play(UrlSource(playUrl));
+      notifyListeners();
     }
   }
+
+  ///暂停播放
+  void pause() async{
+   await _audioPlayer.pause();
+   notifyListeners();
+  }
+
+  ///恢复
+  void resume()async {
+   await _audioPlayer.resume();
+   notifyListeners();
+  }
+
 }
 
 ///获取音乐的播放地址 优先获取下载地址
