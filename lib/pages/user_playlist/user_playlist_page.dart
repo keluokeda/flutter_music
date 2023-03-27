@@ -31,7 +31,9 @@ class UserPlayListPage
               },
               icon: const Icon(Icons.more_vert)),
           subtitle: Text(
-              '${e.trackCount}首 ${e.userId == DataStore.instance.getUserId() ? '' : 'by${e.creator?.nickname}'}'),
+            '${e.trackCount}首 ${e.userId == DataStore.instance.getUserId() ? '' : 'by${e.creator?.nickname}'}',
+            maxLines: 1,
+          ),
           leading: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),

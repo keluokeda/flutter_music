@@ -174,9 +174,11 @@ class PlaylistDetailPage
                         const SizedBox(
                           width: 4,
                         ),
-                        Text(data.playlistDetailEntity.playlist?.creator
-                                ?.nickname ??
-                            ''),
+                        Expanded(
+                          child: Text(data.playlistDetailEntity.playlist?.creator
+                                  ?.nickname ??
+                              '',maxLines: 1,),
+                        ),
                       ],
                     )
                   ],
