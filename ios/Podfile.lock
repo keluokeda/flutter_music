@@ -1,0 +1,57 @@
+PODS:
+  - audioplayers_darwin (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - gallery_saver (0.0.1):
+    - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
+
+DEPENDENCIES:
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
+  - Flutter (from `Flutter`)
+  - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+
+SPEC REPOS:
+  trunk:
+    - FMDB
+
+EXTERNAL SOURCES:
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
+  Flutter:
+    :path: Flutter
+  gallery_saver:
+    :path: ".symlinks/plugins/gallery_saver/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+
+SPEC CHECKSUMS:
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+
+COCOAPODS: 1.11.3
