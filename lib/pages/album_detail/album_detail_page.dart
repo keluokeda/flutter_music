@@ -20,30 +20,61 @@ class AlbumDetailPage
     return Column(
       children: [
         _buildDataContent(data.albumDetailEntity, imageSize, context),
-        Card(
-          margin: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              _buildBottomActionView(
-                  context,
-                  data.albumDynamicEntity.isSub == true
-                      ? Icons.done
-                      : Icons.add_photo_alternate_outlined,
-                  data.albumDynamicEntity.subCount.toString(),
-                  viewModel.collect),
-              _buildBottomActionView(context, Icons.comment_outlined,
-                  data.albumDynamicEntity.commentCount.toString(), () {}),
-              _buildBottomActionView(context, Icons.share,
-                  data.albumDynamicEntity.shareCount.toString(), () {}),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        )
+        // Card(
+        //   margin: const EdgeInsets.all(16),
+        //   child: Row(
+        //     children: [
+        //       _buildBottomActionView(
+        //           context,
+        //           data.albumDynamicEntity.isSub == true
+        //               ? Icons.done
+        //               : Icons.add_photo_alternate_outlined,
+        //           data.albumDynamicEntity.subCount.toString(),
+        //           viewModel.collect),
+        //       _buildBottomActionView(context, Icons.comment_outlined,
+        //           data.albumDynamicEntity.commentCount.toString(), () {}),
+        //       _buildBottomActionView(context, Icons.share,
+        //           data.albumDynamicEntity.shareCount.toString(), () {}),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(
+        //   height: 16,
+        // )
       ],
     );
   }
+
+  // @override
+  // Widget? buildBottomNavigationBar(
+  //     BuildContext context, AlbumDetailViewModel viewModel) {
+  //   final data = viewModel.optional?.data;
+  //   if (data == null) {
+  //     return null;
+  //   }
+  //
+  //   return BottomAppBar(
+  //     child: Row(
+  //       children: [
+  //         InkWell(
+  //           onTap: () {},
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(2.0),
+  //             child: Row(
+  //               children: [
+  //                 Icon(data.albumDynamicEntity.isSub == true
+  //                     ? Icons.done
+  //                     : Icons.add_photo_alternate_outlined),
+  //                 Text(data.albumDynamicEntity.subCount.toString())
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //         IconButton(onPressed: () {}, icon: Icon(Icons.safety_check))
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildDataContent(
       AlbumDetailEntity data, double imageSize, BuildContext context) {
@@ -77,7 +108,10 @@ class AlbumDetailPage
                           maxLines: 2,
                         ),
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/artist/detail',
+                                  arguments: data.album?.artist?.id);
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 4),
                               child: Row(
@@ -150,20 +184,20 @@ class AlbumDetailPage
     );
   }
 
-  Widget _buildBottomActionView(BuildContext context, IconData iconData,
-      String text, VoidCallback onTap) {
-    return Expanded(
-        child: InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Icon(iconData), Text(text)],
-        ),
-      ),
-    ));
-  }
+  // Widget _buildBottomActionView(BuildContext context, IconData iconData,
+  //     String text, VoidCallback onTap) {
+  //   return Expanded(
+  //       child: InkWell(
+  //     onTap: onTap,
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(16.0),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [Icon(iconData), Text(text)],
+  //       ),
+  //     ),
+  //   ));
+  // }
 
   @override
   AlbumDetailViewModel buildViewModel(BuildContext context) {
@@ -182,10 +216,38 @@ class AlbumDetailPage
       title: Text(getTitle()),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.play_arrow_outlined),
-        ),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.download))
+            onPressed: viewModel.collect,
+            icon: Icon(data.albumDynamicEntity.isSub == true
+                ? Icons.done
+                : Icons.add_photo_alternate_outlined)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.comment_outlined)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+
+        // TextButton.icon(
+        //     onPressed: () {
+        //       viewModel.collect();
+        //     },
+        //     icon: Icon(data.albumDynamicEntity.isSub == true
+        //         ? Icons.done
+        //         : Icons.add_photo_alternate_outlined),
+        //     label: Text(
+        //       data.albumDynamicEntity.subCount.toString(),
+        //       style: const TextStyle(fontSize: 12),
+        //     )),
+        // TextButton.icon(
+        //     onPressed: () {},
+        //     icon: const Icon(Icons.comment_outlined),
+        //     label: Text(
+        //       data.albumDynamicEntity.commentCount.toString(),
+        //       style: const TextStyle(fontSize: 12),
+        //     )),
+        // TextButton.icon(
+        //     onPressed: () {},
+        //     icon: const Icon(Icons.share),
+        //     label: Text(
+        //       data.albumDynamicEntity.shareCount.toString(),
+        //       style: const TextStyle(fontSize: 12),
+        //     )),
       ],
     );
   }

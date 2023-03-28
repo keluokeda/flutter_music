@@ -17,6 +17,7 @@ import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
+import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
 import 'package:music/entity/user_playlist_entity.dart';
@@ -129,6 +130,20 @@ class HttpService {
       const path = 'recommend/songs';
       final response = await _dio.get(path);
       return RecommendSongsEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取每日推荐歌曲
+  Future<SongDetailEntity?> getSongDetail(List<int> idList) async {
+    try {
+      const path = 'recommend/songs';
+      final response = await _dio.get(path);
+      return SongDetailEntity.fromJson(response.data);
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -561,7 +576,8 @@ class HttpService {
         ignoreExpires: true,
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
-    _dio.options.baseUrl = "https://music-win.cpolar.top/";
-    // "https://music.cpolar.top/";
+    _dio.options.baseUrl =
+    // "https://music-win.cpolar.top/";
+    "https://music.cpolar.top/";
   }
 }

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:music/api/http_service.dart';
 import 'package:music/entity/playlist_detail_view_data.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
+import 'package:music/event/playlist_delete_event.dart';
 import 'package:music/event/playlist_songs_updated_event.dart';
 import 'package:music/pages/common/base_content_view_model.dart';
-import 'package:oktoast/oktoast.dart';
 
 import '../../event/playlist_info_updated_event.dart';
 import '../../main.dart';
@@ -59,7 +59,11 @@ class PlaylistDetailViewModel
 
   ///删除歌单
   Future<bool> deletePlaylist() async {
-    return await HttpService.instance.deletePlayList(id);
+    final result = await HttpService.instance.deletePlayList(id);
+    if (result) {
+      eventBus.fire(PlaylistDeleteEvent(id));
+    }
+    return result;
   }
 
   Future<void> toggleCollect() async {

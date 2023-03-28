@@ -15,6 +15,7 @@ class AlbumDetailViewModel extends BaseContentViewModel<AlbumViewData> {
     return HttpService.instance.getAlbumDetail(id);
   }
 
+  ///收藏专辑
   void collect() {
     HttpService.instance
         .collectAlbum(id, !(optional?.data?.albumDynamicEntity.isSub ?? false));

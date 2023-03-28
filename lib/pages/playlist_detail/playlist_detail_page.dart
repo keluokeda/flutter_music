@@ -5,6 +5,7 @@ import 'package:music/api/data_store.dart';
 import 'package:music/entity/playlist_detail_view_data.dart';
 import 'package:music/pages/common/base_content_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_view_model.dart';
+import 'package:music/widget/song_list_header_tile.dart';
 import 'package:music/widget/song_list_tile.dart';
 
 import '../../entity/songs_edit_request.dart';
@@ -70,29 +71,35 @@ class PlaylistDetailPage
       //   child: OutlinedButton(onPressed: () {}, child: const Text('添加歌曲')),
       // ));
     } else {
-      songList.add(ListTile(
-        leading: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.play_circle_outline)),
-        title: Text('播放全部 (${data.playlistTracksEntity.songs?.length})'),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/songs/edit',
-                      arguments: SongsEditRequest(
-                          data.playlistTracksEntity.songs
-                                  ?.map((e) => e.toSongItem())
-                                  .toList() ??
-                              [],
-                          isCurrentUser,
-                          viewModel.id));
-                },
-                icon: const Icon(Icons.format_list_bulleted)),
-          ],
-        ),
-      ));
+      // songList.add(ListTile(
+      //   leading: IconButton(
+      //       onPressed: () {}, icon: const Icon(Icons.play_circle_outline)),
+      //   title: Text('播放全部 (${data.playlistTracksEntity.songs?.length})'),
+      //   trailing: Row(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: [
+      //       IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
+      //       IconButton(
+      //           onPressed: () {
+      //             Navigator.of(context).pushNamed('/songs/edit',
+      //                 arguments: SongsEditRequest(
+      //                     data.playlistTracksEntity.songs
+      //                             ?.map((e) => e.toSongItem())
+      //                             .toList() ??
+      //                         [],
+      //                     isCurrentUser,
+      //                     viewModel.id));
+      //           },
+      //           icon: const Icon(Icons.format_list_bulleted)),
+      //     ],
+      //   ),
+      // ));
+      songList.add(SongListHeaderTile(
+          songs: (data.playlistTracksEntity.songs ?? [])
+              .map((e) => e.toSongItem())
+              .toList(),
+          isUser: isCurrentUser,
+          playlistId: viewModel.id));
       songList.addAll((data.playlistTracksEntity.songs ?? [])
           .map((e) => SongListTile(
                 e.toSongItem(),
@@ -175,9 +182,12 @@ class PlaylistDetailPage
                           width: 4,
                         ),
                         Expanded(
-                          child: Text(data.playlistDetailEntity.playlist?.creator
-                                  ?.nickname ??
-                              '',maxLines: 1,),
+                          child: Text(
+                            data.playlistDetailEntity.playlist?.creator
+                                    ?.nickname ??
+                                '',
+                            maxLines: 1,
+                          ),
                         ),
                       ],
                     )
@@ -361,10 +371,8 @@ class PlaylistDetailPage
               }
             } else if (value == 2) {
               //删除歌单
-              final result = await viewModel.deletePlaylist();
-              if (result) {
-                ns.pop(true);
-              }
+              await viewModel.deletePlaylist();
+              ns.pop();
             }
           },
         )

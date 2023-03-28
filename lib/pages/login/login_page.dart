@@ -29,7 +29,7 @@ class LoginPage extends BaseContentPage<LoginViewModel, String> {
                         print('登录结果 = $result');
                       }
                       if(result){
-                        ns.pushReplacementNamed('/app/test');
+                        ns.pushReplacementNamed('/app/splash');
                       }
                     },
               child: const Text('我已扫码')),

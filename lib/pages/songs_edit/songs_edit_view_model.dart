@@ -28,4 +28,14 @@ class SongsEditViewModel extends ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
+
+  void onReorder(int oldIndex, int newIndex) {
+    if (kDebugMode) {
+      print('onReorder $oldIndex $newIndex');
+    }
+    final tmp = _songs[oldIndex];
+    _songs[oldIndex] = _songs[newIndex];
+    _songs[newIndex] = tmp;
+    notifyListeners();
+  }
 }

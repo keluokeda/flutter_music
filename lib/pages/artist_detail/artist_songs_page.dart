@@ -30,11 +30,10 @@ class _ArtistSongsPageState extends State<ArtistSongsPage>
           }
           return ListView(
             children: [
-              SongListHeaderTile(playAll: () {
-
-              }, download: () {
-
-              }, list: () {}),
+              SongListHeaderTile(
+                  songs: (data ?? []).map((e) => e.toSongItem()).toList(),
+                  isUser: false,
+                  playlistId: null),
               ...data
                   .map((e) => e.toSongItem())
                   .map((e) => SongListTile(e, null))

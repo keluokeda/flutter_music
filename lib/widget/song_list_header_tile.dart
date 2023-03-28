@@ -1,28 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:music/entity/songs_edit_request.dart';
+import 'package:music/pages/common/music_view_model.dart';
+import 'package:provider/provider.dart';
+
+import '../entity/song_item.dart';
 
 class SongListHeaderTile extends StatelessWidget {
-  final VoidCallback playAll;
-  final VoidCallback download;
-  final VoidCallback list;
+  final List<SongItem> songs;
+  final bool isUser;
+
+  final int? playlistId;
 
   const SongListHeaderTile(
-      {required this.playAll,
-      required this.download,
-      required this.list,
+      {required this.songs,
+      required this.isUser,
+      required this.playlistId,
       super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: IconButton(
-          onPressed: playAll, icon: const Icon(Icons.play_circle_outline)),
+          onPressed: () {
+            context.read<MusicViewModel>().insertMusicList(songs);
+          },
+          icon: const Icon(Icons.play_circle_outline)),
       title: const Text('播放全部'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(onPressed: download, icon: const Icon(Icons.download)),
           IconButton(
-              onPressed: list, icon: const Icon(Icons.format_list_bulleted)),
+              onPressed: () {
+                context.read<MusicViewModel>().playMusicList(songs);
+              },
+              icon: const Icon(Icons.download)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/songs/edit',
+                    arguments: SongsEditRequest(songs, isUser, playlistId));
+              },
+              icon: const Icon(Icons.format_list_bulleted)),
         ],
       ),
     );

@@ -21,6 +21,7 @@ import 'package:music/pages/songs_edit/songs_edit_page.dart';
 import 'package:music/pages/splash/splash_page.dart';
 import 'package:music/pages/user_playlist/user_playlist_page.dart';
 import 'package:music/pages/user_playlist_list/user_playlist_list_page.dart';
+import 'package:music/widget/music_banner.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
@@ -190,10 +191,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           .pushNamed('/artist/detail', arguments: 5427);
                     },
                   ),
+                  const MusicBanner(),
                 ],
               ),
             ),
-
           ],
         );
       }),

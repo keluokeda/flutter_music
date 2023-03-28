@@ -1,5 +1,7 @@
 import 'package:music/generated/json/base/json_convert_content.dart';
 import 'package:music/entity/artist_songs_entity.dart';
+import 'package:music/entity/song_item.dart';
+
 
 ArtistSongsEntity $ArtistSongsEntityFromJson(Map<String, dynamic> json) {
 	final ArtistSongsEntity artistSongsEntity = ArtistSongsEntity();

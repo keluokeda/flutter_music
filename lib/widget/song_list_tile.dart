@@ -21,7 +21,8 @@ class SongListTile extends StatelessWidget {
     return ListTile(
       onTap: () {
         //播放音乐
-        musicViewModel.playMusic(songItem.id);
+        // musicViewModel.playMusic(songItem.id);
+        musicViewModel.insertMusicList([songItem]);
       },
       leading: index == null
           ? CachedNetworkImage(
@@ -84,7 +85,11 @@ class SongListTile extends StatelessWidget {
                   height: 1,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    if (kDebugMode) {
+                      print('歌曲的id是 ${songItem.id}');
+                    }
+                  },
                   leading: const Icon(Icons.play_circle_outline),
                   title: const Text('下一首播放'),
                 ),
@@ -120,6 +125,9 @@ class SongListTile extends StatelessWidget {
                               if (kDebugMode) {
                                 print('歌手的id 是 ${e.id}');
                               }
+                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .pushNamed('/artist/detail', arguments: e.id);
                             },
                             leading: const Icon(Icons.account_circle_outlined),
                             title: Text('歌手：${e.name}'),

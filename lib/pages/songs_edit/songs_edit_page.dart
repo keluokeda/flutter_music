@@ -92,9 +92,12 @@ class SongsEditPage extends StatelessWidget {
                     icon: const Icon(Icons.delete)),
               ],
             ),
-            body: ListView(
+            body: ReorderableListView(
+              buildDefaultDragHandles: false,
+              onReorder: viewModel.onReorder,
               children: viewModel.songs
                   .map((e) => CheckboxListTile(
+                      key: ValueKey(e),
                       enabled: !viewModel.loading,
                       controlAffinity: ListTileControlAffinity.leading,
                       title: Text(e.songItem.name),
@@ -108,26 +111,6 @@ class SongsEditPage extends StatelessWidget {
                       }))
                   .toList(),
             ),
-            // bottomNavigationBar: BottomAppBar(
-            //   child: Row(
-            //     children: [
-            //       IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.play_circle)),
-            //       IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.add_photo_alternate_outlined)),
-            //
-            //       IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.download)),
-            //
-            //       IconButton(
-            //           onPressed: () {},
-            //           icon: const Icon(Icons.delete)),
-            //     ],
-            //   ),
-            // ),
           );
         },
       ),

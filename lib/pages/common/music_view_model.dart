@@ -1,12 +1,29 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:music/api/http_service.dart';
+import 'package:music/entity/songs_play_mode.dart';
 import 'package:music/event/playlist_songs_updated_event.dart';
 import 'package:music/main.dart';
 import 'package:oktoast/oktoast.dart';
 
+import '../../entity/song_item.dart';
+
 class MusicViewModel extends ChangeNotifier {
   final AudioPlayer _audioPlayer = AudioPlayer();
+
+  final List<SongItem> _songList = [];
+
+  ///当前播放音乐列表
+  List<SongItem> get songList => _songList;
+
+  SongItem? _currentPlayingSong;
+
+  ///当前正在播放的音乐
+  SongItem? get currentPlayingSong => _currentPlayingSong;
+
+  SongsPlayMode _songsPlayMode = SongsPlayMode.repeat;
+
+  SongsPlayMode get songsPlayMode => _songsPlayMode;
 
   ///往歌单插入或删除一组歌曲
   Future<bool> insertOrRemoveMusicListToPlaylist(
@@ -44,26 +61,40 @@ class MusicViewModel extends ChangeNotifier {
   }
 
   ///播放音乐
-  void playMusic(int id) async {
-    final playUrl = await _getSongUrl(id);
-    if (playUrl != null) {
-      await _audioPlayer.play(UrlSource(playUrl));
-      notifyListeners();
-    }
+  void playSong(SongItem songItem) {
+    _currentPlayingSong = songItem;
+    notifyListeners();
+  }
+
+  ///会替换当前播放列表
+  void playMusicList(List<SongItem> songs) {
+    _songList.clear();
+    _songList.addAll(songs);
+    notifyListeners();
+  }
+
+  ///插入音乐到当前列表
+  void insertMusicList(List<SongItem> songs) {
+    _songList.addAll(songs);
+    notifyListeners();
   }
 
   ///暂停播放
-  void pause() async{
-   await _audioPlayer.pause();
-   notifyListeners();
+  void pause() async {
+    await _audioPlayer.pause();
+    notifyListeners();
   }
 
   ///恢复
-  void resume()async {
-   await _audioPlayer.resume();
-   notifyListeners();
+  void resume() async {
+    await _audioPlayer.resume();
+    notifyListeners();
   }
 
+  void changePlayMode() {
+    _songsPlayMode = _songsPlayMode.next();
+    notifyListeners();
+  }
 }
 
 ///获取音乐的播放地址 优先获取下载地址

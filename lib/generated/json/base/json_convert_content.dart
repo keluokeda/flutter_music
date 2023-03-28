@@ -20,6 +20,7 @@ import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
+import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
 import 'package:music/entity/user_playlist_entity.dart';
@@ -145,6 +146,17 @@ class JsonConvert {
 		(RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege).toString(): RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege.fromJson,
 		(RecommendSongsDataDailySongsPrivilegeChargeInfoList).toString(): RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson,
 		(RecommendSongsDataRecommendReasons).toString(): RecommendSongsDataRecommendReasons.fromJson,
+		(SongDetailEntity).toString(): SongDetailEntity.fromJson,
+		(SongDetailSongs).toString(): SongDetailSongs.fromJson,
+		(SongDetailSongsAr).toString(): SongDetailSongsAr.fromJson,
+		(SongDetailSongsAl).toString(): SongDetailSongsAl.fromJson,
+		(SongDetailSongsH).toString(): SongDetailSongsH.fromJson,
+		(SongDetailSongsM).toString(): SongDetailSongsM.fromJson,
+		(SongDetailSongsL).toString(): SongDetailSongsL.fromJson,
+		(SongDetailSongsSq).toString(): SongDetailSongsSq.fromJson,
+		(SongDetailPrivileges).toString(): SongDetailPrivileges.fromJson,
+		(SongDetailPrivilegesFreeTrialPrivilege).toString(): SongDetailPrivilegesFreeTrialPrivilege.fromJson,
+		(SongDetailPrivilegesChargeInfoList).toString(): SongDetailPrivilegesChargeInfoList.fromJson,
 		(SongDownloadUrlEntity).toString(): SongDownloadUrlEntity.fromJson,
 		(SongDownloadUrlData).toString(): SongDownloadUrlData.fromJson,
 		(SongDownloadUrlDataFreeTrialPrivilege).toString(): SongDownloadUrlDataFreeTrialPrivilege.fromJson,
@@ -578,6 +590,39 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<RecommendSongsDataRecommendReasons>[] is M){
 			return data.map<RecommendSongsDataRecommendReasons>((Map<String, dynamic> e) => RecommendSongsDataRecommendReasons.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailEntity>[] is M){
+			return data.map<SongDetailEntity>((Map<String, dynamic> e) => SongDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongs>[] is M){
+			return data.map<SongDetailSongs>((Map<String, dynamic> e) => SongDetailSongs.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsAr>[] is M){
+			return data.map<SongDetailSongsAr>((Map<String, dynamic> e) => SongDetailSongsAr.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsAl>[] is M){
+			return data.map<SongDetailSongsAl>((Map<String, dynamic> e) => SongDetailSongsAl.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsH>[] is M){
+			return data.map<SongDetailSongsH>((Map<String, dynamic> e) => SongDetailSongsH.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsM>[] is M){
+			return data.map<SongDetailSongsM>((Map<String, dynamic> e) => SongDetailSongsM.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsL>[] is M){
+			return data.map<SongDetailSongsL>((Map<String, dynamic> e) => SongDetailSongsL.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailSongsSq>[] is M){
+			return data.map<SongDetailSongsSq>((Map<String, dynamic> e) => SongDetailSongsSq.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailPrivileges>[] is M){
+			return data.map<SongDetailPrivileges>((Map<String, dynamic> e) => SongDetailPrivileges.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailPrivilegesFreeTrialPrivilege>[] is M){
+			return data.map<SongDetailPrivilegesFreeTrialPrivilege>((Map<String, dynamic> e) => SongDetailPrivilegesFreeTrialPrivilege.fromJson(e)).toList() as M;
+		}
+		if(<SongDetailPrivilegesChargeInfoList>[] is M){
+			return data.map<SongDetailPrivilegesChargeInfoList>((Map<String, dynamic> e) => SongDetailPrivilegesChargeInfoList.fromJson(e)).toList() as M;
 		}
 		if(<SongDownloadUrlEntity>[] is M){
 			return data.map<SongDownloadUrlEntity>((Map<String, dynamic> e) => SongDownloadUrlEntity.fromJson(e)).toList() as M;

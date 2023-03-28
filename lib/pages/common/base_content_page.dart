@@ -38,11 +38,16 @@ abstract class BaseContentPage<VM extends BaseContentViewModel<T>, T>
   }
 
   @protected
-  Widget buildScaffold(BuildContext context,VM viewModel) {
+  Widget buildScaffold(BuildContext context, VM viewModel) {
     return Scaffold(
       appBar: buildAppBar(context, viewModel),
       body: buildBodyInner(context, viewModel),
+      bottomNavigationBar: buildBottomNavigationBar(context, viewModel),
     );
+  }
+
+  Widget? buildBottomNavigationBar(BuildContext context, VM viewModel) {
+    return null;
   }
 
   @protected
