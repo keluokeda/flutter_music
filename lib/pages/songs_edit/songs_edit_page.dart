@@ -33,7 +33,13 @@ class SongsEditPage extends StatelessWidget {
               title: Text('已选$count'),
               actions: [
                 IconButton(
-                    onPressed: viewModel.loading ? null : () {},
+                    onPressed: viewModel.loading ? null : () {
+                      //播放选中的音乐
+                      if(count == 0){
+                        return;
+                      }
+                      context.read<MusicViewModel>().insertSongList(targetList);
+                    },
                     icon: const Icon(Icons.play_circle)),
                 IconButton(
                     onPressed: viewModel.loading

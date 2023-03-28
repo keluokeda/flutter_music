@@ -22,7 +22,8 @@ class SongListTile extends StatelessWidget {
       onTap: () {
         //播放音乐
         // musicViewModel.playMusic(songItem.id);
-        musicViewModel.insertMusicList([songItem]);
+        // musicViewModel.insertMusicList([songItem]);
+        musicViewModel.playSong(songItem);
       },
       leading: index == null
           ? CachedNetworkImage(
@@ -89,6 +90,8 @@ class SongListTile extends StatelessWidget {
                     if (kDebugMode) {
                       print('歌曲的id是 ${songItem.id}');
                     }
+                    musicViewModel.playSongNext(songItem);
+                    Navigator.of(context).pop();
                   },
                   leading: const Icon(Icons.play_circle_outline),
                   title: const Text('下一首播放'),

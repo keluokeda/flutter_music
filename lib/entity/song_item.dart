@@ -52,4 +52,7 @@ class Album {
   final String imageUrl;
 
   const Album(this.id, this.name, this.imageUrl);
+
+
+
 }

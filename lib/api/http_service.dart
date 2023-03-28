@@ -577,7 +577,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-    // "https://music-win.cpolar.top/";
-    "https://music.cpolar.top/";
+    "https://music-win.cpolar.top/";
+    // "https://music.cpolar.top/";
   }
 }

@@ -5,6 +5,7 @@ import 'package:music/entity/song_item.dart';
 import 'package:music/entity/songs_edit_request.dart';
 import 'package:music/pages/album_detail/album_detail_view_model.dart';
 import 'package:music/pages/common/base_content_page.dart';
+import 'package:music/widget/song_list_header_tile.dart';
 import 'package:music/widget/song_list_tile.dart';
 
 import '../../entity/album_view_data.dart';
@@ -143,27 +144,31 @@ class AlbumDetailPage
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(data.album?.description ?? ''),
           ),
-          ListTile(
-            leading: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.play_circle_outline)),
-            title: const Text('播放全部'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
-                IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/songs/edit',
-                          arguments: SongsEditRequest(
-                              data.songs?.map((e) => e.toSongItem()).toList() ??
-                                  [],
-                              false,
-                              null));
-                    },
-                    icon: const Icon(Icons.format_list_bulleted)),
-              ],
-            ),
-          ),
+          SongListHeaderTile(
+              songs: data.songs!.map((e) => e.toSongItem()).toList(),
+              isUser: false,
+              playlistId: null),
+          // ListTile(
+          //   leading: IconButton(
+          //       onPressed: () {}, icon: const Icon(Icons.play_circle_outline)),
+          //   title: const Text('播放全部'),
+          //   trailing: Row(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
+          //       IconButton(
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed('/songs/edit',
+          //                 arguments: SongsEditRequest(
+          //                     data.songs?.map((e) => e.toSongItem()).toList() ??
+          //                         [],
+          //                     false,
+          //                     null));
+          //           },
+          //           icon: const Icon(Icons.format_list_bulleted)),
+          //     ],
+          //   ),
+          // ),
           ...data.songs!.map((e) {
             final index = data.songs!.indexOf(e);
             final SongItem item = e.toSongItem();

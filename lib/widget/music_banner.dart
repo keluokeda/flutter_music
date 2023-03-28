@@ -61,7 +61,9 @@ class MusicBanner extends StatelessWidget {
                         IconButton(
                             onPressed: () {}, icon: const Icon(Icons.download)),
                         IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.delete)),
+                            onPressed: () {
+                              viewModel.clearSongList();
+                            }, icon: const Icon(Icons.delete)),
                       ],
                     ),
                   ),
@@ -69,6 +71,7 @@ class MusicBanner extends StatelessWidget {
                       .map((e) => ListTile(
                             onTap: () {
                               viewModel.playSong(e);
+
                             },
                             title: Text(
                               e.name,
@@ -78,7 +81,9 @@ class MusicBanner extends StatelessWidget {
                                       : null),
                             ),
                             trailing: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  viewModel.removeSong(e);
+                                },
                                 icon: const Icon(Icons.clear)),
                           ))
                       .toList()

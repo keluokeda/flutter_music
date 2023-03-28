@@ -22,7 +22,7 @@ class SongListHeaderTile extends StatelessWidget {
     return ListTile(
       leading: IconButton(
           onPressed: () {
-            context.read<MusicViewModel>().insertMusicList(songs);
+            context.read<MusicViewModel>().playSongList(songs);
           },
           icon: const Icon(Icons.play_circle_outline)),
       title: const Text('播放全部'),
@@ -31,7 +31,7 @@ class SongListHeaderTile extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
-                context.read<MusicViewModel>().playMusicList(songs);
+                context.read<MusicViewModel>().playSongList(songs);
               },
               icon: const Icon(Icons.download)),
           IconButton(
