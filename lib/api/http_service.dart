@@ -139,10 +139,15 @@ class HttpService {
   }
 
   ///获取每日推荐歌曲
-  Future<SongDetailEntity?> getSongDetail(List<int> idList) async {
+  Future<SongDetailEntity?> getSongsDetail(List<int> idList) async {
+    if (idList.isEmpty) {
+      return null;
+    }
+
     try {
-      const path = 'recommend/songs';
-      final response = await _dio.get(path);
+      const path = 'song/detail';
+      final response = await _dio.get(path,
+          queryParameters: {'ids': idList.map((e) => e.toString()).join(',')});
       return SongDetailEntity.fromJson(response.data);
     } catch (e) {
       if (kDebugMode) {
@@ -553,6 +558,24 @@ class HttpService {
     }
   }
 
+  ///获取音乐的播放地址 优先获取下载地址
+  Future<String?> getSongUrl(int id) async {
+    final downloadEntity = await HttpService.instance.getSongDownloadUrl(id);
+    final downloadUrl = downloadEntity?.data?.url;
+    if (downloadUrl != null) {
+      return downloadUrl;
+    }
+    final playEntity = await HttpService.instance.getSongPlayUrl(id);
+    if (playEntity == null) {
+      return null;
+    }
+    final list = playEntity.data ?? [];
+    if (list.isEmpty) {
+      return null;
+    }
+    return list.first.url;
+  }
+
   ///初始化
   Future<void> init() async {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -577,7 +600,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-    "https://music-win.cpolar.top/";
-    // "https://music.cpolar.top/";
+        // "https://music-win.cpolar.top/";
+        "https://music.cpolar.top/";
   }
 }

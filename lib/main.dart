@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
 import 'package:music/pages/artist_detail/artist_detail_page.dart';
+import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:music/pages/common/theme_view_model.dart';
+import 'package:music/pages/download_management/download_management_page.dart';
 import 'package:music/pages/login/login_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
 import 'package:music/pages/playlist_category/playlist_category_page.dart';
@@ -42,7 +44,8 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => MusicViewModel()),
-          ChangeNotifierProvider(create: (_) => ThemeViewModel())
+          ChangeNotifierProvider(create: (_) => ThemeViewModel()),
+          ChangeNotifierProvider(create: (_) => DownloadViewModel()),
         ],
         child: buildMaterialApp(),
       ),
@@ -70,7 +73,8 @@ class MyApp extends StatelessWidget {
           '/playlist/square': (_) => const PlaylistSquarePage(),
           '/playlist/category': (_) => const PlaylistCategoryPage(),
           '/songs/edit': (_) => const SongsEditPage(),
-          '/artist/detail': (_) => const ArtistDetailPage()
+          '/artist/detail': (_) => const ArtistDetailPage(),
+          '/download/management': (_) => const DownloadManagementPage()
         },
         title: '网易云音乐',
         theme: (viewModel.darkTheme
@@ -191,6 +195,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           .pushNamed('/artist/detail', arguments: 5427);
                     },
                   ),
+                  ListTile(
+                    title: const Text('下载管理'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/download/management');
+                    },
+                  ),
                   const MusicBanner(),
                 ],
               ),
@@ -203,3 +213,14 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 final EventBus eventBus = EventBus();
+
+
+class TestPage extends StatelessWidget {
+  const TestPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+

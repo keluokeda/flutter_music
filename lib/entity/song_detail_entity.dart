@@ -1,3 +1,4 @@
+import 'package:music/entity/song_item.dart';
 import 'package:music/generated/json/base/json_field.dart';
 import 'package:music/generated/json/song_detail_entity.g.dart';
 import 'dart:convert';
@@ -34,7 +35,7 @@ class SongDetailSongs {
 	int? pst;
 	int? t;
 	List<SongDetailSongsAr>? ar;
-	List<dynamic>? alia;
+	List<String>? alia;
 	int? pop;
 	int? st;
 	String? rt;
@@ -77,13 +78,23 @@ class SongDetailSongs {
 	int? mv;
 	int? publishTime;
 
+	SongItem toSongItem() {
+		return SongItem(
+				id ?? 0,
+				name ?? "",
+				ar?.map((a) => Singer(a.id ?? 0, a.name ?? '')).toList() ?? [],
+				alia ?? [],
+				Album(al?.id ?? 0, al?.name ?? '', al?.picUrl ?? ''),
+				mv ?? 0);
+	}
+
 	SongDetailSongs();
 
 	factory SongDetailSongs.fromJson(Map<String, dynamic> json) => $SongDetailSongsFromJson(json);
 
 	Map<String, dynamic> toJson() => $SongDetailSongsToJson(this);
 
-	SongDetailSongs copyWith({String? name, int? id, int? pst, int? t, List<SongDetailSongsAr>? ar, List<dynamic>? alia, int? pop, int? st, String? rt, int? fee, int? v, dynamic crbt, String? cf, SongDetailSongsAl? al, int? dt, SongDetailSongsH? h, SongDetailSongsM? m, SongDetailSongsL? l, SongDetailSongsSq? sq, dynamic hr, dynamic a, String? cd, int? no, dynamic rtUrl, int? ftype, List<dynamic>? rtUrls, int? djId, int? copyright, int? sId, int? mark, int? originCoverType, dynamic originSongSimpleData, dynamic tagPicList, bool? resourceState, int? version, dynamic songJumpInfo, dynamic entertainmentTags, dynamic awardTags, int? single, dynamic noCopyrightRcmd, int? cp, int? rtype, dynamic rurl, int? mst, int? mv, int? publishTime}) {
+	SongDetailSongs copyWith({String? name, int? id, int? pst, int? t, List<SongDetailSongsAr>? ar, List<String>? alia, int? pop, int? st, String? rt, int? fee, int? v, dynamic crbt, String? cf, SongDetailSongsAl? al, int? dt, SongDetailSongsH? h, SongDetailSongsM? m, SongDetailSongsL? l, SongDetailSongsSq? sq, dynamic hr, dynamic a, String? cd, int? no, dynamic rtUrl, int? ftype, List<dynamic>? rtUrls, int? djId, int? copyright, int? sId, int? mark, int? originCoverType, dynamic originSongSimpleData, dynamic tagPicList, bool? resourceState, int? version, dynamic songJumpInfo, dynamic entertainmentTags, dynamic awardTags, int? single, dynamic noCopyrightRcmd, int? cp, int? rtype, dynamic rurl, int? mst, int? mv, int? publishTime}) {
 		return SongDetailSongs()
 			..name= name ?? this.name
 			..id= id ?? this.id

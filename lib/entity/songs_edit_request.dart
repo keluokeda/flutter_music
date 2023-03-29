@@ -11,5 +11,9 @@ class SongsEditRequest {
   ///歌单id 要是从专辑过来的就为null
   final int? playlistId;
 
-  const SongsEditRequest(this.list, this.isUser, this.playlistId);
+  ///是否是本地文件
+  final bool isLocalFile;
+
+  const SongsEditRequest(this.list, this.isUser, this.playlistId,
+      {this.isLocalFile = false});
 }

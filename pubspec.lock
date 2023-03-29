@@ -222,6 +222,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "3.3.0"
+  flutter_download_manager:
+    dependency: "direct main"
+    description:
+      name: flutter_download_manager
+      sha256: f0e604be623f2559a2dc2ccb0918e4e5224ff28a02b864ba0c27a3c6aca6c154
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.5.5"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -230,6 +238,14 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "2.0.1"
+  flutter_media_metadata:
+    dependency: "direct main"
+    description:
+      name: flutter_media_metadata
+      sha256: "69cfc76ffd6cd5d546dcc4880584b3844c5e879e435aa54f57f1096c15bd04db"
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "1.0.0+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -639,3 +655,4 @@ packages:
     version: "1.0.0"
 sdks:
   dart: ">=3.0.0-362.0.dev <4.0.0"
+  flutter: ">=3.3.0"

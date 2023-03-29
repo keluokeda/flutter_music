@@ -33,13 +33,17 @@ class SongsEditPage extends StatelessWidget {
               title: Text('已选$count'),
               actions: [
                 IconButton(
-                    onPressed: viewModel.loading ? null : () {
-                      //播放选中的音乐
-                      if(count == 0){
-                        return;
-                      }
-                      context.read<MusicViewModel>().insertSongList(targetList);
-                    },
+                    onPressed: viewModel.loading
+                        ? null
+                        : () {
+                            //播放选中的音乐
+                            if (count == 0) {
+                              return;
+                            }
+                            context
+                                .read<MusicViewModel>()
+                                .insertSongList(targetList);
+                          },
                     icon: const Icon(Icons.play_circle)),
                 IconButton(
                     onPressed: viewModel.loading
@@ -71,9 +75,10 @@ class SongsEditPage extends StatelessWidget {
                             ns.pop();
                           },
                     icon: const Icon(Icons.add_photo_alternate_outlined)),
-                IconButton(
-                    onPressed: viewModel.loading ? null : () {},
-                    icon: const Icon(Icons.download)),
+                if (request.isLocalFile == false)
+                  IconButton(
+                      onPressed: viewModel.loading ? null : () {},
+                      icon: const Icon(Icons.download)),
                 IconButton(
                     onPressed: viewModel.loading
                         ? null
@@ -85,6 +90,12 @@ class SongsEditPage extends StatelessWidget {
 
                             final musicViewModel =
                                 context.read<MusicViewModel>();
+
+                            if (request.isLocalFile) {
+                              musicViewModel.deleteLocalFile(targetList);
+                              Navigator.of(context).pop();
+                            }
+
                             if (request.isUser) {
                               //从歌单中删除
                               await musicViewModel

@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+import 'package:music/api/data_store.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/entity/songs_play_mode.dart';
+import 'package:music/event/local_file_deleted_event.dart';
 import 'package:music/event/playlist_songs_updated_event.dart';
 import 'package:music/main.dart';
+import 'package:music/pages/common/download_view_model.dart';
 import 'package:oktoast/oktoast.dart';
 
 import '../../entity/song_item.dart';
@@ -27,6 +32,7 @@ class MusicViewModel extends ChangeNotifier {
 
   SongsPlayMode _songsPlayMode = SongsPlayMode.repeat;
 
+  ///音乐播放模式
   SongsPlayMode get songsPlayMode => _songsPlayMode;
 
   ///往歌单插入或删除一组歌曲
@@ -92,15 +98,32 @@ class MusicViewModel extends ChangeNotifier {
     songList[index] = songItem;
     _currentPlayingSong = songItem;
 
-    final musicUrl = await _getSongUrl(songItem.id);
-
+    final songFile =
+        File("${DataStore.instance.downloadPath}${songItem.id}.mp3");
     if (kDebugMode) {
-      print('要播放的音乐地址是 $musicUrl');
+      print('要播放的音乐文件是 $songItem');
     }
-    if (musicUrl != null) {
-      _audioPlayer.play(UrlSource(musicUrl));
-    }
+    if (await songFile.exists()) {
+      //本地文件存在
+      if (kDebugMode) {
+        print('本地音乐文件存在 播放本地音乐 $songFile');
+      }
+      MetadataRetriever.fromFile(songFile).then((value) {
+        if (kDebugMode) {
+          print('获取到本地音乐文件信息 $value');
+        }
+      });
 
+      _audioPlayer.play(DeviceFileSource(songFile.path));
+    } else {
+      final musicUrl = await HttpService.instance.getSongUrl(songItem.id);
+      if (kDebugMode) {
+        print('本地音乐文件不存在 网络播放音乐 ,${songFile.path} $musicUrl');
+      }
+      if (musicUrl != null) {
+        _audioPlayer.play(UrlSource(musicUrl));
+      }
+    }
     notifyListeners();
   }
 
@@ -184,8 +207,7 @@ class MusicViewModel extends ChangeNotifier {
 
   ///下一首播放
   void playSongNext(SongItem songItem) {
-
-    if(songItem.id == currentPlayingSong?.id){
+    if (songItem.id == currentPlayingSong?.id) {
       //要进行下一首播放的音乐是当前正在播放的音乐
       return;
     }
@@ -194,38 +216,28 @@ class MusicViewModel extends ChangeNotifier {
 
     if (index == -1) {
       //当前音乐列表中没有这首音乐
-     if(currentPlayingSong == null){
-       //当前没有播放任何音乐
-       playSong(songItem);
-       return;
-     }
-     final playingSongIndex = songList.indexOf(currentPlayingSong!);
-     _songList.insert(playingSongIndex+1, songItem);
-     notifyListeners();
-    }else{
+      if (currentPlayingSong == null) {
+        //当前没有播放任何音乐
+        playSong(songItem);
+        return;
+      }
+      final playingSongIndex = songList.indexOf(currentPlayingSong!);
+      _songList.insert(playingSongIndex + 1, songItem);
+      notifyListeners();
+    } else {
       //要进行下一首播放的音乐已经在当前的播放列表中
       final playingSongIndex = songList.indexOf(currentPlayingSong!);
       _songList.removeWhere((element) => element.id == songItem.id);
-      _songList.insert(playingSongIndex+1, songItem);
-
+      _songList.insert(playingSongIndex + 1, songItem);
     }
   }
 
-  ///获取音乐的播放地址 优先获取下载地址
-  Future<String?> _getSongUrl(int id) async {
-    final downloadEntity = await HttpService.instance.getSongDownloadUrl(id);
-    final downloadUrl = downloadEntity?.data?.url;
-    if (downloadUrl != null) {
-      return downloadUrl;
-    }
-    final playEntity = await HttpService.instance.getSongPlayUrl(id);
-    if (playEntity == null) {
-      return null;
-    }
-    final list = playEntity.data ?? [];
-    if (list.isEmpty) {
-      return null;
-    }
-    return list.first.url;
+  ///删除本地文件
+  void deleteLocalFile(List<SongItem> list) async {
+    list.map((e) => e.getFilePath()).map((e) => File(e)).forEach((element) {
+      element.deleteSync();
+    });
+
+    eventBus.fire(LocalFileDeletedEvent(list));
   }
 }

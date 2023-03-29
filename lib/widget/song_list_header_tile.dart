@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music/entity/songs_edit_request.dart';
+import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,10 +12,13 @@ class SongListHeaderTile extends StatelessWidget {
 
   final int? playlistId;
 
+  final bool isLocalFile;
+
   const SongListHeaderTile(
       {required this.songs,
       required this.isUser,
       required this.playlistId,
+      this.isLocalFile = false,
       super.key});
 
   @override
@@ -31,13 +35,15 @@ class SongListHeaderTile extends StatelessWidget {
         children: [
           IconButton(
               onPressed: () {
-                context.read<MusicViewModel>().playSongList(songs);
+                // context.read<MusicViewModel>().playSongList(songs);
+                context.read<DownloadViewModel>().download(songs);
               },
               icon: const Icon(Icons.download)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/songs/edit',
-                    arguments: SongsEditRequest(songs, isUser, playlistId));
+                    arguments: SongsEditRequest(songs, isUser, playlistId,
+                        isLocalFile: isLocalFile));
               },
               icon: const Icon(Icons.format_list_bulleted)),
         ],

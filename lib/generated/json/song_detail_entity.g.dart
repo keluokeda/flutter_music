@@ -48,7 +48,7 @@ SongDetailSongs $SongDetailSongsFromJson(Map<String, dynamic> json) {
 	if (ar != null) {
 		songDetailSongs.ar = ar;
 	}
-	final List<dynamic>? alia = jsonConvert.convertListNotNull<dynamic>(json['alia']);
+	final List<String>? alia = jsonConvert.convertListNotNull<String>(json['alia']);
 	if (alia != null) {
 		songDetailSongs.alia = alia;
 	}
