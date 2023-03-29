@@ -7,6 +7,7 @@ import 'package:flutter_download_manager/flutter_download_manager.dart';
 import 'package:music/api/data_store.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/event/local_file_deleted_event.dart';
+import 'package:music/event/local_file_downloaded_event.dart';
 import 'package:music/main.dart';
 import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/widget/song_list_header_tile.dart';
@@ -21,20 +22,21 @@ class DownloadManagementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 1,
         length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('下载管理'),
             bottom: const TabBar(tabs: [
               Tab(text: '下载中'),
-              Tab(text: '已失败'),
+              // Tab(text: '已失败'),
               Tab(text: '已完成'),
             ]),
           ),
           body: const TabBarView(
             children: [
               DownloadingPage(),
-              DownloadFailedPage(),
+              // DownloadFailedPage(),
               DownloadedPage(),
             ],
           ),
@@ -175,12 +177,15 @@ class DownloadedViewModel extends ChangeNotifier {
   List<SongItem> _list = [];
 
   late StreamSubscription<LocalFileDeletedEvent> subscription;
+  late StreamSubscription<LocalFileDownloadedEvent> subscription1;
 
   List<SongItem> get list => _list;
 
   void init() async {
     final downloadDir = Directory(DataStore.instance.downloadPath);
     final children = await downloadDir.list().toList();
+
+
 
     final idList = <int>[];
 
@@ -211,12 +216,18 @@ class DownloadedViewModel extends ChangeNotifier {
       _list.removeWhere((element) => event.list.contains(element));
       notifyListeners();
     });
+
+    subscription1 = eventBus.on<LocalFileDownloadedEvent>().listen((event) {
+      _list.insert(0, event.songItem);
+      notifyListeners();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     subscription.cancel();
+    subscription1.cancel();
   }
 
   void deleteFile(SongItem songItem) async {

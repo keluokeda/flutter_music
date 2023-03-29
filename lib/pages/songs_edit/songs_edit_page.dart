@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music/entity/song_item.dart';
 import 'package:music/entity/songs_edit_request.dart';
+import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:music/pages/songs_edit/songs_edit_view_model.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +31,11 @@ class SongsEditPage extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text('已选$count'),
+              title: Text('$count'),
               actions: [
+                IconButton(
+                    onPressed: viewModel.loading ? null : viewModel.checkAll,
+                    icon: const Text('全选')),
                 IconButton(
                     onPressed: viewModel.loading
                         ? null
@@ -77,7 +81,9 @@ class SongsEditPage extends StatelessWidget {
                     icon: const Icon(Icons.add_photo_alternate_outlined)),
                 if (request.isLocalFile == false)
                   IconButton(
-                      onPressed: viewModel.loading ? null : () {},
+                      onPressed: viewModel.loading ? null : () {
+                        context.read<DownloadViewModel>().download(targetList);
+                      },
                       icon: const Icon(Icons.download)),
                 IconButton(
                     onPressed: viewModel.loading
@@ -112,21 +118,23 @@ class SongsEditPage extends StatelessWidget {
             body: ReorderableListView(
               buildDefaultDragHandles: false,
               onReorder: viewModel.onReorder,
-              children: viewModel.songs
-                  .map((e) => CheckboxListTile(
-                      key: ValueKey(e),
-                      enabled: !viewModel.loading,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(e.songItem.name),
-                      subtitle: Text(
-                        e.songItem.subTitle(),
-                        maxLines: 1,
-                      ),
-                      value: e.checked,
-                      onChanged: (value) {
-                        viewModel.toggleChecked(e);
-                      }))
-                  .toList(),
+              children: [
+                ...viewModel.songs
+                    .map((e) => CheckboxListTile(
+                        key: ValueKey(e),
+                        enabled: !viewModel.loading,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(e.songItem.name),
+                        subtitle: Text(
+                          e.songItem.subTitle(),
+                          maxLines: 1,
+                        ),
+                        value: e.checked,
+                        onChanged: (value) {
+                          viewModel.toggleChecked(e);
+                        }))
+                    .toList()
+              ],
             ),
           );
         },

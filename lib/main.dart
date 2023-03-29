@@ -9,6 +9,7 @@ import 'package:music/pages/common/music_view_model.dart';
 import 'package:music/pages/common/theme_view_model.dart';
 import 'package:music/pages/download_management/download_management_page.dart';
 import 'package:music/pages/login/login_page.dart';
+import 'package:music/pages/main/main_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
 import 'package:music/pages/playlist_category/playlist_category_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_page.dart';
@@ -74,7 +75,8 @@ class MyApp extends StatelessWidget {
           '/playlist/category': (_) => const PlaylistCategoryPage(),
           '/songs/edit': (_) => const SongsEditPage(),
           '/artist/detail': (_) => const ArtistDetailPage(),
-          '/download/management': (_) => const DownloadManagementPage()
+          '/download/management': (_) => const DownloadManagementPage(),
+          '/app/main':(_)=>const MainPage()
         },
         title: '网易云音乐',
         theme: (viewModel.darkTheme
@@ -199,6 +201,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: const Text('下载管理'),
                     onTap: () {
                       Navigator.of(context).pushNamed('/download/management');
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('首页'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/app/main');
                     },
                   ),
                   const MusicBanner(),

@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_download_manager/flutter_download_manager.dart';
 import 'package:music/api/data_store.dart';
 import 'package:music/api/http_service.dart';
+import 'package:music/event/local_file_downloaded_event.dart';
+import 'package:music/main.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../../entity/downloading_song.dart';
 import '../../entity/song_item.dart';
@@ -31,6 +34,8 @@ class DownloadViewModel extends ChangeNotifier {
         _downloadingSongs.remove(target);
         if (result == false) {
           _failedSongs.add(target);
+        }else{
+          eventBus.fire(LocalFileDownloadedEvent(target.songItem));
         }
         notifyListeners();
       }
@@ -79,6 +84,7 @@ class DownloadViewModel extends ChangeNotifier {
 
   ///下载歌曲
   void download(List<SongItem> songs) {
+    showToast('开始下载');
     _downloadingSongs.addAll(songs.map((e) => e.toDownloadingSong()));
     notifyListeners();
   }

@@ -8,10 +8,13 @@ import '../entity/song_item.dart';
 
 class SongListHeaderTile extends StatelessWidget {
   final List<SongItem> songs;
+  ///是否是用户的歌单
   final bool isUser;
 
+  ///歌单id 没有可以传入null
   final int? playlistId;
 
+  ///是否是本地文件
   final bool isLocalFile;
 
   const SongListHeaderTile(

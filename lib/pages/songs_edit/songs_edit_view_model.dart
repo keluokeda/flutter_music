@@ -29,6 +29,13 @@ class SongsEditViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void checkAll() {
+    for (var element in _songs) {
+      element.checked = true;
+    }
+    notifyListeners();
+  }
+
   void onReorder(int oldIndex, int newIndex) {
     if (kDebugMode) {
       print('onReorder $oldIndex $newIndex');
