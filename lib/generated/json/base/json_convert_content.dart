@@ -12,6 +12,7 @@ import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
+import 'package:music/entity/newest_album_entity.dart';
 import 'package:music/entity/playlist_category_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
 import 'package:music/entity/playlist_detail_entity.dart';
@@ -19,10 +20,14 @@ import 'package:music/entity/playlist_list_entity.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
+import 'package:music/entity/recommend_playlist_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
+import 'package:music/entity/user_detail_entity.dart';
+import 'package:music/entity/user_followeds_entity.dart';
+import 'package:music/entity/user_follows_entity.dart';
 import 'package:music/entity/user_playlist_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -87,6 +92,10 @@ class JsonConvert {
 		(MessageListMsgsFromUser).toString(): MessageListMsgsFromUser.fromJson,
 		(MessageListMsgsFromUserAvatarDetail).toString(): MessageListMsgsFromUserAvatarDetail.fromJson,
 		(MessageListMsgsToUser).toString(): MessageListMsgsToUser.fromJson,
+		(NewestAlbumEntity).toString(): NewestAlbumEntity.fromJson,
+		(NewestAlbumAlbums).toString(): NewestAlbumAlbums.fromJson,
+		(NewestAlbumAlbumsArtist).toString(): NewestAlbumAlbumsArtist.fromJson,
+		(NewestAlbumAlbumsArtists).toString(): NewestAlbumAlbumsArtists.fromJson,
 		(PlaylistCategoryEntity).toString(): PlaylistCategoryEntity.fromJson,
 		(PlaylistCategoryAll).toString(): PlaylistCategoryAll.fromJson,
 		(PlaylistCategorySub).toString(): PlaylistCategorySub.fromJson,
@@ -132,6 +141,9 @@ class JsonConvert {
 		(PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
 		(PlaylistTracksPrivilegesFreeTrialPrivilege).toString(): PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
 		(PlaylistTracksPrivilegesChargeInfoList).toString(): PlaylistTracksPrivilegesChargeInfoList.fromJson,
+		(RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
+		(RecommendPlaylistRecommend).toString(): RecommendPlaylistRecommend.fromJson,
+		(RecommendPlaylistRecommendCreator).toString(): RecommendPlaylistRecommendCreator.fromJson,
 		(RecommendSongsEntity).toString(): RecommendSongsEntity.fromJson,
 		(RecommendSongsData).toString(): RecommendSongsData.fromJson,
 		(RecommendSongsDataDailySongs).toString(): RecommendSongsDataDailySongs.fromJson,
@@ -165,6 +177,18 @@ class JsonConvert {
 		(SongUrlData).toString(): SongUrlData.fromJson,
 		(SongUrlDataFreeTrialPrivilege).toString(): SongUrlDataFreeTrialPrivilege.fromJson,
 		(SongUrlDataFreeTimeTrialPrivilege).toString(): SongUrlDataFreeTimeTrialPrivilege.fromJson,
+		(UserDetailEntity).toString(): UserDetailEntity.fromJson,
+		(UserDetailUserPoint).toString(): UserDetailUserPoint.fromJson,
+		(UserDetailProfile).toString(): UserDetailProfile.fromJson,
+		(UserDetailProfilePrivacyItemUnlimit).toString(): UserDetailProfilePrivacyItemUnlimit.fromJson,
+		(UserDetailBindings).toString(): UserDetailBindings.fromJson,
+		(UserDetailProfileVillageInfo).toString(): UserDetailProfileVillageInfo.fromJson,
+		(UserFollowedsEntity).toString(): UserFollowedsEntity.fromJson,
+		(UserFollowedsFolloweds).toString(): UserFollowedsFolloweds.fromJson,
+		(UserFollowsEntity).toString(): UserFollowsEntity.fromJson,
+		(UserFollowsFollow).toString(): UserFollowsFollow.fromJson,
+		(UserFollowsFollowVipRights).toString(): UserFollowsFollowVipRights.fromJson,
+		(UserFollowsFollowAvatarDetail).toString(): UserFollowsFollowAvatarDetail.fromJson,
 		(UserPlaylistEntity).toString(): UserPlaylistEntity.fromJson,
 		(UserPlaylistPlaylist).toString(): UserPlaylistPlaylist.fromJson,
 		(UserPlaylistPlaylistCreator).toString(): UserPlaylistPlaylistCreator.fromJson,
@@ -414,6 +438,18 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<MessageListMsgsToUser>[] is M){
 			return data.map<MessageListMsgsToUser>((Map<String, dynamic> e) => MessageListMsgsToUser.fromJson(e)).toList() as M;
 		}
+		if(<NewestAlbumEntity>[] is M){
+			return data.map<NewestAlbumEntity>((Map<String, dynamic> e) => NewestAlbumEntity.fromJson(e)).toList() as M;
+		}
+		if(<NewestAlbumAlbums>[] is M){
+			return data.map<NewestAlbumAlbums>((Map<String, dynamic> e) => NewestAlbumAlbums.fromJson(e)).toList() as M;
+		}
+		if(<NewestAlbumAlbumsArtist>[] is M){
+			return data.map<NewestAlbumAlbumsArtist>((Map<String, dynamic> e) => NewestAlbumAlbumsArtist.fromJson(e)).toList() as M;
+		}
+		if(<NewestAlbumAlbumsArtists>[] is M){
+			return data.map<NewestAlbumAlbumsArtists>((Map<String, dynamic> e) => NewestAlbumAlbumsArtists.fromJson(e)).toList() as M;
+		}
 		if(<PlaylistCategoryEntity>[] is M){
 			return data.map<PlaylistCategoryEntity>((Map<String, dynamic> e) => PlaylistCategoryEntity.fromJson(e)).toList() as M;
 		}
@@ -549,6 +585,15 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<PlaylistTracksPrivilegesChargeInfoList>[] is M){
 			return data.map<PlaylistTracksPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistTracksPrivilegesChargeInfoList.fromJson(e)).toList() as M;
 		}
+		if(<RecommendPlaylistEntity>[] is M){
+			return data.map<RecommendPlaylistEntity>((Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e)).toList() as M;
+		}
+		if(<RecommendPlaylistRecommend>[] is M){
+			return data.map<RecommendPlaylistRecommend>((Map<String, dynamic> e) => RecommendPlaylistRecommend.fromJson(e)).toList() as M;
+		}
+		if(<RecommendPlaylistRecommendCreator>[] is M){
+			return data.map<RecommendPlaylistRecommendCreator>((Map<String, dynamic> e) => RecommendPlaylistRecommendCreator.fromJson(e)).toList() as M;
+		}
 		if(<RecommendSongsEntity>[] is M){
 			return data.map<RecommendSongsEntity>((Map<String, dynamic> e) => RecommendSongsEntity.fromJson(e)).toList() as M;
 		}
@@ -647,6 +692,42 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<SongUrlDataFreeTimeTrialPrivilege>[] is M){
 			return data.map<SongUrlDataFreeTimeTrialPrivilege>((Map<String, dynamic> e) => SongUrlDataFreeTimeTrialPrivilege.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailEntity>[] is M){
+			return data.map<UserDetailEntity>((Map<String, dynamic> e) => UserDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailUserPoint>[] is M){
+			return data.map<UserDetailUserPoint>((Map<String, dynamic> e) => UserDetailUserPoint.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailProfile>[] is M){
+			return data.map<UserDetailProfile>((Map<String, dynamic> e) => UserDetailProfile.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailProfilePrivacyItemUnlimit>[] is M){
+			return data.map<UserDetailProfilePrivacyItemUnlimit>((Map<String, dynamic> e) => UserDetailProfilePrivacyItemUnlimit.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailBindings>[] is M){
+			return data.map<UserDetailBindings>((Map<String, dynamic> e) => UserDetailBindings.fromJson(e)).toList() as M;
+		}
+		if(<UserDetailProfileVillageInfo>[] is M){
+			return data.map<UserDetailProfileVillageInfo>((Map<String, dynamic> e) => UserDetailProfileVillageInfo.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowedsEntity>[] is M){
+			return data.map<UserFollowedsEntity>((Map<String, dynamic> e) => UserFollowedsEntity.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowedsFolloweds>[] is M){
+			return data.map<UserFollowedsFolloweds>((Map<String, dynamic> e) => UserFollowedsFolloweds.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowsEntity>[] is M){
+			return data.map<UserFollowsEntity>((Map<String, dynamic> e) => UserFollowsEntity.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowsFollow>[] is M){
+			return data.map<UserFollowsFollow>((Map<String, dynamic> e) => UserFollowsFollow.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowsFollowVipRights>[] is M){
+			return data.map<UserFollowsFollowVipRights>((Map<String, dynamic> e) => UserFollowsFollowVipRights.fromJson(e)).toList() as M;
+		}
+		if(<UserFollowsFollowAvatarDetail>[] is M){
+			return data.map<UserFollowsFollowAvatarDetail>((Map<String, dynamic> e) => UserFollowsFollowAvatarDetail.fromJson(e)).toList() as M;
 		}
 		if(<UserPlaylistEntity>[] is M){
 			return data.map<UserPlaylistEntity>((Map<String, dynamic> e) => UserPlaylistEntity.fromJson(e)).toList() as M;

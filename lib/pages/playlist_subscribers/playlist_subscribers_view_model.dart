@@ -2,7 +2,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/entity/load_list_result.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
-import 'package:music/pages/common/base_refreah_and_load_more_view_model.dart';
+import 'package:music/pages/common/base_refresh_and_load_more_view_model.dart';
 
 class PlaylistSubscribersViewModel
     extends BaseRefreshAndLoadMoreViewModel<PlaylistSubscribersSubscribers> {

@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:music/entity/playlist_list_entity.dart';
 import 'package:music/pages/playlist_square/playlist_square_view_model.dart';
+import 'package:music/widget/playlist_view.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistSquarePage extends StatelessWidget {
@@ -76,31 +76,6 @@ class PlaylistSquarePage extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, PlaylistListPlaylists e) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed('/playlist/detail', arguments: e.id);
-      },
-      child: Stack(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: CachedNetworkImage(imageUrl: e.coverImgUrl ?? ''),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              width: double.infinity,
-              color: Colors.black.withOpacity(0.4),
-              child: Text(
-                '${e.name ?? ''}\n',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-                maxLines: 2,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+    return PlaylistView(e.toPlaylistItem(), double.infinity);
   }
 }

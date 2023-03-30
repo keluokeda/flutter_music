@@ -1,5 +1,7 @@
 import 'package:music/generated/json/base/json_convert_content.dart';
 import 'package:music/entity/playlist_list_entity.dart';
+import 'package:music/entity/playlist_item.dart';
+
 
 PlaylistListEntity $PlaylistListEntityFromJson(Map<String, dynamic> json) {
 	final PlaylistListEntity playlistListEntity = PlaylistListEntity();

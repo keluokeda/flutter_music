@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
+import 'package:music/pages/album_square/album_square_page.dart';
 import 'package:music/pages/artist_detail/artist_detail_page.dart';
 import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
@@ -22,6 +23,7 @@ import 'package:music/pages/playlist_subscribers/playlist_subscribers_page.dart'
 import 'package:music/pages/recommend_songs/recommend_songs_page.dart';
 import 'package:music/pages/songs_edit/songs_edit_page.dart';
 import 'package:music/pages/splash/splash_page.dart';
+import 'package:music/pages/user_list/user_list_page.dart';
 import 'package:music/pages/user_playlist/user_playlist_page.dart';
 import 'package:music/pages/user_playlist_list/user_playlist_list_page.dart';
 import 'package:music/widget/music_banner.dart';
@@ -76,7 +78,9 @@ class MyApp extends StatelessWidget {
           '/songs/edit': (_) => const SongsEditPage(),
           '/artist/detail': (_) => const ArtistDetailPage(),
           '/download/management': (_) => const DownloadManagementPage(),
-          '/app/main':(_)=>const MainPage()
+          '/app/main': (_) => const MainPage(),
+          '/album/square': (_) => const AlbumSquarePage(),
+          '/user/list': (_) => const UserListPage(),
         },
         title: '网易云音乐',
         theme: (viewModel.darkTheme
@@ -206,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ListTile(
                     title: const Text('首页'),
                     onTap: () {
-                      Navigator.of(context).pushNamed('/app/main');
+                      Navigator.of(context).pushReplacementNamed('/app/main');
                     },
                   ),
                   const MusicBanner(),
@@ -222,7 +226,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
 final EventBus eventBus = EventBus();
 
-
 class TestPage extends StatelessWidget {
   const TestPage({Key? key}) : super(key: key);
 
@@ -231,4 +234,3 @@ class TestPage extends StatelessWidget {
     return const Placeholder();
   }
 }
-

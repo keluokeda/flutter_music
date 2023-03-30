@@ -10,7 +10,6 @@ import 'package:music/entity/songs_play_mode.dart';
 import 'package:music/event/local_file_deleted_event.dart';
 import 'package:music/event/playlist_songs_updated_event.dart';
 import 'package:music/main.dart';
-import 'package:music/pages/common/download_view_model.dart';
 import 'package:oktoast/oktoast.dart';
 
 import '../../entity/song_item.dart';

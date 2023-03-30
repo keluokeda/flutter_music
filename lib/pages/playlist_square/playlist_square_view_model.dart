@@ -1,6 +1,6 @@
 import 'package:music/api/http_service.dart';
 import 'package:music/entity/load_list_result.dart';
-import 'package:music/pages/common/base_refreah_and_load_more_view_model.dart';
+import 'package:music/pages/common/base_refresh_and_load_more_view_model.dart';
 
 import '../../entity/playlist_list_entity.dart';
 

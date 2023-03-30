@@ -11,15 +11,20 @@ import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
+import 'package:music/entity/newest_album_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
 import 'package:music/entity/playlist_detail_entity.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
+import 'package:music/entity/recommend_playlist_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
+import 'package:music/entity/user_detail_entity.dart';
+import 'package:music/entity/user_followeds_entity.dart';
+import 'package:music/entity/user_follows_entity.dart';
 import 'package:music/entity/user_playlist_entity.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:path_provider/path_provider.dart';
@@ -163,6 +168,102 @@ class HttpService {
       const path = 'playlist/detail';
       final response = await _dio.get(path, queryParameters: {'id': id});
       return PlaylistDetailEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取每日推荐歌单
+  Future<RecommendPlaylistEntity?> getRecommendPlaylist() async {
+    try {
+      const path = 'recommend/resource';
+      final response = await _dio.get(path);
+      return RecommendPlaylistEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取最新专辑
+  Future<NewestAlbumEntity?> getNewestAlbum() async {
+    try {
+      const path = 'album/newest';
+      final response = await _dio.get(path, queryParameters: {'limit': 10});
+      return NewestAlbumEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///全部新碟
+  Future<NewestAlbumEntity?> getAlbumList(int index, String area) async {
+    try {
+      const path = 'album/new';
+      final response = await _dio.get(path, queryParameters: {
+        'limit': 30,
+        'offset': (index - 1) * 30,
+        'area': area
+      });
+      return NewestAlbumEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取用户粉丝
+  Future<UserFollowedsEntity?> getUserFolloweds(int uid, int index) async {
+    try {
+      const path = 'user/followeds';
+      final response = await _dio.get(path, queryParameters: {
+        'limit': 30,
+        'offset': (index - 1) * 30,
+        'uid': uid
+      });
+      return UserFollowedsEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取用户关注的人
+  Future<UserFollowsEntity?> getUserFollows(int uid, int index) async {
+    try {
+      const path = 'user/follows';
+      final response = await _dio.get(path, queryParameters: {
+        'limit': 30,
+        'offset': (index - 1) * 30,
+        'uid': uid
+      });
+      return UserFollowsEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取用户详情
+  Future<UserDetailEntity?> getUserDetail(int id) async {
+    try {
+      const path = 'user/detail';
+      final response = await _dio.get(path, queryParameters: {'uid': id});
+      return UserDetailEntity.fromJson(response.data);
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -600,7 +701,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-        "https://music-win.cpolar.top/";
-        // "https://music.cpolar.top/";
+        // "https://music-win.cpolar.top/";
+        "https://music.cpolar.top/";
   }
 }
