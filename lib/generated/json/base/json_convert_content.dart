@@ -25,6 +25,7 @@ import 'package:music/entity/recommend_songs_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
+import 'package:music/entity/top_artists_entity.dart';
 import 'package:music/entity/user_detail_entity.dart';
 import 'package:music/entity/user_followeds_entity.dart';
 import 'package:music/entity/user_follows_entity.dart';
@@ -177,6 +178,8 @@ class JsonConvert {
 		(SongUrlData).toString(): SongUrlData.fromJson,
 		(SongUrlDataFreeTrialPrivilege).toString(): SongUrlDataFreeTrialPrivilege.fromJson,
 		(SongUrlDataFreeTimeTrialPrivilege).toString(): SongUrlDataFreeTimeTrialPrivilege.fromJson,
+		(TopArtistsEntity).toString(): TopArtistsEntity.fromJson,
+		(TopArtistsArtists).toString(): TopArtistsArtists.fromJson,
 		(UserDetailEntity).toString(): UserDetailEntity.fromJson,
 		(UserDetailUserPoint).toString(): UserDetailUserPoint.fromJson,
 		(UserDetailProfile).toString(): UserDetailProfile.fromJson,
@@ -692,6 +695,12 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<SongUrlDataFreeTimeTrialPrivilege>[] is M){
 			return data.map<SongUrlDataFreeTimeTrialPrivilege>((Map<String, dynamic> e) => SongUrlDataFreeTimeTrialPrivilege.fromJson(e)).toList() as M;
+		}
+		if(<TopArtistsEntity>[] is M){
+			return data.map<TopArtistsEntity>((Map<String, dynamic> e) => TopArtistsEntity.fromJson(e)).toList() as M;
+		}
+		if(<TopArtistsArtists>[] is M){
+			return data.map<TopArtistsArtists>((Map<String, dynamic> e) => TopArtistsArtists.fromJson(e)).toList() as M;
 		}
 		if(<UserDetailEntity>[] is M){
 			return data.map<UserDetailEntity>((Map<String, dynamic> e) => UserDetailEntity.fromJson(e)).toList() as M;

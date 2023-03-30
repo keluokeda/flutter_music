@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/home/home_view_model.dart';
 import 'package:music/widget/album_view.dart';
@@ -107,6 +108,53 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          ListTile(
+            title: const Text('热门歌手'),
+            trailing: const Text('更多'),
+            onTap: () {
+              Navigator.of(context).pushNamed('/album/square');
+            },
+          ),
+          Container(
+            height: 200,
+            child: GridView.count(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              scrollDirection: Axis.horizontal,
+              crossAxisCount: 2,
+              children: data.artists!
+                  .map((e) => InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed('/artist/detail', arguments: e.id);
+                        },
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Stack(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl: e.img1v1Url ?? '',
+                                fit: BoxFit.cover,
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  width: double.infinity,
+                                  color: Colors.black.withOpacity(0.3),
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(
+                                    e.name ?? '',
+                                    style: const TextStyle(color: Colors.white),
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          )
         ],
       ),
     );

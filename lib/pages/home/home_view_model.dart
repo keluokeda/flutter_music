@@ -16,9 +16,13 @@ class HomeViewModel extends ChangeNotifier {
 
     final entity2 = await HttpService.instance.getNewestAlbum();
 
+    final entity3 = await HttpService.instance.getTopArtists();
+
     _homeViewData = HomeViewData(
         (entity1?.recommend ?? []).map((e) => e.toPlaylistItem()).toList(),
-        (entity2?.albums ?? []).map((e) => e.toAlbumItem()).toList());
+        (entity2?.albums ?? []).map((e) => e.toAlbumItem()).toList(),
+        entity3?.artists??[]
+    );
     notifyListeners();
   }
 }

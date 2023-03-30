@@ -22,6 +22,7 @@ import 'package:music/entity/recommend_songs_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
+import 'package:music/entity/top_artists_entity.dart';
 import 'package:music/entity/user_detail_entity.dart';
 import 'package:music/entity/user_followeds_entity.dart';
 import 'package:music/entity/user_follows_entity.dart';
@@ -586,6 +587,21 @@ class HttpService {
     }
   }
 
+  ///获取热门歌手
+  Future<TopArtistsEntity?> getTopArtists() async {
+    try {
+      const path = 'top/artists';
+
+      final response = await _dio.get(path);
+      return TopArtistsEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
   ///删除歌单
   Future<bool> deletePlayList(int playlistId) async {
     try {
@@ -701,7 +717,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-        // "https://music-win.cpolar.top/";
-        "https://music.cpolar.top/";
+        "https://music-win.cpolar.top/";
+        // "https://music.cpolar.top/";
   }
 }
