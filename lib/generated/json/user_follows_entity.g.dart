@@ -3,7 +3,6 @@ import 'package:music/entity/user_follows_entity.dart';
 import 'package:music/entity/user_item.dart';
 
 
-
 UserFollowsEntity $UserFollowsEntityFromJson(Map<String, dynamic> json) {
 	final UserFollowsEntity userFollowsEntity = UserFollowsEntity();
 	final List<UserFollowsFollow>? follow = jsonConvert.convertListNotNull<UserFollowsFollow>(json['follow']);

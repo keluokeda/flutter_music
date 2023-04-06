@@ -10,6 +10,7 @@ import 'package:music/entity/artist_album_entity.dart';
 import 'package:music/entity/artist_desc_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
+import 'package:music/entity/cloud_song_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
@@ -83,6 +84,17 @@ class JsonConvert {
 		(ArtistSongsHotSongsPrivilege).toString(): ArtistSongsHotSongsPrivilege.fromJson,
 		(ArtistSongsHotSongsPrivilegeFreeTrialPrivilege).toString(): ArtistSongsHotSongsPrivilegeFreeTrialPrivilege.fromJson,
 		(ArtistSongsHotSongsPrivilegeChargeInfoList).toString(): ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson,
+		(CloudSongEntity).toString(): CloudSongEntity.fromJson,
+		(CloudSongData).toString(): CloudSongData.fromJson,
+		(CloudSongDataSimpleSong).toString(): CloudSongDataSimpleSong.fromJson,
+		(CloudSongDataSimpleSongAr).toString(): CloudSongDataSimpleSongAr.fromJson,
+		(CloudSongDataSimpleSongAl).toString(): CloudSongDataSimpleSongAl.fromJson,
+		(CloudSongDataSimpleSongH).toString(): CloudSongDataSimpleSongH.fromJson,
+		(CloudSongDataSimpleSongM).toString(): CloudSongDataSimpleSongM.fromJson,
+		(CloudSongDataSimpleSongL).toString(): CloudSongDataSimpleSongL.fromJson,
+		(CloudSongDataSimpleSongPrivilege).toString(): CloudSongDataSimpleSongPrivilege.fromJson,
+		(CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege).toString(): CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson,
+		(CloudSongDataSimpleSongPrivilegeChargeInfoList).toString(): CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson,
 		(LoginStatusEntity).toString(): LoginStatusEntity.fromJson,
 		(LoginStatusData).toString(): LoginStatusData.fromJson,
 		(LoginStatusDataAccount).toString(): LoginStatusDataAccount.fromJson,
@@ -142,7 +154,6 @@ class JsonConvert {
 		(PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
 		(PlaylistTracksPrivilegesFreeTrialPrivilege).toString(): PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
 		(PlaylistTracksPrivilegesChargeInfoList).toString(): PlaylistTracksPrivilegesChargeInfoList.fromJson,
-
 		(RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
 		(RecommendPlaylistRecommend).toString(): RecommendPlaylistRecommend.fromJson,
 		(RecommendPlaylistRecommendCreator).toString(): RecommendPlaylistRecommendCreator.fromJson,
@@ -412,6 +423,39 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<ArtistSongsHotSongsPrivilegeChargeInfoList>[] is M){
 			return data.map<ArtistSongsHotSongsPrivilegeChargeInfoList>((Map<String, dynamic> e) => ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson(e)).toList() as M;
 		}
+		if(<CloudSongEntity>[] is M){
+			return data.map<CloudSongEntity>((Map<String, dynamic> e) => CloudSongEntity.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongData>[] is M){
+			return data.map<CloudSongData>((Map<String, dynamic> e) => CloudSongData.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSong>[] is M){
+			return data.map<CloudSongDataSimpleSong>((Map<String, dynamic> e) => CloudSongDataSimpleSong.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongAr>[] is M){
+			return data.map<CloudSongDataSimpleSongAr>((Map<String, dynamic> e) => CloudSongDataSimpleSongAr.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongAl>[] is M){
+			return data.map<CloudSongDataSimpleSongAl>((Map<String, dynamic> e) => CloudSongDataSimpleSongAl.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongH>[] is M){
+			return data.map<CloudSongDataSimpleSongH>((Map<String, dynamic> e) => CloudSongDataSimpleSongH.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongM>[] is M){
+			return data.map<CloudSongDataSimpleSongM>((Map<String, dynamic> e) => CloudSongDataSimpleSongM.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongL>[] is M){
+			return data.map<CloudSongDataSimpleSongL>((Map<String, dynamic> e) => CloudSongDataSimpleSongL.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongPrivilege>[] is M){
+			return data.map<CloudSongDataSimpleSongPrivilege>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilege.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>[] is M){
+			return data.map<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson(e)).toList() as M;
+		}
+		if(<CloudSongDataSimpleSongPrivilegeChargeInfoList>[] is M){
+			return data.map<CloudSongDataSimpleSongPrivilegeChargeInfoList>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson(e)).toList() as M;
+		}
 		if(<LoginStatusEntity>[] is M){
 			return data.map<LoginStatusEntity>((Map<String, dynamic> e) => LoginStatusEntity.fromJson(e)).toList() as M;
 		}
@@ -589,7 +633,6 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<PlaylistTracksPrivilegesChargeInfoList>[] is M){
 			return data.map<PlaylistTracksPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistTracksPrivilegesChargeInfoList.fromJson(e)).toList() as M;
 		}
-
 		if(<RecommendPlaylistEntity>[] is M){
 			return data.map<RecommendPlaylistEntity>((Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e)).toList() as M;
 		}

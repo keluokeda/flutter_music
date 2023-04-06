@@ -11,6 +11,7 @@ import 'package:music/entity/artist_album_entity.dart';
 import 'package:music/entity/artist_desc_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
+import 'package:music/entity/cloud_song_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
@@ -744,6 +745,56 @@ class HttpService {
         print(e);
       }
       return null;
+    }
+  }
+
+  ///更新歌单封面
+  Future<dynamic> uploadMusicToCloud(String filePath) async {
+    try {
+      const path = "cloud";
+
+      final response = await _dio.post(path,
+          data: FormData.fromMap({
+            'songFile': await MultipartFile.fromFile(filePath),
+          }));
+      return response.data;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取云盘音乐
+  Future<CloudSongEntity?> userCloudSongs(int index) async {
+    try {
+      const path = "user/cloud";
+
+      final response = await _dio.post(path, queryParameters: {
+        "limit": 50,
+        "offset": (index - 1) * 50,
+      });
+      return CloudSongEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///删除云盘音乐
+  Future<bool> deleteCloudSong(int id) async {
+    try {
+      const path = "user/cloud/del";
+      await _dio.post(path, queryParameters: {"id": id});
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
     }
   }
 

@@ -6,6 +6,8 @@ import 'package:music/entity/user_list_type.dart';
 import 'package:music/pages/user_list/user_list_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../api/data_store.dart';
+
 class UserListPage extends StatelessWidget {
   const UserListPage({super.key});
 
@@ -47,11 +49,13 @@ class UserListPage extends StatelessWidget {
                               e.name,
                               maxLines: 1,
                             ),
-                            trailing: TextButton(
-                                onPressed: () {
-                                  viewModel.followUser(e);
-                                },
-                                child: Text(e.followed ? '已关注' : "关注")),
+                            trailing: DataStore.instance.getUserId() == e.id
+                                ? null
+                                : TextButton(
+                                    onPressed: () {
+                                      viewModel.followUser(e);
+                                    },
+                                    child: Text(e.followed ? '已关注' : "关注")),
                             subtitle: e.signature.isEmpty
                                 ? null
                                 : Text(

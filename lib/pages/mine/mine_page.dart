@@ -1,7 +1,10 @@
 import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music/api/data_store.dart';
+import 'package:music/api/http_service.dart';
 import 'package:music/entity/user_list_request.dart';
 import 'package:music/entity/user_list_type.dart';
 import 'package:music/pages/mine/mine_view_model.dart';
@@ -50,12 +53,21 @@ class MinePage extends StatelessWidget {
                               const SizedBox(
                                 height: 16,
                               ),
-                              CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider(
-                                    viewModel.userDetailEntity?.profile
-                                            ?.avatarUrl ??
-                                        ''),
-                                radius: 32,
+                              GestureDetector(
+                                onTap: () async {
+                                  final result = await Navigator.of(context)
+                                      .pushNamed('/mine/profile');
+                                  if (result == true) {
+                                    viewModel.load();
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      viewModel.userDetailEntity?.profile
+                                              ?.avatarUrl ??
+                                          ''),
+                                  radius: 32,
+                                ),
                               ),
                               const SizedBox(
                                 height: 8,
@@ -126,17 +138,30 @@ class MinePage extends StatelessWidget {
                   ListTile(
                     leading: const Icon(
                       Icons.cloud,
-                      color: Colors.orange,
+                      color: Colors.blueAccent,
                     ),
                     title: const Text('我的云盘'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/mine/profile');
+                    onTap: () async {
+                      Navigator.of(context).pushNamed('/user/cloud');
+                      // final result = await FilePicker.platform
+                      //     .pickFiles(type: FileType.audio);
+                      //
+                      // if (result != null) {
+                      //   if (kDebugMode) {
+                      //     print('文件选择结果 $result');
+                      //   }
+                      //   final json = await HttpService.instance
+                      //       .uploadMusicToCloud(result.paths[0]!);
+                      //   if (kDebugMode) {
+                      //     print("上传文件结果是 $json");
+                      //   }
+                      // }
                     },
                   ),
                   ListTile(
                     leading: const Icon(
                       Icons.history,
-                      color: Colors.lightBlue,
+                      color: Colors.deepOrange,
                     ),
                     title: const Text('最近播放'),
                     onTap: () {},

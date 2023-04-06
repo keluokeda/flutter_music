@@ -6,6 +6,7 @@ import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
 import 'package:music/pages/album_square/album_square_page.dart';
 import 'package:music/pages/artist_detail/artist_detail_page.dart';
+import 'package:music/pages/cloud/cloud_page.dart';
 import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:music/pages/common/theme_view_model.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
         ],
         routes: {
           '/app/login': (_) => const LoginPage(),
+          '/user/cloud': (_) => const CloudPage(),
           '/app/splash': (_) => const SplashPage(),
           '/app/test': (_) => const MyHomePage(title: '首页'),
           '/app/messages': (_) => const MessagesPage(),

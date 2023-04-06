@@ -112,7 +112,13 @@ class SongListTile extends StatelessWidget {
                   title: const Text('收藏到歌单'),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    if (kDebugMode) {
+                      print('歌曲的id是 ${songItem.id}');
+                    }
+                    // musicViewModel.playSongNext(songItem);
+                    Navigator.of(context).pop();
+                  },
                   leading: const Icon(Icons.comment_outlined),
                   title: const Text('评论'),
                 ),
