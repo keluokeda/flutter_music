@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:music/entity/playlist_info_edit_view_data.dart';
 import 'package:music/pages/common/base_content_page.dart';
 import 'package:music/pages/playlist_info_edit/playlist_info_edit_view_model.dart';
@@ -14,7 +16,25 @@ class PlaylistInfoEditPage extends BaseContentPage<PlaylistInfoEditViewModel,
     return ListView(
       children: [
         InkWell(
-          onTap: viewModel.loading ? null : () {},
+          onTap: viewModel.loading
+              ? null
+              : () async {
+                  final result = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
+
+                  if (result != null) {
+                    // viewModel.updateCover(result.path);
+                    final cropResult = await ImageCropper().cropImage(
+                        sourcePath: result.path,
+                        maxHeight: 300,
+                        maxWidth: 300,
+                        aspectRatio:
+                            const CropAspectRatio(ratioX: 1, ratioY: 1));
+                    if (cropResult != null) {
+                      viewModel.updateCover(cropResult.path);
+                    }
+                  }
+                },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(children: [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -723,6 +725,26 @@ class HttpService {
       return null;
     }
     return list.first.url;
+  }
+
+  ///更新歌单封面
+  Future<dynamic> updatePlaylistCover(int id, String filePath) async {
+    const path = "playlist/cover/update";
+    try {
+      final response = await _dio.post(path,
+          queryParameters: {
+            'id': id,
+          },
+          data: FormData.fromMap({
+            'imgFile': await MultipartFile.fromFile(filePath),
+          }));
+      return response.data;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
   }
 
   ///初始化
