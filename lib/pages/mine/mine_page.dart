@@ -129,7 +129,9 @@ class MinePage extends StatelessWidget {
                       color: Colors.orange,
                     ),
                     title: const Text('我的云盘'),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/mine/profile');
+                    },
                   ),
                   ListTile(
                     leading: const Icon(

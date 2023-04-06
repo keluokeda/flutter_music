@@ -3,56 +3,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music/api/data_store.dart';
 import 'package:music/entity/playlist_detail_view_data.dart';
+import 'package:music/entity/user_list_request.dart';
+import 'package:music/entity/user_list_type.dart';
+import 'package:music/main.dart';
 import 'package:music/pages/common/base_content_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_view_model.dart';
 import 'package:music/widget/song_list_header_tile.dart';
 import 'package:music/widget/song_list_tile.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 import '../../entity/songs_edit_request.dart';
 
 class PlaylistDetailPage
     extends BaseContentPage<PlaylistDetailViewModel, PlaylistDetailViewData> {
   const PlaylistDetailPage({super.key});
-
-  // @override
-  // Widget buildScaffold(
-  //     BuildContext context, PlaylistDetailViewModel viewModel) {
-  //   final Widget scaffold = super.buildScaffold(context, viewModel);
-  //
-  //   final data = viewModel.optional?.data;
-  //   if (data == null) {
-  //     return scaffold;
-  //   }
-  //
-  //   return Scaffold(
-  //     body: Stack(
-  //       children: [
-  //         CachedNetworkImage(
-  //             imageUrl: data.playlistDetailEntity.playlist?.coverImgUrl ?? ''),
-  //         Column(
-  //           children: [
-  //             AppBar(
-  //               title: Text(
-  //                 data.playlistDetailEntity.playlist?.name ?? '',
-  //                 style: const TextStyle(color: Colors.white),
-  //               ),
-  //               leading: IconButton(
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   icon: const Icon(
-  //                     Icons.arrow_back_ios_new,
-  //                     color: Colors.white,
-  //                   )),
-  //               backgroundColor: Colors.transparent,
-  //             ),
-  //             Expanded(child: buildBodyInner(context, viewModel)),
-  //           ],
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget buildContent(BuildContext context, PlaylistDetailViewData data,
@@ -94,40 +58,64 @@ class PlaylistDetailPage
       //     ],
       //   ),
       // ));
-      songList.add(SongListHeaderTile(
-          songs: (data.playlistTracksEntity.songs ?? [])
-              .map((e) => e.toSongItem())
-              .toList(),
-          isUser: isCurrentUser,
-          playlistId: viewModel.id));
-      songList.addAll((data.playlistTracksEntity.songs ?? [])
-          .map((e) => SongListTile(
-                e.toSongItem(),
-                (data.playlistTracksEntity.songs ?? []).indexOf(e),
-                dialogActionsBuilder: isCurrentUser
-                    ? (_) {
-                        return ListTile(
-                          leading: const Icon(Icons.delete_forever),
-                          title: const Text('删除'),
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            viewModel.deleteMusicToPlaylist(e);
-                          },
-                        );
-                      }
-                    : null,
-                // ListTile(
-                //       title: Text(e.name ?? ''),
-                //       subtitle: Text(
-                //         '${e.ar?.first.name} - ${e.al?.name}',
-                //         style: Theme.of(context).textTheme.bodySmall,
-                //       ),
-                //       leading: Text(
-                //         "${(data.playlistTracksEntity.songs ?? []).indexOf(e) + 1}",
-                //         style: Theme.of(context).textTheme.titleMedium,
-                //       ),
-              ))
-          .toList());
+
+      songList.add(StickyHeader(
+          header: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: SongListHeaderTile(
+                songs: (data.playlistTracksEntity.songs ?? [])
+                    .map((e) => e.toSongItem())
+                    .toList(),
+                isUser: isCurrentUser,
+                playlistId: viewModel.id),
+          ),
+          content: Column(
+            children: (data.playlistTracksEntity.songs ?? [])
+                .map((e) => SongListTile(
+                      e.toSongItem(),
+                      (data.playlistTracksEntity.songs ?? []).indexOf(e),
+                      dialogActionsBuilder: isCurrentUser
+                          ? (_) {
+                              return ListTile(
+                                leading: const Icon(Icons.delete_forever),
+                                title: const Text('删除'),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  viewModel.deleteMusicToPlaylist(e);
+                                },
+                              );
+                            }
+                          : null,
+                    ))
+                .toList(),
+          )));
+
+      // songList.add(SongListHeaderTile(
+      //     songs: (data.playlistTracksEntity.songs ?? [])
+      //         .map((e) => e.toSongItem())
+      //         .toList(),
+      //     isUser: isCurrentUser,
+      //     playlistId: viewModel.id));
+      // songList.addAll(
+      //     (data.playlistTracksEntity.songs ?? [])
+      //     .map((e) => SongListTile(
+      //           e.toSongItem(),
+      //           (data.playlistTracksEntity.songs ?? []).indexOf(e),
+      //           dialogActionsBuilder: isCurrentUser
+      //               ? (_) {
+      //                   return ListTile(
+      //                     leading: const Icon(Icons.delete_forever),
+      //                     title: const Text('删除'),
+      //                     onTap: () {
+      //                       Navigator.of(context).pop();
+      //                       viewModel.deleteMusicToPlaylist(e);
+      //                     },
+      //                   );
+      //                 }
+      //               : null,
+      //         ))
+      //     .toList()
+      // );
     }
 
     songList.add(_buildFooter(context, data));
@@ -225,7 +213,7 @@ class PlaylistDetailPage
                       label: Text(
                           style: const TextStyle(fontSize: 12),
                           maxLines: 1,
-                          '${data.playlistDetailDynamicEntity.shareCount}'))),
+                          '${data.playlistDetailDynamicEntity.shareCount?.formatNumber()}'))),
               const SizedBox(
                 width: 8,
               ),
@@ -236,7 +224,7 @@ class PlaylistDetailPage
                       label: Text(
                           maxLines: 1,
                           style: const TextStyle(fontSize: 12),
-                          '${data.playlistDetailDynamicEntity.commentCount}'))),
+                          '${data.playlistDetailDynamicEntity.commentCount?.formatNumber(needDecimal: false)}'))),
               const SizedBox(
                 width: 8,
               ),
@@ -251,7 +239,7 @@ class PlaylistDetailPage
                               : Icons.add_chart),
                       label: Text(
                         style: const TextStyle(fontSize: 12),
-                        '${data.playlistDetailDynamicEntity.bookedCount}',
+                        '${data.playlistDetailDynamicEntity.bookedCount?.formatNumber(needDecimal: false)}',
                         maxLines: 1,
                       ))),
             ],
@@ -276,8 +264,11 @@ class PlaylistDetailPage
 
     return ListTile(
       onTap: () {
-        Navigator.of(context).pushNamed('/playlist/subscribers',
-            arguments: data.playlistDetailEntity.playlist?.id);
+        // Navigator.of(context).pushNamed('/playlist/subscribers',
+        //     arguments: data.playlistDetailEntity.playlist?.id);
+        Navigator.of(context).pushNamed('/user/list',
+            arguments: UserListRequest(data.playlistDetailEntity.playlist!.id!,
+                UserListType.playlistSubscribers, '收藏者'));
       },
       title: Row(
         children: subscribers
@@ -294,7 +285,8 @@ class PlaylistDetailPage
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("${data.playlistDetailDynamicEntity.bookedCount}人收藏"),
+          Text(
+              "${data.playlistDetailDynamicEntity.bookedCount?.formatNumber()}人收藏"),
           Icon(
             Icons.keyboard_arrow_right,
             color: Theme.of(context).textTheme.bodyMedium?.color,

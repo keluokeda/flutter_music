@@ -3,5 +3,8 @@ enum UserListType {
   followeds,
 
   ///关注的人
-  follows
+  follows,
+
+  ///歌单收藏者
+  playlistSubscribers
 }

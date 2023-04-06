@@ -142,6 +142,7 @@ class JsonConvert {
 		(PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
 		(PlaylistTracksPrivilegesFreeTrialPrivilege).toString(): PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
 		(PlaylistTracksPrivilegesChargeInfoList).toString(): PlaylistTracksPrivilegesChargeInfoList.fromJson,
+
 		(RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
 		(RecommendPlaylistRecommend).toString(): RecommendPlaylistRecommend.fromJson,
 		(RecommendPlaylistRecommendCreator).toString(): RecommendPlaylistRecommendCreator.fromJson,
@@ -588,6 +589,7 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<PlaylistTracksPrivilegesChargeInfoList>[] is M){
 			return data.map<PlaylistTracksPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistTracksPrivilegesChargeInfoList.fromJson(e)).toList() as M;
 		}
+
 		if(<RecommendPlaylistEntity>[] is M){
 			return data.map<RecommendPlaylistEntity>((Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e)).toList() as M;
 		}

@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
 import 'package:music/pages/album_square/album_square_page.dart';
@@ -12,6 +13,7 @@ import 'package:music/pages/download_management/download_management_page.dart';
 import 'package:music/pages/login/login_page.dart';
 import 'package:music/pages/main/main_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
+import 'package:music/pages/my_profile/my_profile_page.dart';
 import 'package:music/pages/playlist_category/playlist_category_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_page.dart';
 import 'package:music/pages/playlist_info/playlist_info_page.dart';
@@ -58,6 +60,14 @@ class MyApp extends StatelessWidget {
   Widget buildMaterialApp() {
     return Consumer<ThemeViewModel>(builder: (context, viewModel, _) {
       return MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('zh', 'CN'),
+          Locale('en', 'US'),
+        ],
         routes: {
           '/app/login': (_) => const LoginPage(),
           '/app/splash': (_) => const SplashPage(),
@@ -81,6 +91,7 @@ class MyApp extends StatelessWidget {
           '/app/main': (_) => const MainPage(),
           '/album/square': (_) => const AlbumSquarePage(),
           '/user/list': (_) => const UserListPage(),
+          '/mine/profile': (_) => const MyProfilePage()
         },
         title: '网易云音乐',
         theme: (viewModel.darkTheme
@@ -232,5 +243,18 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
+  }
+}
+
+extension IntExtension on int {
+  String formatNumber({bool needDecimal = true}) {
+    if (this < 10000) {
+      return toString();
+    }
+    if (!needDecimal) {
+      return "${this ~/ 10000}万";
+    }
+
+    return "${this ~/ 10000}.${(this % 10000) ~/ 1000 % 10}万";
   }
 }

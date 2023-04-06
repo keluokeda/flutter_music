@@ -43,7 +43,15 @@ class UserListPage extends StatelessWidget {
                               backgroundImage:
                                   CachedNetworkImageProvider(e.avatar),
                             ),
-                            title: Text(e.name,maxLines: 1,),
+                            title: Text(
+                              e.name,
+                              maxLines: 1,
+                            ),
+                            trailing: TextButton(
+                                onPressed: () {
+                                  viewModel.followUser(e);
+                                },
+                                child: Text(e.followed ? '已关注' : "关注")),
                             subtitle: e.signature.isEmpty
                                 ? null
                                 : Text(

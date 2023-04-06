@@ -25,8 +25,20 @@ class UserListViewModel extends BaseRefreshAndLoadMoreViewModel<UserItem> {
       return LoadListResult(
           entity?.follow?.map((e) => e.toUserItem()).toList() ?? [],
           entity?.more ?? false);
+    } else if (userListType == UserListType.playlistSubscribers) {
+      final entity = await HttpService.instance.playlistSubscribers(id, index);
+      return LoadListResult(
+          entity?.subscribers?.map((e) => e.toUserItem()).toList() ?? [],
+          entity?.more ?? false);
     }
 
     return const LoadListResult([], false);
+  }
+
+  ///关注或取关用户
+  void followUser(UserItem userItem) {
+    HttpService.instance.followUser(userItem.id, !userItem.followed);
+    userItem.followed = !userItem.followed;
+    notifyListeners();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:music/generated/json/base/json_convert_content.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
 
+
 PlaylistSubscribersEntity $PlaylistSubscribersEntityFromJson(Map<String, dynamic> json) {
 	final PlaylistSubscribersEntity playlistSubscribersEntity = PlaylistSubscribersEntity();
 	final int? total = jsonConvert.convert<int>(json['total']);

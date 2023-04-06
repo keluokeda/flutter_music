@@ -638,6 +638,38 @@ class HttpService {
     }
   }
 
+  ///更新用户信息
+  Future<bool> updateMyProfile(int gender, int birthday, String name,
+      String signature, int province, int city) async {
+    try {
+      const path = 'user/update';
+      final response = await _dio.get(
+        path,
+        queryParameters: {
+          'gender': gender,
+          'birthday': birthday,
+          'nickname': name,
+          'signature': signature,
+          'province': province,
+          'city': city,
+        },
+      );
+      final json = response.data;
+      //失败 {message: 省份代码不合法, code: 400}
+      if (json["code"] == 200) {
+        return true;
+      } else {
+        showToast(json["message"]);
+        return false;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+  }
+
   ///获取歌单热门标签
   Future<List<PlaylistTagsTags>> getPlaylistTags() async {
     try {
@@ -717,7 +749,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-        "https://music-win.cpolar.top/";
-        // "https://music.cpolar.top/";
+        // "https://music-win.cpolar.top/";
+        "https://music.cpolar.top/";
   }
 }

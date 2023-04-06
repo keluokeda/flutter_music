@@ -1,5 +1,7 @@
 import 'package:music/generated/json/base/json_convert_content.dart';
 import 'package:music/entity/user_follows_entity.dart';
+import 'package:music/entity/user_item.dart';
+
 
 
 UserFollowsEntity $UserFollowsEntityFromJson(Map<String, dynamic> json) {
