@@ -27,12 +27,19 @@ class _SplashPageState extends State<SplashPage> {
       ns.pushReplacementNamed('/app/login');
     } else {
       await DataStore.instance.saveUserId(entity.data?.profile?.userId ?? 0);
-      ns.pushReplacementNamed('/app/test');
+      ns.pushReplacementNamed('/app/main');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return const FlutterLogo();
+    return Container(
+      color: Colors.red,
+      child: const Icon(
+        Icons.music_note,
+        size: 128,
+        color: Colors.white,
+      ),
+    );
   }
 }
