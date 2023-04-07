@@ -56,7 +56,10 @@ class MessagesPage extends StatelessWidget {
             .map((e) => Column(
                   children: [
                     ListTile(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/message/history',
+                            arguments: e.fromUser?.userId);
+                      },
                       leading: CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(
                             e.fromUser?.avatarUrl ?? ''),

@@ -50,7 +50,12 @@ class SongListTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (songItem.mv != 0)
-            IconButton(onPressed: () {}, icon: const Icon(Icons.play_circle)),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed('/app/mv', arguments: songItem.mv);
+                },
+                icon: const Icon(Icons.play_circle)),
           IconButton(
               onPressed: () {
                 _showBottomSheetDialog(context, musicViewModel);

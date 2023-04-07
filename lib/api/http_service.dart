@@ -14,14 +14,18 @@ import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
+import 'package:music/entity/mv_detail_entity.dart';
+import 'package:music/entity/mv_detail_info_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
 import 'package:music/entity/playlist_detail_entity.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
+import 'package:music/entity/private_history_entity.dart';
 import 'package:music/entity/recommend_playlist_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
+import 'package:music/entity/simi_mv_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
@@ -300,6 +304,87 @@ class HttpService {
         'id': id,
       });
       return PlaylistTracksEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取和某个用户的私信内容
+  Future<PrivateHistoryEntity?> getPrivateMessageHistory(int uid) async {
+    try {
+      const path = 'msg/private/history';
+      final response = await _dio.get(path, queryParameters: {
+        'uid': uid,
+        'limit': 1000,
+      });
+      return PrivateHistoryEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取相似MV
+  Future<SimiMvEntity?> getSimiMvList(int id) async {
+    try {
+      const path = 'simi/mv';
+      final response = await _dio.get(path, queryParameters: {
+        'mvid': id,
+      });
+      return SimiMvEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取mv详情
+  Future<MvDetailEntity?> getMVDetail(int id) async {
+    try {
+      const path = 'mv/detail';
+      final response = await _dio.get(path, queryParameters: {
+        'mvid': id,
+      });
+      return MvDetailEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取mv详情
+  Future<MvDetailInfoEntity?> getMVDetailInfo(int id) async {
+    try {
+      const path = 'mv/detail/info';
+      final response = await _dio.get(path, queryParameters: {
+        'mvid': id,
+      });
+      return MvDetailInfoEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取视频播放地址
+  Future<String?> getMVVideoUrl(int id) async {
+    try {
+      const path = 'mv/url';
+      final response = await _dio.get(path, queryParameters: {
+        'id': id,
+      });
+      return response.data['data']['url'];
     } catch (e) {
       if (kDebugMode) {
         print(e);

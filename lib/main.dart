@@ -14,6 +14,8 @@ import 'package:music/pages/download_management/download_management_page.dart';
 import 'package:music/pages/login/login_page.dart';
 import 'package:music/pages/main/main_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
+import 'package:music/pages/mv/mv_page.dart';
+import 'package:music/pages/mv/mv_play_page.dart';
 import 'package:music/pages/my_profile/my_profile_page.dart';
 import 'package:music/pages/playlist_category/playlist_category_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_page.dart';
@@ -33,6 +35,8 @@ import 'package:music/pages/user_playlist_list/user_playlist_list_page.dart';
 import 'package:music/widget/music_banner.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+
+import 'pages/message_history/message_history_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,6 +77,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/app/login': (_) => const LoginPage(),
           '/app/send/message': (_) => const SendMessagePage(),
+          '/message/history': (_) => const MessageHistoryPage(),
+          '/app/mv': (_) => const MVPlayPage(),
           '/user/cloud': (_) => const CloudPage(),
           '/app/splash': (_) => const SplashPage(),
           '/app/test': (_) => const MyHomePage(title: '首页'),

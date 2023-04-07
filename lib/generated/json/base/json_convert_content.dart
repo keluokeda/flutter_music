@@ -13,6 +13,8 @@ import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
+import 'package:music/entity/mv_detail_entity.dart';
+import 'package:music/entity/mv_detail_info_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
 import 'package:music/entity/playlist_category_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
@@ -21,8 +23,10 @@ import 'package:music/entity/playlist_list_entity.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
 import 'package:music/entity/playlist_tags_entity.dart';
 import 'package:music/entity/playlist_tracks_entity.dart';
+import 'package:music/entity/private_history_entity.dart';
 import 'package:music/entity/recommend_playlist_entity.dart';
 import 'package:music/entity/recommend_songs_entity.dart';
+import 'package:music/entity/simi_mv_entity.dart';
 import 'package:music/entity/song_detail_entity.dart';
 import 'package:music/entity/song_download_url_entity.dart';
 import 'package:music/entity/song_url_entity.dart';
@@ -105,6 +109,12 @@ class JsonConvert {
 		(MessageListMsgsFromUser).toString(): MessageListMsgsFromUser.fromJson,
 		(MessageListMsgsFromUserAvatarDetail).toString(): MessageListMsgsFromUserAvatarDetail.fromJson,
 		(MessageListMsgsToUser).toString(): MessageListMsgsToUser.fromJson,
+		(MvDetailEntity).toString(): MvDetailEntity.fromJson,
+		(MvDetailMp).toString(): MvDetailMp.fromJson,
+		(MvDetailData).toString(): MvDetailData.fromJson,
+		(MvDetailDataBrs).toString(): MvDetailDataBrs.fromJson,
+		(MvDetailDataArtists).toString(): MvDetailDataArtists.fromJson,
+		(MvDetailInfoEntity).toString(): MvDetailInfoEntity.fromJson,
 		(NewestAlbumEntity).toString(): NewestAlbumEntity.fromJson,
 		(NewestAlbumAlbums).toString(): NewestAlbumAlbums.fromJson,
 		(NewestAlbumAlbumsArtist).toString(): NewestAlbumAlbumsArtist.fromJson,
@@ -154,6 +164,10 @@ class JsonConvert {
 		(PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
 		(PlaylistTracksPrivilegesFreeTrialPrivilege).toString(): PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
 		(PlaylistTracksPrivilegesChargeInfoList).toString(): PlaylistTracksPrivilegesChargeInfoList.fromJson,
+		(PrivateHistoryEntity).toString(): PrivateHistoryEntity.fromJson,
+		(PrivateHistoryMsgs).toString(): PrivateHistoryMsgs.fromJson,
+		(PrivateHistoryMsgsFromUser).toString(): PrivateHistoryMsgsFromUser.fromJson,
+		(PrivateHistoryMsgsToUser).toString(): PrivateHistoryMsgsToUser.fromJson,
 		(RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
 		(RecommendPlaylistRecommend).toString(): RecommendPlaylistRecommend.fromJson,
 		(RecommendPlaylistRecommendCreator).toString(): RecommendPlaylistRecommendCreator.fromJson,
@@ -171,6 +185,9 @@ class JsonConvert {
 		(RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege).toString(): RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege.fromJson,
 		(RecommendSongsDataDailySongsPrivilegeChargeInfoList).toString(): RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson,
 		(RecommendSongsDataRecommendReasons).toString(): RecommendSongsDataRecommendReasons.fromJson,
+		(SimiMvEntity).toString(): SimiMvEntity.fromJson,
+		(SimiMvMvs).toString(): SimiMvMvs.fromJson,
+		(SimiMvMvsArtists).toString(): SimiMvMvsArtists.fromJson,
 		(SongDetailEntity).toString(): SongDetailEntity.fromJson,
 		(SongDetailSongs).toString(): SongDetailSongs.fromJson,
 		(SongDetailSongsAr).toString(): SongDetailSongsAr.fromJson,
@@ -486,6 +503,24 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<MessageListMsgsToUser>[] is M){
 			return data.map<MessageListMsgsToUser>((Map<String, dynamic> e) => MessageListMsgsToUser.fromJson(e)).toList() as M;
 		}
+		if(<MvDetailEntity>[] is M){
+			return data.map<MvDetailEntity>((Map<String, dynamic> e) => MvDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<MvDetailMp>[] is M){
+			return data.map<MvDetailMp>((Map<String, dynamic> e) => MvDetailMp.fromJson(e)).toList() as M;
+		}
+		if(<MvDetailData>[] is M){
+			return data.map<MvDetailData>((Map<String, dynamic> e) => MvDetailData.fromJson(e)).toList() as M;
+		}
+		if(<MvDetailDataBrs>[] is M){
+			return data.map<MvDetailDataBrs>((Map<String, dynamic> e) => MvDetailDataBrs.fromJson(e)).toList() as M;
+		}
+		if(<MvDetailDataArtists>[] is M){
+			return data.map<MvDetailDataArtists>((Map<String, dynamic> e) => MvDetailDataArtists.fromJson(e)).toList() as M;
+		}
+		if(<MvDetailInfoEntity>[] is M){
+			return data.map<MvDetailInfoEntity>((Map<String, dynamic> e) => MvDetailInfoEntity.fromJson(e)).toList() as M;
+		}
 		if(<NewestAlbumEntity>[] is M){
 			return data.map<NewestAlbumEntity>((Map<String, dynamic> e) => NewestAlbumEntity.fromJson(e)).toList() as M;
 		}
@@ -633,6 +668,18 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<PlaylistTracksPrivilegesChargeInfoList>[] is M){
 			return data.map<PlaylistTracksPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistTracksPrivilegesChargeInfoList.fromJson(e)).toList() as M;
 		}
+		if(<PrivateHistoryEntity>[] is M){
+			return data.map<PrivateHistoryEntity>((Map<String, dynamic> e) => PrivateHistoryEntity.fromJson(e)).toList() as M;
+		}
+		if(<PrivateHistoryMsgs>[] is M){
+			return data.map<PrivateHistoryMsgs>((Map<String, dynamic> e) => PrivateHistoryMsgs.fromJson(e)).toList() as M;
+		}
+		if(<PrivateHistoryMsgsFromUser>[] is M){
+			return data.map<PrivateHistoryMsgsFromUser>((Map<String, dynamic> e) => PrivateHistoryMsgsFromUser.fromJson(e)).toList() as M;
+		}
+		if(<PrivateHistoryMsgsToUser>[] is M){
+			return data.map<PrivateHistoryMsgsToUser>((Map<String, dynamic> e) => PrivateHistoryMsgsToUser.fromJson(e)).toList() as M;
+		}
 		if(<RecommendPlaylistEntity>[] is M){
 			return data.map<RecommendPlaylistEntity>((Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e)).toList() as M;
 		}
@@ -683,6 +730,15 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<RecommendSongsDataRecommendReasons>[] is M){
 			return data.map<RecommendSongsDataRecommendReasons>((Map<String, dynamic> e) => RecommendSongsDataRecommendReasons.fromJson(e)).toList() as M;
+		}
+		if(<SimiMvEntity>[] is M){
+			return data.map<SimiMvEntity>((Map<String, dynamic> e) => SimiMvEntity.fromJson(e)).toList() as M;
+		}
+		if(<SimiMvMvs>[] is M){
+			return data.map<SimiMvMvs>((Map<String, dynamic> e) => SimiMvMvs.fromJson(e)).toList() as M;
+		}
+		if(<SimiMvMvsArtists>[] is M){
+			return data.map<SimiMvMvsArtists>((Map<String, dynamic> e) => SimiMvMvsArtists.fromJson(e)).toList() as M;
 		}
 		if(<SongDetailEntity>[] is M){
 			return data.map<SongDetailEntity>((Map<String, dynamic> e) => SongDetailEntity.fromJson(e)).toList() as M;
