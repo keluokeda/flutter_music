@@ -7,5 +7,7 @@ class UserItem {
   final String signature;
   bool followed;
 
+  bool checked = false;
+
   UserItem(this.id, this.avatar, this.name, this.signature, this.followed);
 }

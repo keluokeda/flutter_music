@@ -34,7 +34,20 @@ class MainPage extends StatelessWidget {
                 const MusicBanner(),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
+            bottomNavigationBar:
+                // NavigationBar(
+                //   destinations: const [
+                //     NavigationDestination(icon: Icon(Icons.home), label: '首页'),
+                //     NavigationDestination(icon: Icon(Icons.message), label: '消息'),
+                //     NavigationDestination(
+                //         icon: Icon(Icons.music_note), label: '歌单'),
+                //     NavigationDestination(
+                //         icon: Icon(Icons.account_circle_outlined), label: '我的'),
+                //   ],
+                //   selectedIndex: viewModel.index,
+                //   onDestinationSelected: viewModel.updateIndex,
+                // )
+                BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               currentIndex: viewModel.index,
               items: const [

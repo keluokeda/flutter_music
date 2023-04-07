@@ -245,12 +245,13 @@ class HttpService {
   }
 
   ///获取用户关注的人
-  Future<UserFollowsEntity?> getUserFollows(int uid, int index) async {
+  Future<UserFollowsEntity?> getUserFollows(int uid, int index,
+      {int limit = 30}) async {
     try {
       const path = 'user/follows';
       final response = await _dio.get(path, queryParameters: {
-        'limit': 30,
-        'offset': (index - 1) * 30,
+        'limit': limit,
+        'offset': (index - 1) * limit,
         'uid': uid
       });
       return UserFollowsEntity.fromJson(response.data);
@@ -273,6 +274,21 @@ class HttpService {
         print(e);
       }
       return null;
+    }
+  }
+
+  ///发送私信
+  Future<bool> sendPrivateMessage(List<int> userIdList, String content) async {
+    try {
+      const path = 'send/text';
+      await _dio.get(path,
+          queryParameters: {'msg': content, 'user_ids': userIdList.join(',')});
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
     }
   }
 

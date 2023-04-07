@@ -19,11 +19,17 @@ class MessagesPage extends StatelessWidget {
               title: const Text('消息'),
               actions: [
                 IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/app/send/message');
+                    },
+                    icon: const Icon(Icons.email_outlined)),
+                IconButton(
                     onPressed: () {}, icon: const Icon(Icons.alternate_email)),
                 IconButton(
                     onPressed: () {}, icon: const Icon(Icons.comment_outlined)),
                 IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.notifications_none)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.notifications_none)),
               ],
             ),
             body: _buildBody(context, viewModel),

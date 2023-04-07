@@ -24,6 +24,7 @@ import 'package:music/pages/playlist_search/playlist_search_page.dart';
 import 'package:music/pages/playlist_square/playlist_square_page.dart';
 import 'package:music/pages/playlist_subscribers/playlist_subscribers_page.dart';
 import 'package:music/pages/recommend_songs/recommend_songs_page.dart';
+import 'package:music/pages/send_message/send_message_page.dart';
 import 'package:music/pages/songs_edit/songs_edit_page.dart';
 import 'package:music/pages/splash/splash_page.dart';
 import 'package:music/pages/user_list/user_list_page.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         ],
         routes: {
           '/app/login': (_) => const LoginPage(),
+          '/app/send/message': (_) => const SendMessagePage(),
           '/user/cloud': (_) => const CloudPage(),
           '/app/splash': (_) => const SplashPage(),
           '/app/test': (_) => const MyHomePage(title: '首页'),
