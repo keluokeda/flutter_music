@@ -1,4 +1,3 @@
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -6,8 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:music/entity/album_detail_entity.dart';
 import 'package:music/entity/album_dynamic_entity.dart';
 import 'package:music/entity/album_view_data.dart';
+import 'package:music/entity/all_mv_entity.dart';
 import 'package:music/entity/artist_album_entity.dart';
 import 'package:music/entity/artist_desc_entity.dart';
+import 'package:music/entity/artist_list_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
@@ -16,6 +17,7 @@ import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/mv_detail_entity.dart';
 import 'package:music/entity/mv_detail_info_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
+import 'package:music/entity/personalized_mv_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
 import 'package:music/entity/playlist_detail_entity.dart';
 import 'package:music/entity/playlist_subscribers_entity.dart';
@@ -368,6 +370,60 @@ class HttpService {
         'mvid': id,
       });
       return MvDetailInfoEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取歌手列表
+  Future<ArtistListEntity?> getArtistList(int index,
+      {int limit = 50, int type = -1, int area = -1}) async {
+    try {
+      const path = 'artist/list';
+      final response = await _dio.get(path, queryParameters: {
+        'limit': limit,
+        'offset': (index - 1) * limit,
+        'type': type,
+        'area': area
+      });
+      return ArtistListEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取推荐的mv
+  Future<PersonalizedMvEntity?> getRecommendMV() async {
+    try {
+      const path = 'personalized/mv';
+      final response = await _dio.get(path);
+      return PersonalizedMvEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///获取全部的mv
+  Future<AllMvEntity?> getAllMV(int index, String area, String type,
+      {int limit = 50}) async {
+    try {
+      const path = 'mv/all';
+      final response = await _dio.get(path, queryParameters: {
+        'area': area,
+        'type': type,
+        'limit': limit,
+        'offset': (index - 1) * limit
+      });
+      return AllMvEntity.fromJson(response.data);
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -921,7 +977,7 @@ class HttpService {
       const path = "resource/like";
       await _dio.get(path, queryParameters: {
         "id": id,
-        'type':1,
+        'type': 1,
         't': like ? '1' : '2',
       });
       return true;
@@ -939,15 +995,22 @@ class HttpService {
       //加上时间戳 防止缓存
       options.queryParameters['timestamp'] =
           DateTime.now().microsecondsSinceEpoch;
+      if (kDebugMode) {
+        print('请求打印开始======');
+        print("url = ${options.uri}");
+        print("data = ${options.queryParameters}");
+        print('header = ${options.headers}');
+        print('请求打印结束======');
+      }
       return handler.next(options);
     }, onResponse: (response, handler) {
-      if (kDebugMode) {
-        print('响应打印开始======');
-        print("url = ${response.realUri}");
-        print("data = ${response.data}");
-        print('header = ${response.headers}');
-        print('响应打印结束======');
-      }
+      // if (kDebugMode) {
+      //   print('响应打印开始======');
+      //   print("url = ${response.realUri}");
+      //   print("data = ${response.data}");
+      //   print('header = ${response.headers}');
+      //   print('响应打印结束======');
+      // }
       return handler.next(response);
     }));
     final appDocDir = await getApplicationDocumentsDirectory();
@@ -956,7 +1019,8 @@ class HttpService {
         ignoreExpires: true,
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
-    _dio.options.baseUrl = "https://music-win.cpolar.top/";
-    // "https://music.cpolar.top/";
+    _dio.options.baseUrl =
+        // "https://music-win.cpolar.top/";
+        "https://music.cpolar.top/";
   }
 }

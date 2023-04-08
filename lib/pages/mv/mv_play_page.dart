@@ -33,10 +33,9 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
                 Text(
                   data.likedCount.formatNumber(),
                   style: const TextStyle(fontSize: 11),
-                ),
-                () {
-                  viewModel.toggleLike(data);
-                }),
+                ), () {
+              viewModel.toggleLike(data);
+            }),
             _buildIconTextButton(
                 Icon(
                   Icons.add_photo_alternate_outlined,
@@ -45,10 +44,9 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
                 Text(
                   data.subCount.formatNumber(),
                   style: const TextStyle(fontSize: 11),
-                ),
-                () {
-                  viewModel.toggleCollect(data);
-                }),
+                ), () {
+              viewModel.toggleCollect(data);
+            }),
             _buildIconTextButton(
                 const Icon(
                   Icons.comment_outlined,
@@ -100,21 +98,30 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
           children: [
-            CachedNetworkImage(imageUrl: item.cover ?? ''),
-            Container(
-              padding: const EdgeInsets.all(4),
-              child: Text(
-                item.name ?? '',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+            Expanded(
+              flex: 4,
+              child: CachedNetworkImage(imageUrl: item.cover ?? ''),
             ),
-            const Divider(
-              height: 1,
-            ),
+            Expanded(
+                flex: 6,
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item.name ?? ''),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Text(
+                            item.artists?.map((e) => e.name ?? '').join(',') ??
+                                ''),
+                      ),
+                      Text('${item.playCount!.formatNumber()}播放')
+                    ],
+                  ),
+                ))
           ],
         ),
       ),
@@ -137,7 +144,7 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

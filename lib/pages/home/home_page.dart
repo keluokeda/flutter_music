@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/home/home_view_model.dart';
 import 'package:music/widget/album_view.dart';
+import 'package:music/widget/mv_item_view.dart';
 import 'package:music/widget/playlist_view.dart';
 import 'package:provider/provider.dart';
 
@@ -112,10 +113,10 @@ class HomePage extends StatelessWidget {
             title: const Text('热门歌手'),
             trailing: const Text('更多'),
             onTap: () {
-              Navigator.of(context).pushNamed('/album/square');
+              Navigator.of(context).pushNamed('/artist/list');
             },
           ),
-          Container(
+          SizedBox(
             height: 200,
             child: GridView.count(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -154,6 +155,25 @@ class HomePage extends StatelessWidget {
                       ))
                   .toList(),
             ),
+          ),
+          ListTile(
+            title: const Text('热门MV'),
+            trailing: const Text('更多'),
+            onTap: () {
+              Navigator.of(context).pushNamed('/mv/all');
+            },
+          ),
+          GridView.count(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            childAspectRatio: 20 / 17,
+            //禁止无限高度
+            physics: const NeverScrollableScrollPhysics(),
+            children:
+                data.mvList!.map((e) => MVItemView(e.toMVItem())).toList(),
           )
         ],
       ),

@@ -1,8 +1,7 @@
+import 'package:music/entity/user_item.dart';
 import 'package:music/generated/json/base/json_field.dart';
 import 'package:music/generated/json/playlist_subscribers_entity.g.dart';
 import 'dart:convert';
-
-import 'user_item.dart';
 
 @JsonSerializable()
 class PlaylistSubscribersEntity {

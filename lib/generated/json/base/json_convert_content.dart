@@ -6,8 +6,10 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:music/entity/album_detail_entity.dart';
 import 'package:music/entity/album_dynamic_entity.dart';
+import 'package:music/entity/all_mv_entity.dart';
 import 'package:music/entity/artist_album_entity.dart';
 import 'package:music/entity/artist_desc_entity.dart';
+import 'package:music/entity/artist_list_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
@@ -16,6 +18,7 @@ import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/mv_detail_entity.dart';
 import 'package:music/entity/mv_detail_info_entity.dart';
 import 'package:music/entity/newest_album_entity.dart';
+import 'package:music/entity/personalized_mv_entity.dart';
 import 'package:music/entity/playlist_category_entity.dart';
 import 'package:music/entity/playlist_detail_dynamic_entity.dart';
 import 'package:music/entity/playlist_detail_entity.dart';
@@ -61,6 +64,9 @@ class JsonConvert {
 		(AlbumDetailAlbumInfoCommentThread).toString(): AlbumDetailAlbumInfoCommentThread.fromJson,
 		(AlbumDetailAlbumInfoCommentThreadResourceInfo).toString(): AlbumDetailAlbumInfoCommentThreadResourceInfo.fromJson,
 		(AlbumDynamicEntity).toString(): AlbumDynamicEntity.fromJson,
+		(AllMvEntity).toString(): AllMvEntity.fromJson,
+		(AllMvData).toString(): AllMvData.fromJson,
+		(AllMvDataArtists).toString(): AllMvDataArtists.fromJson,
 		(ArtistAlbumEntity).toString(): ArtistAlbumEntity.fromJson,
 		(ArtistAlbumArtist).toString(): ArtistAlbumArtist.fromJson,
 		(ArtistAlbumHotAlbums).toString(): ArtistAlbumHotAlbums.fromJson,
@@ -72,6 +78,8 @@ class JsonConvert {
 		(ArtistDescTopicDataTopic).toString(): ArtistDescTopicDataTopic.fromJson,
 		(ArtistDescTopicDataTopicContent).toString(): ArtistDescTopicDataTopicContent.fromJson,
 		(ArtistDescTopicDataCreator).toString(): ArtistDescTopicDataCreator.fromJson,
+		(ArtistListEntity).toString(): ArtistListEntity.fromJson,
+		(ArtistListArtists).toString(): ArtistListArtists.fromJson,
 		(ArtistMvEntity).toString(): ArtistMvEntity.fromJson,
 		(ArtistMvMvs).toString(): ArtistMvMvs.fromJson,
 		(ArtistMvMvsArtist).toString(): ArtistMvMvsArtist.fromJson,
@@ -119,6 +127,9 @@ class JsonConvert {
 		(NewestAlbumAlbums).toString(): NewestAlbumAlbums.fromJson,
 		(NewestAlbumAlbumsArtist).toString(): NewestAlbumAlbumsArtist.fromJson,
 		(NewestAlbumAlbumsArtists).toString(): NewestAlbumAlbumsArtists.fromJson,
+		(PersonalizedMvEntity).toString(): PersonalizedMvEntity.fromJson,
+		(PersonalizedMvResult).toString(): PersonalizedMvResult.fromJson,
+		(PersonalizedMvResultArtists).toString(): PersonalizedMvResultArtists.fromJson,
 		(PlaylistCategoryEntity).toString(): PlaylistCategoryEntity.fromJson,
 		(PlaylistCategoryAll).toString(): PlaylistCategoryAll.fromJson,
 		(PlaylistCategorySub).toString(): PlaylistCategorySub.fromJson,
@@ -359,6 +370,15 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		if(<AlbumDynamicEntity>[] is M){
 			return data.map<AlbumDynamicEntity>((Map<String, dynamic> e) => AlbumDynamicEntity.fromJson(e)).toList() as M;
 		}
+		if(<AllMvEntity>[] is M){
+			return data.map<AllMvEntity>((Map<String, dynamic> e) => AllMvEntity.fromJson(e)).toList() as M;
+		}
+		if(<AllMvData>[] is M){
+			return data.map<AllMvData>((Map<String, dynamic> e) => AllMvData.fromJson(e)).toList() as M;
+		}
+		if(<AllMvDataArtists>[] is M){
+			return data.map<AllMvDataArtists>((Map<String, dynamic> e) => AllMvDataArtists.fromJson(e)).toList() as M;
+		}
 		if(<ArtistAlbumEntity>[] is M){
 			return data.map<ArtistAlbumEntity>((Map<String, dynamic> e) => ArtistAlbumEntity.fromJson(e)).toList() as M;
 		}
@@ -391,6 +411,12 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<ArtistDescTopicDataCreator>[] is M){
 			return data.map<ArtistDescTopicDataCreator>((Map<String, dynamic> e) => ArtistDescTopicDataCreator.fromJson(e)).toList() as M;
+		}
+		if(<ArtistListEntity>[] is M){
+			return data.map<ArtistListEntity>((Map<String, dynamic> e) => ArtistListEntity.fromJson(e)).toList() as M;
+		}
+		if(<ArtistListArtists>[] is M){
+			return data.map<ArtistListArtists>((Map<String, dynamic> e) => ArtistListArtists.fromJson(e)).toList() as M;
 		}
 		if(<ArtistMvEntity>[] is M){
 			return data.map<ArtistMvEntity>((Map<String, dynamic> e) => ArtistMvEntity.fromJson(e)).toList() as M;
@@ -532,6 +558,15 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<NewestAlbumAlbumsArtists>[] is M){
 			return data.map<NewestAlbumAlbumsArtists>((Map<String, dynamic> e) => NewestAlbumAlbumsArtists.fromJson(e)).toList() as M;
+		}
+		if(<PersonalizedMvEntity>[] is M){
+			return data.map<PersonalizedMvEntity>((Map<String, dynamic> e) => PersonalizedMvEntity.fromJson(e)).toList() as M;
+		}
+		if(<PersonalizedMvResult>[] is M){
+			return data.map<PersonalizedMvResult>((Map<String, dynamic> e) => PersonalizedMvResult.fromJson(e)).toList() as M;
+		}
+		if(<PersonalizedMvResultArtists>[] is M){
+			return data.map<PersonalizedMvResultArtists>((Map<String, dynamic> e) => PersonalizedMvResultArtists.fromJson(e)).toList() as M;
 		}
 		if(<PlaylistCategoryEntity>[] is M){
 			return data.map<PlaylistCategoryEntity>((Map<String, dynamic> e) => PlaylistCategoryEntity.fromJson(e)).toList() as M;

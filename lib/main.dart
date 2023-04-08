@@ -6,6 +6,7 @@ import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
 import 'package:music/pages/album_square/album_square_page.dart';
 import 'package:music/pages/artist_detail/artist_detail_page.dart';
+import 'package:music/pages/artist_list/artist_list_page.dart';
 import 'package:music/pages/cloud/cloud_page.dart';
 import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
@@ -16,6 +17,7 @@ import 'package:music/pages/main/main_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
 import 'package:music/pages/mv/mv_page.dart';
 import 'package:music/pages/mv/mv_play_page.dart';
+import 'package:music/pages/mv_square/mv_square_page.dart';
 import 'package:music/pages/my_profile/my_profile_page.dart';
 import 'package:music/pages/playlist_category/playlist_category_page.dart';
 import 'package:music/pages/playlist_detail/playlist_detail_page.dart';
@@ -78,7 +80,9 @@ class MyApp extends StatelessWidget {
           '/app/login': (_) => const LoginPage(),
           '/app/send/message': (_) => const SendMessagePage(),
           '/message/history': (_) => const MessageHistoryPage(),
+          '/artist/list': (_) => const ArtistListPage(),
           '/app/mv': (_) => const MVPlayPage(),
+          '/mv/all': (_) => const MVSquarePage(),
           '/user/cloud': (_) => const CloudPage(),
           '/app/splash': (_) => const SplashPage(),
           '/app/test': (_) => const MyHomePage(title: '首页'),
@@ -266,5 +270,10 @@ extension IntExtension on int {
     }
 
     return "${this ~/ 10000}.${(this % 10000) ~/ 1000 % 10}万";
+  }
+
+  String formatDuration() {
+    final second = this ~/ 1000;
+    return "${second ~/ 60}:${second % 60}";
   }
 }

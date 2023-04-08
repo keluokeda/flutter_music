@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music/entity/artist_album_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
+import 'package:music/main.dart';
 import 'package:music/pages/artist_detail/artist_album_view_model.dart';
 import 'package:music/pages/artist_detail/artist_mv_view_model.dart';
 import 'package:provider/provider.dart';
@@ -41,10 +42,12 @@ class _ArtistMVPageState extends State<ArtistMVPage>
 
   Widget _buildMV(BuildContext context, ArtistMvMvs mv) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = screenWidth / 2;
+    final imageWidth = screenWidth / 3;
     final imageHeight = imageWidth * 420 / 640;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed('/app/mv', arguments: mv.id);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
@@ -73,7 +76,7 @@ class _ArtistMVPageState extends State<ArtistMVPage>
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Text(
-                      "${mv.playCount}播放",
+                      "${mv.playCount!.formatNumber()}播放",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
