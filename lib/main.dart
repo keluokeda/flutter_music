@@ -15,7 +15,6 @@ import 'package:music/pages/download_management/download_management_page.dart';
 import 'package:music/pages/login/login_page.dart';
 import 'package:music/pages/main/main_page.dart';
 import 'package:music/pages/messages/messages_page.dart';
-import 'package:music/pages/mv/mv_page.dart';
 import 'package:music/pages/mv/mv_play_page.dart';
 import 'package:music/pages/mv_square/mv_square_page.dart';
 import 'package:music/pages/my_profile/my_profile_page.dart';
@@ -38,17 +37,20 @@ import 'package:music/widget/music_banner.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
+import 'api/data_store.dart';
 import 'pages/message_history/message_history_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  await DataStore.instance.init();
+  await HttpService.instance.init();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key}) {
-    HttpService.instance.init();
-  }
+  const MyApp({super.key});
+
+
 
   // This widget is the root of your application.
   @override

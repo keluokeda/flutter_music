@@ -991,6 +991,14 @@ class HttpService {
 
   ///初始化
   Future<void> init() async {
+
+    final appDocDir = await getApplicationDocumentsDirectory();
+
+    final cookieJar = PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage('${appDocDir.path}/.cookies/'));
+    _dio.interceptors.add(CookieManager(cookieJar));
+
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       //加上时间戳 防止缓存
       options.queryParameters['timestamp'] =
@@ -1004,23 +1012,17 @@ class HttpService {
       }
       return handler.next(options);
     }, onResponse: (response, handler) {
-      // if (kDebugMode) {
-      //   print('响应打印开始======');
-      //   print("url = ${response.realUri}");
-      //   print("data = ${response.data}");
-      //   print('header = ${response.headers}');
-      //   print('响应打印结束======');
-      // }
+      if (kDebugMode) {
+        print('响应打印开始======');
+        print("url = ${response.realUri}");
+        print("data = ${response.data}");
+        print('header = ${response.headers}');
+        print('响应打印结束======');
+      }
       return handler.next(response);
     }));
-    final appDocDir = await getApplicationDocumentsDirectory();
-
-    final cookieJar = PersistCookieJar(
-        ignoreExpires: true,
-        storage: FileStorage('${appDocDir.path}/.cookies/'));
-    _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-        // "https://music-win.cpolar.top/";
-        "https://music.cpolar.top/";
+        "https://music-win.cpolar.top/";
+        // "https://music.cpolar.top/";
   }
 }

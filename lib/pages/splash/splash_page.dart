@@ -18,8 +18,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void init() async {
     final ns = Navigator.of(context);
-    await DataStore.instance.init();
-    await HttpService.instance.init();
+
 
     final entity = await HttpService.instance.getLoginStatus();
     if (entity == null || entity.data?.profile == null) {
