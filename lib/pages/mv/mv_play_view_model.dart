@@ -62,4 +62,17 @@ class MVPlayViewModel extends BaseContentViewModel<MVPlayEntity> {
         mvDetailEntity.data?.playCount ?? 0,
         mvDetailEntity.data?.name ?? 'MV');
   }
+
+  ///切换收藏状态
+  void toggleCollect(MVPlayEntity entity){
+    entity.collected = !entity.collected;
+    notifyListeners();
+    HttpService.instance.collectMV(id, entity.collected);
+  }
+
+  void toggleLike(MVPlayEntity entity){
+    entity.liked = !entity.liked;
+    notifyListeners();
+    HttpService.instance.likeMV(id, entity.liked);
+  }
 }

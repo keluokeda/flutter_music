@@ -34,7 +34,9 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
                   data.likedCount.formatNumber(),
                   style: const TextStyle(fontSize: 11),
                 ),
-                () {}),
+                () {
+                  viewModel.toggleLike(data);
+                }),
             _buildIconTextButton(
                 Icon(
                   Icons.add_photo_alternate_outlined,
@@ -44,7 +46,9 @@ class MVPlayPage extends BaseContentPage<MVPlayViewModel, MVPlayEntity> {
                   data.subCount.formatNumber(),
                   style: const TextStyle(fontSize: 11),
                 ),
-                () {}),
+                () {
+                  viewModel.toggleCollect(data);
+                }),
             _buildIconTextButton(
                 const Icon(
                   Icons.comment_outlined,

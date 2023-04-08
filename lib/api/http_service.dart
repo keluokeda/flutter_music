@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -872,7 +871,7 @@ class HttpService {
     try {
       const path = "user/cloud";
 
-      final response = await _dio.post(path, queryParameters: {
+      final response = await _dio.get(path, queryParameters: {
         "limit": 50,
         "offset": (index - 1) * 50,
       });
@@ -889,7 +888,7 @@ class HttpService {
   Future<bool> deleteCloudSong(int id) async {
     try {
       const path = "user/cloud/del";
-      await _dio.post(path, queryParameters: {"id": id});
+      await _dio.get(path, queryParameters: {"id": id});
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -898,11 +897,15 @@ class HttpService {
       return false;
     }
   }
+
   ///收藏或取消收藏mv
-  Future<bool> collectMV(int id,bool collect) async {
+  Future<bool> collectMV(int id, bool collect) async {
     try {
       const path = "mv/sub";
-      await _dio.post(path, queryParameters: {"mvid": id,'t':collect?'1':'2'});
+      await _dio.get(path, queryParameters: {
+        "mvid": id,
+        't': collect ? '1' : '2',
+      });
       return true;
     } catch (e) {
       if (kDebugMode) {
@@ -911,6 +914,25 @@ class HttpService {
       return false;
     }
   }
+
+  ///喜欢mv
+  Future<bool> likeMV(int id, bool like) async {
+    try {
+      const path = "resource/like";
+      await _dio.get(path, queryParameters: {
+        "id": id,
+        'type':1,
+        't': like ? '1' : '2',
+      });
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+  }
+
   ///初始化
   Future<void> init() async {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -934,8 +956,7 @@ class HttpService {
         ignoreExpires: true,
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
-    _dio.options.baseUrl =
-        "https://music-win.cpolar.top/";
-        // "https://music.cpolar.top/";
+    _dio.options.baseUrl = "https://music-win.cpolar.top/";
+    // "https://music.cpolar.top/";
   }
 }
