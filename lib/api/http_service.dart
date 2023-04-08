@@ -898,7 +898,19 @@ class HttpService {
       return false;
     }
   }
-
+  ///收藏或取消收藏mv
+  Future<bool> collectMV(int id,bool collect) async {
+    try {
+      const path = "mv/sub";
+      await _dio.post(path, queryParameters: {"mvid": id,'t':collect?'1':'2'});
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+  }
   ///初始化
   Future<void> init() async {
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -923,7 +935,7 @@ class HttpService {
         storage: FileStorage('${appDocDir.path}/.cookies/'));
     _dio.interceptors.add(CookieManager(cookieJar));
     _dio.options.baseUrl =
-        // "https://music-win.cpolar.top/";
-        "https://music.cpolar.top/";
+        "https://music-win.cpolar.top/";
+        // "https://music.cpolar.top/";
   }
 }
