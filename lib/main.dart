@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/pages/album_detail/album_detail_page.dart';
@@ -28,6 +29,7 @@ import 'package:music/pages/playlist_square/playlist_square_page.dart';
 import 'package:music/pages/playlist_subscribers/playlist_subscribers_page.dart';
 import 'package:music/pages/recommend_songs/recommend_songs_page.dart';
 import 'package:music/pages/send_message/send_message_page.dart';
+import 'package:music/pages/share_resource/share_resource_page.dart';
 import 'package:music/pages/songs_edit/songs_edit_page.dart';
 import 'package:music/pages/splash/splash_page.dart';
 import 'package:music/pages/user_list/user_list_page.dart';
@@ -41,6 +43,8 @@ import 'api/data_store.dart';
 import 'pages/message_history/message_history_page.dart';
 
 void main() async {
+  // SystemChrome.setSystemUIOverlayStyle(
+  //     const SystemUiOverlayStyle(statusBarBrightness: Brightness.dark));
   WidgetsFlutterBinding.ensureInitialized();
   await DataStore.instance.init();
   await HttpService.instance.init();
@@ -49,8 +53,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
 
   // This widget is the root of your application.
   @override
@@ -82,6 +84,7 @@ class MyApp extends StatelessWidget {
           '/app/login': (_) => const LoginPage(),
           '/app/send/message': (_) => const SendMessagePage(),
           '/message/history': (_) => const MessageHistoryPage(),
+          '/share/resource': (_) => const ShareResourcePage(),
           '/artist/list': (_) => const ArtistListPage(),
           '/app/mv': (_) => const MVPlayPage(),
           '/mv/all': (_) => const MVSquarePage(),

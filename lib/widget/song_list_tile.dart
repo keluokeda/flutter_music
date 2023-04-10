@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:music/entity/share_resource_type.dart';
 import 'package:music/entity/song_item.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +129,17 @@ class SongListTile extends StatelessWidget {
                   title: const Text('评论'),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    final request = ShareResourceRequest(
+                        songItem.id,
+                        songItem.name,
+                        songItem.subTitle(),
+                        songItem.album.imageUrl,
+                        ShareResourceType.song);
+                    Navigator.of(context).pop();
+                    Navigator.of(context)
+                        .pushNamed('/share/resource', arguments: request);
+                  },
                   leading: const Icon(Icons.share),
                   title: const Text('分享'),
                 ),

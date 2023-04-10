@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music/api/data_store.dart';
+import 'package:music/entity/share_resource_type.dart';
 import 'package:music/entity/user_playlist_entity.dart';
 import 'package:music/pages/common/base_content_page.dart';
 import 'package:music/pages/user_playlist/user_playlist_view_model.dart';
@@ -83,7 +84,7 @@ class UserPlayListPage
       UserPlaylistPlaylist playlist, bool isUserPlaylist) {
     showModalBottomSheet(
         context: context,
-        builder: (_) => ListView(
+        builder: (context) => ListView(
               children: [
                 ListTile(
                   title: Text(playlist.name ?? ''),
@@ -96,7 +97,17 @@ class UserPlayListPage
                 ListTile(
                   leading: const Icon(Icons.share),
                   title: const Text('分享'),
-                  onTap: () {},
+                  onTap: () {
+                    final request = ShareResourceRequest(
+                        playlist.id ?? 0,
+                        playlist.name ?? '',
+                        playlist.creator?.nickname ?? '',
+                        playlist.coverImgUrl ?? '',
+                        ShareResourceType.playlist);
+                    Navigator.of(context).pop();
+                    Navigator.of(context)
+                        .pushNamed('/share/resource', arguments: request);
+                  },
                 ),
                 if (isUserPlaylist)
                   ListTile(

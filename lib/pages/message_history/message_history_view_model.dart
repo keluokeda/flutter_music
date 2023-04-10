@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:music/api/http_service.dart';
 import 'package:music/entity/load_list_result.dart';
 
@@ -15,8 +15,19 @@ class MessageHistoryViewModel extends ChangeNotifier {
 
   List<PrivateHistoryMsgs> get list => _list;
 
+  final TextEditingController controller = TextEditingController();
+
   MessageHistoryViewModel(this.uid) {
     refresh();
+    controller.addListener(() {
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 
   Future<void> refresh() async {
@@ -30,5 +41,12 @@ class MessageHistoryViewModel extends ChangeNotifier {
     final entity = await HttpService.instance.getPrivateMessageHistory(uid);
 
     return LoadListResult(entity?.msgs ?? [], entity?.more ?? false);
+  }
+
+  void reply() async {
+    await HttpService.instance.sendPrivateMessage([uid], controller.text);
+    controller.clear();
+    _list.clear();
+    await refresh();
   }
 }

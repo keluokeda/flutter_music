@@ -231,6 +231,60 @@ class HttpService {
     }
   }
 
+  ///分享歌单
+  Future sharePlaylist(int id, List<int> userIdList, String content) async {
+    try {
+      const path = 'send/playlist';
+      final response = await _dio.get(path, queryParameters: {
+        'playlist': id,
+        'user_ids': userIdList.join(','),
+        'msg': content
+      });
+      return response.data;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///分享歌单
+  Future shareSong(int id, List<int> userIdList, String content) async {
+    try {
+      const path = 'send/song';
+      final response = await _dio.get(path, queryParameters: {
+        'id': id,
+        'user_ids': userIdList.join(','),
+        'msg': content
+      });
+      return response.data;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
+  ///分享歌单
+  Future shareAlbum(int id, List<int> userIdList, String content) async {
+    try {
+      const path = 'send/album';
+      final response = await _dio.get(path, queryParameters: {
+        'id': id,
+        'user_ids': userIdList.join(','),
+        'msg': content
+      });
+      return response.data;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
   ///获取用户粉丝
   Future<UserFollowedsEntity?> getUserFolloweds(int uid, int index) async {
     try {
@@ -991,7 +1045,6 @@ class HttpService {
 
   ///初始化
   Future<void> init() async {
-
     final appDocDir = await getApplicationDocumentsDirectory();
 
     final cookieJar = PersistCookieJar(
@@ -1022,7 +1075,7 @@ class HttpService {
       return handler.next(response);
     }));
     _dio.options.baseUrl =
-        "https://music-win.cpolar.top/";
-        // "https://music.cpolar.top/";
+        // "https://music-win.cpolar.top/";
+        "https://music.cpolar.top/";
   }
 }

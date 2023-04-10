@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music/api/data_store.dart';
 import 'package:music/entity/playlist_detail_view_data.dart';
+import 'package:music/entity/share_resource_type.dart';
 import 'package:music/entity/user_list_request.dart';
 import 'package:music/entity/user_list_type.dart';
 import 'package:music/main.dart';
@@ -11,8 +12,6 @@ import 'package:music/pages/playlist_detail/playlist_detail_view_model.dart';
 import 'package:music/widget/song_list_header_tile.dart';
 import 'package:music/widget/song_list_tile.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-
-import '../../entity/songs_edit_request.dart';
 
 class PlaylistDetailPage
     extends BaseContentPage<PlaylistDetailViewModel, PlaylistDetailViewData> {
@@ -208,7 +207,20 @@ class PlaylistDetailPage
             children: [
               Expanded(
                   child: OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        final request = ShareResourceRequest(
+                            viewModel.id,
+                            data.playlistDetailEntity.playlist?.name ?? '',
+                            data.playlistDetailEntity.playlist?.creator
+                                    ?.nickname ??
+                                '',
+                            data.playlistDetailEntity.playlist?.coverImgUrl ??
+                                "",
+                            ShareResourceType.playlist);
+
+                        Navigator.of(context)
+                            .pushNamed('/share/resource', arguments: request);
+                      },
                       icon: const Icon(Icons.share),
                       label: Text(
                           style: const TextStyle(fontSize: 12),

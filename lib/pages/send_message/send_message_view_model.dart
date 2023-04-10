@@ -16,6 +16,12 @@ class SendMessageViewModel extends BaseContentViewModel<List<UserItem>> {
     return entity?.follow?.map((e) => e.toUserItem()).toList();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   void toggleChecked(UserItem item) {
     item.checked = !item.checked;
     notifyListeners();

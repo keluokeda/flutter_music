@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music/entity/album_detail_entity.dart';
+import 'package:music/entity/share_resource_type.dart';
 import 'package:music/entity/song_item.dart';
-import 'package:music/entity/songs_edit_request.dart';
 import 'package:music/pages/album_detail/album_detail_view_model.dart';
 import 'package:music/pages/common/base_content_page.dart';
 import 'package:music/widget/song_list_header_tile.dart';
@@ -226,7 +226,18 @@ class AlbumDetailPage
                 ? Icons.done
                 : Icons.add_photo_alternate_outlined)),
         IconButton(onPressed: () {}, icon: const Icon(Icons.comment_outlined)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+        IconButton(
+            onPressed: () {
+              final request = ShareResourceRequest(
+                  data.albumDetailEntity.album?.id ?? 0,
+                  data.albumDetailEntity.album?.name ?? '',
+                  data.albumDetailEntity.album?.artist?.name ?? '',
+                  data.albumDetailEntity.album?.picUrl ?? '',
+                  ShareResourceType.album);
+              Navigator.of(context)
+                  .pushNamed('/share/resource', arguments: request);
+            },
+            icon: const Icon(Icons.share)),
 
         // TextButton.icon(
         //     onPressed: () {

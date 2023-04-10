@@ -55,6 +55,7 @@ class MVItemView extends StatelessWidget {
           Text(
             mvItem.artistName,
             style: Theme.of(context).textTheme.bodySmall,
+            maxLines: 1,
           )
         ],
       ),
