@@ -9,6 +9,7 @@ import 'package:music/pages/album_square/album_square_page.dart';
 import 'package:music/pages/artist_detail/artist_detail_page.dart';
 import 'package:music/pages/artist_list/artist_list_page.dart';
 import 'package:music/pages/cloud/cloud_page.dart';
+import 'package:music/pages/comments/comments_page.dart';
 import 'package:music/pages/common/download_view_model.dart';
 import 'package:music/pages/common/music_view_model.dart';
 import 'package:music/pages/common/theme_view_model.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
         ],
         routes: {
           '/app/login': (_) => const LoginPage(),
+          '/app/comments': (_) => const CommentsPage(),
           '/app/send/message': (_) => const SendMessagePage(),
           '/message/history': (_) => const MessageHistoryPage(),
           '/share/resource': (_) => const ShareResourcePage(),

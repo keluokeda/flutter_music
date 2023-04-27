@@ -12,6 +12,7 @@ import 'package:music/entity/artist_list_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
+import 'package:music/entity/comment_response_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/mv_detail_entity.dart';
@@ -1025,6 +1026,21 @@ class HttpService {
     }
   }
 
+  ///获取歌曲评论
+  Future<CommentResponseEntity?> getMusicComments(int id, int index) async {
+    try {
+      const path = "comment/music";
+      final response = await _dio.get(path,
+          queryParameters: {"id": id, 'offset': (index - 1) * 50, 'limit': 50});
+      return CommentResponseEntity.fromJson(response.data);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
+    }
+  }
+
   ///喜欢mv
   Future<bool> likeMV(int id, bool like) async {
     try {
@@ -1056,13 +1072,7 @@ class HttpService {
       //加上时间戳 防止缓存
       options.queryParameters['timestamp'] =
           DateTime.now().microsecondsSinceEpoch;
-      if (kDebugMode) {
-        print('请求打印开始======');
-        print("url = ${options.uri}");
-        print("data = ${options.queryParameters}");
-        print('header = ${options.headers}');
-        print('请求打印结束======');
-      }
+
       return handler.next(options);
     }, onResponse: (response, handler) {
       if (kDebugMode) {

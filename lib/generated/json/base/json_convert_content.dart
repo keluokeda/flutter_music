@@ -13,6 +13,7 @@ import 'package:music/entity/artist_list_entity.dart';
 import 'package:music/entity/artist_mv_entity.dart';
 import 'package:music/entity/artist_songs_entity.dart';
 import 'package:music/entity/cloud_song_entity.dart';
+import 'package:music/entity/comment_response_entity.dart';
 import 'package:music/entity/login_status_entity.dart';
 import 'package:music/entity/message_list_entity.dart';
 import 'package:music/entity/mv_detail_entity.dart';
@@ -40,202 +41,294 @@ import 'package:music/entity/user_follows_entity.dart';
 import 'package:music/entity/user_playlist_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
+
 typedef JsonConvertFunction<T> = T Function(Map<String, dynamic> json);
 typedef EnumConvertFunction<T> = T Function(String value);
 
 class JsonConvert {
-	static final Map<String, JsonConvertFunction> convertFuncMap = {
-		(AlbumDetailEntity).toString(): AlbumDetailEntity.fromJson,
-		(AlbumDetailSongs).toString(): AlbumDetailSongs.fromJson,
-		(AlbumDetailSongsAr).toString(): AlbumDetailSongsAr.fromJson,
-		(AlbumDetailSongsAl).toString(): AlbumDetailSongsAl.fromJson,
-		(AlbumDetailSongsNoCopyrightRcmd).toString(): AlbumDetailSongsNoCopyrightRcmd.fromJson,
-		(AlbumDetailSongsH).toString(): AlbumDetailSongsH.fromJson,
-		(AlbumDetailSongsL).toString(): AlbumDetailSongsL.fromJson,
-		(AlbumDetailSongsSq).toString(): AlbumDetailSongsSq.fromJson,
-		(AlbumDetailSongsM).toString(): AlbumDetailSongsM.fromJson,
-		(AlbumDetailSongsPrivilege).toString(): AlbumDetailSongsPrivilege.fromJson,
-		(AlbumDetailSongsPrivilegeFreeTrialPrivilege).toString(): AlbumDetailSongsPrivilegeFreeTrialPrivilege.fromJson,
-		(AlbumDetailSongsPrivilegeChargeInfoList).toString(): AlbumDetailSongsPrivilegeChargeInfoList.fromJson,
-		(AlbumDetailAlbum).toString(): AlbumDetailAlbum.fromJson,
-		(AlbumDetailAlbumArtists).toString(): AlbumDetailAlbumArtists.fromJson,
-		(AlbumDetailAlbumArtist).toString(): AlbumDetailAlbumArtist.fromJson,
-		(AlbumDetailAlbumInfo).toString(): AlbumDetailAlbumInfo.fromJson,
-		(AlbumDetailAlbumInfoCommentThread).toString(): AlbumDetailAlbumInfoCommentThread.fromJson,
-		(AlbumDetailAlbumInfoCommentThreadResourceInfo).toString(): AlbumDetailAlbumInfoCommentThreadResourceInfo.fromJson,
-		(AlbumDynamicEntity).toString(): AlbumDynamicEntity.fromJson,
-		(AllMvEntity).toString(): AllMvEntity.fromJson,
-		(AllMvData).toString(): AllMvData.fromJson,
-		(AllMvDataArtists).toString(): AllMvDataArtists.fromJson,
-		(ArtistAlbumEntity).toString(): ArtistAlbumEntity.fromJson,
-		(ArtistAlbumArtist).toString(): ArtistAlbumArtist.fromJson,
-		(ArtistAlbumHotAlbums).toString(): ArtistAlbumHotAlbums.fromJson,
-		(ArtistAlbumHotAlbumsArtists).toString(): ArtistAlbumHotAlbumsArtists.fromJson,
-		(ArtistAlbumHotAlbumsArtist).toString(): ArtistAlbumHotAlbumsArtist.fromJson,
-		(ArtistDescEntity).toString(): ArtistDescEntity.fromJson,
-		(ArtistDescIntroduction).toString(): ArtistDescIntroduction.fromJson,
-		(ArtistDescTopicData).toString(): ArtistDescTopicData.fromJson,
-		(ArtistDescTopicDataTopic).toString(): ArtistDescTopicDataTopic.fromJson,
-		(ArtistDescTopicDataTopicContent).toString(): ArtistDescTopicDataTopicContent.fromJson,
-		(ArtistDescTopicDataCreator).toString(): ArtistDescTopicDataCreator.fromJson,
-		(ArtistListEntity).toString(): ArtistListEntity.fromJson,
-		(ArtistListArtists).toString(): ArtistListArtists.fromJson,
-		(ArtistMvEntity).toString(): ArtistMvEntity.fromJson,
-		(ArtistMvMvs).toString(): ArtistMvMvs.fromJson,
-		(ArtistMvMvsArtist).toString(): ArtistMvMvsArtist.fromJson,
-		(ArtistSongsEntity).toString(): ArtistSongsEntity.fromJson,
-		(ArtistSongsArtist).toString(): ArtistSongsArtist.fromJson,
-		(ArtistSongsHotSongs).toString(): ArtistSongsHotSongs.fromJson,
-		(ArtistSongsHotSongsAr).toString(): ArtistSongsHotSongsAr.fromJson,
-		(ArtistSongsHotSongsAl).toString(): ArtistSongsHotSongsAl.fromJson,
-		(ArtistSongsHotSongsH).toString(): ArtistSongsHotSongsH.fromJson,
-		(ArtistSongsHotSongsL).toString(): ArtistSongsHotSongsL.fromJson,
-		(ArtistSongsHotSongsSq).toString(): ArtistSongsHotSongsSq.fromJson,
-		(ArtistSongsHotSongsHr).toString(): ArtistSongsHotSongsHr.fromJson,
-		(ArtistSongsHotSongsM).toString(): ArtistSongsHotSongsM.fromJson,
-		(ArtistSongsHotSongsPrivilege).toString(): ArtistSongsHotSongsPrivilege.fromJson,
-		(ArtistSongsHotSongsPrivilegeFreeTrialPrivilege).toString(): ArtistSongsHotSongsPrivilegeFreeTrialPrivilege.fromJson,
-		(ArtistSongsHotSongsPrivilegeChargeInfoList).toString(): ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson,
-		(CloudSongEntity).toString(): CloudSongEntity.fromJson,
-		(CloudSongData).toString(): CloudSongData.fromJson,
-		(CloudSongDataSimpleSong).toString(): CloudSongDataSimpleSong.fromJson,
-		(CloudSongDataSimpleSongAr).toString(): CloudSongDataSimpleSongAr.fromJson,
-		(CloudSongDataSimpleSongAl).toString(): CloudSongDataSimpleSongAl.fromJson,
-		(CloudSongDataSimpleSongH).toString(): CloudSongDataSimpleSongH.fromJson,
-		(CloudSongDataSimpleSongM).toString(): CloudSongDataSimpleSongM.fromJson,
-		(CloudSongDataSimpleSongL).toString(): CloudSongDataSimpleSongL.fromJson,
-		(CloudSongDataSimpleSongPrivilege).toString(): CloudSongDataSimpleSongPrivilege.fromJson,
-		(CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege).toString(): CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson,
-		(CloudSongDataSimpleSongPrivilegeChargeInfoList).toString(): CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson,
-		(LoginStatusEntity).toString(): LoginStatusEntity.fromJson,
-		(LoginStatusData).toString(): LoginStatusData.fromJson,
-		(LoginStatusDataAccount).toString(): LoginStatusDataAccount.fromJson,
-		(LoginStatusDataProfile).toString(): LoginStatusDataProfile.fromJson,
-		(MessageListEntity).toString(): MessageListEntity.fromJson,
-		(MessageListMsgs).toString(): MessageListMsgs.fromJson,
-		(MessageListMsgsUser).toString(): MessageListMsgsUser.fromJson,
-		(MessageListMsgsFromUser).toString(): MessageListMsgsFromUser.fromJson,
-		(MessageListMsgsFromUserAvatarDetail).toString(): MessageListMsgsFromUserAvatarDetail.fromJson,
-		(MessageListMsgsToUser).toString(): MessageListMsgsToUser.fromJson,
-		(MvDetailEntity).toString(): MvDetailEntity.fromJson,
-		(MvDetailMp).toString(): MvDetailMp.fromJson,
-		(MvDetailData).toString(): MvDetailData.fromJson,
-		(MvDetailDataBrs).toString(): MvDetailDataBrs.fromJson,
-		(MvDetailDataArtists).toString(): MvDetailDataArtists.fromJson,
-		(MvDetailInfoEntity).toString(): MvDetailInfoEntity.fromJson,
-		(NewestAlbumEntity).toString(): NewestAlbumEntity.fromJson,
-		(NewestAlbumAlbums).toString(): NewestAlbumAlbums.fromJson,
-		(NewestAlbumAlbumsArtist).toString(): NewestAlbumAlbumsArtist.fromJson,
-		(NewestAlbumAlbumsArtists).toString(): NewestAlbumAlbumsArtists.fromJson,
-		(PersonalizedMvEntity).toString(): PersonalizedMvEntity.fromJson,
-		(PersonalizedMvResult).toString(): PersonalizedMvResult.fromJson,
-		(PersonalizedMvResultArtists).toString(): PersonalizedMvResultArtists.fromJson,
-		(PlaylistCategoryEntity).toString(): PlaylistCategoryEntity.fromJson,
-		(PlaylistCategoryAll).toString(): PlaylistCategoryAll.fromJson,
-		(PlaylistCategorySub).toString(): PlaylistCategorySub.fromJson,
-		(PlaylistCategoryCategories).toString(): PlaylistCategoryCategories.fromJson,
-		(PlaylistDetailDynamicEntity).toString(): PlaylistDetailDynamicEntity.fromJson,
-		(PlaylistDetailEntity).toString(): PlaylistDetailEntity.fromJson,
-		(PlaylistDetailPlaylist).toString(): PlaylistDetailPlaylist.fromJson,
-		(PlaylistDetailPlaylistSubscribers).toString(): PlaylistDetailPlaylistSubscribers.fromJson,
-		(PlaylistDetailPlaylistCreator).toString(): PlaylistDetailPlaylistCreator.fromJson,
-		(PlaylistDetailPlaylistCreatorAvatarDetail).toString(): PlaylistDetailPlaylistCreatorAvatarDetail.fromJson,
-		(PlaylistDetailPlaylistTracks).toString(): PlaylistDetailPlaylistTracks.fromJson,
-		(PlaylistDetailPlaylistTracksAr).toString(): PlaylistDetailPlaylistTracksAr.fromJson,
-		(PlaylistDetailPlaylistTracksAl).toString(): PlaylistDetailPlaylistTracksAl.fromJson,
-		(PlaylistDetailPlaylistTracksH).toString(): PlaylistDetailPlaylistTracksH.fromJson,
-		(PlaylistDetailPlaylistTracksM).toString(): PlaylistDetailPlaylistTracksM.fromJson,
-		(PlaylistDetailPlaylistTracksL).toString(): PlaylistDetailPlaylistTracksL.fromJson,
-		(PlaylistDetailPlaylistTracksSq).toString(): PlaylistDetailPlaylistTracksSq.fromJson,
-		(PlaylistDetailPlaylistTracksHr).toString(): PlaylistDetailPlaylistTracksHr.fromJson,
-		(PlaylistDetailPlaylistTracksNoCopyrightRcmd).toString(): PlaylistDetailPlaylistTracksNoCopyrightRcmd.fromJson,
-		(PlaylistDetailPlaylistTrackIds).toString(): PlaylistDetailPlaylistTrackIds.fromJson,
-		(PlaylistDetailPrivileges).toString(): PlaylistDetailPrivileges.fromJson,
-		(PlaylistDetailPrivilegesFreeTrialPrivilege).toString(): PlaylistDetailPrivilegesFreeTrialPrivilege.fromJson,
-		(PlaylistDetailPrivilegesChargeInfoList).toString(): PlaylistDetailPrivilegesChargeInfoList.fromJson,
-		(PlaylistListEntity).toString(): PlaylistListEntity.fromJson,
-		(PlaylistListPlaylists).toString(): PlaylistListPlaylists.fromJson,
-		(PlaylistListPlaylistsCreator).toString(): PlaylistListPlaylistsCreator.fromJson,
-		(PlaylistListPlaylistsCreatorAvatarDetail).toString(): PlaylistListPlaylistsCreatorAvatarDetail.fromJson,
-		(PlaylistListPlaylistsSubscribers).toString(): PlaylistListPlaylistsSubscribers.fromJson,
-		(PlaylistSubscribersEntity).toString(): PlaylistSubscribersEntity.fromJson,
-		(PlaylistSubscribersSubscribers).toString(): PlaylistSubscribersSubscribers.fromJson,
-		(PlaylistTagsEntity).toString(): PlaylistTagsEntity.fromJson,
-		(PlaylistTagsTags).toString(): PlaylistTagsTags.fromJson,
-		(PlaylistTracksEntity).toString(): PlaylistTracksEntity.fromJson,
-		(PlaylistTracksSongs).toString(): PlaylistTracksSongs.fromJson,
-		(PlaylistTracksSongsAr).toString(): PlaylistTracksSongsAr.fromJson,
-		(PlaylistTracksSongsAl).toString(): PlaylistTracksSongsAl.fromJson,
-		(PlaylistTracksSongsH).toString(): PlaylistTracksSongsH.fromJson,
-		(PlaylistTracksSongsM).toString(): PlaylistTracksSongsM.fromJson,
-		(PlaylistTracksSongsL).toString(): PlaylistTracksSongsL.fromJson,
-		(PlaylistTracksSongsSq).toString(): PlaylistTracksSongsSq.fromJson,
-		(PlaylistTracksSongsHr).toString(): PlaylistTracksSongsHr.fromJson,
-		(PlaylistTracksSongsNoCopyrightRcmd).toString(): PlaylistTracksSongsNoCopyrightRcmd.fromJson,
-		(PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
-		(PlaylistTracksPrivilegesFreeTrialPrivilege).toString(): PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
-		(PlaylistTracksPrivilegesChargeInfoList).toString(): PlaylistTracksPrivilegesChargeInfoList.fromJson,
-		(PrivateHistoryEntity).toString(): PrivateHistoryEntity.fromJson,
-		(PrivateHistoryMsgs).toString(): PrivateHistoryMsgs.fromJson,
-		(PrivateHistoryMsgsFromUser).toString(): PrivateHistoryMsgsFromUser.fromJson,
-		(PrivateHistoryMsgsToUser).toString(): PrivateHistoryMsgsToUser.fromJson,
-		(RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
-		(RecommendPlaylistRecommend).toString(): RecommendPlaylistRecommend.fromJson,
-		(RecommendPlaylistRecommendCreator).toString(): RecommendPlaylistRecommendCreator.fromJson,
-		(RecommendSongsEntity).toString(): RecommendSongsEntity.fromJson,
-		(RecommendSongsData).toString(): RecommendSongsData.fromJson,
-		(RecommendSongsDataDailySongs).toString(): RecommendSongsDataDailySongs.fromJson,
-		(RecommendSongsDataDailySongsAr).toString(): RecommendSongsDataDailySongsAr.fromJson,
-		(RecommendSongsDataDailySongsAl).toString(): RecommendSongsDataDailySongsAl.fromJson,
-		(RecommendSongsDataDailySongsH).toString(): RecommendSongsDataDailySongsH.fromJson,
-		(RecommendSongsDataDailySongsM).toString(): RecommendSongsDataDailySongsM.fromJson,
-		(RecommendSongsDataDailySongsL).toString(): RecommendSongsDataDailySongsL.fromJson,
-		(RecommendSongsDataDailySongsSq).toString(): RecommendSongsDataDailySongsSq.fromJson,
-		(RecommendSongsDataDailySongsHr).toString(): RecommendSongsDataDailySongsHr.fromJson,
-		(RecommendSongsDataDailySongsPrivilege).toString(): RecommendSongsDataDailySongsPrivilege.fromJson,
-		(RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege).toString(): RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege.fromJson,
-		(RecommendSongsDataDailySongsPrivilegeChargeInfoList).toString(): RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson,
-		(RecommendSongsDataRecommendReasons).toString(): RecommendSongsDataRecommendReasons.fromJson,
-		(SimiMvEntity).toString(): SimiMvEntity.fromJson,
-		(SimiMvMvs).toString(): SimiMvMvs.fromJson,
-		(SimiMvMvsArtists).toString(): SimiMvMvsArtists.fromJson,
-		(SongDetailEntity).toString(): SongDetailEntity.fromJson,
-		(SongDetailSongs).toString(): SongDetailSongs.fromJson,
-		(SongDetailSongsAr).toString(): SongDetailSongsAr.fromJson,
-		(SongDetailSongsAl).toString(): SongDetailSongsAl.fromJson,
-		(SongDetailSongsH).toString(): SongDetailSongsH.fromJson,
-		(SongDetailSongsM).toString(): SongDetailSongsM.fromJson,
-		(SongDetailSongsL).toString(): SongDetailSongsL.fromJson,
-		(SongDetailSongsSq).toString(): SongDetailSongsSq.fromJson,
-		(SongDetailPrivileges).toString(): SongDetailPrivileges.fromJson,
-		(SongDetailPrivilegesFreeTrialPrivilege).toString(): SongDetailPrivilegesFreeTrialPrivilege.fromJson,
-		(SongDetailPrivilegesChargeInfoList).toString(): SongDetailPrivilegesChargeInfoList.fromJson,
-		(SongDownloadUrlEntity).toString(): SongDownloadUrlEntity.fromJson,
-		(SongDownloadUrlData).toString(): SongDownloadUrlData.fromJson,
-		(SongDownloadUrlDataFreeTrialPrivilege).toString(): SongDownloadUrlDataFreeTrialPrivilege.fromJson,
-		(SongDownloadUrlDataFreeTimeTrialPrivilege).toString(): SongDownloadUrlDataFreeTimeTrialPrivilege.fromJson,
-		(SongUrlEntity).toString(): SongUrlEntity.fromJson,
-		(SongUrlData).toString(): SongUrlData.fromJson,
-		(SongUrlDataFreeTrialPrivilege).toString(): SongUrlDataFreeTrialPrivilege.fromJson,
-		(SongUrlDataFreeTimeTrialPrivilege).toString(): SongUrlDataFreeTimeTrialPrivilege.fromJson,
-		(TopArtistsEntity).toString(): TopArtistsEntity.fromJson,
-		(TopArtistsArtists).toString(): TopArtistsArtists.fromJson,
-		(UserDetailEntity).toString(): UserDetailEntity.fromJson,
-		(UserDetailUserPoint).toString(): UserDetailUserPoint.fromJson,
-		(UserDetailProfile).toString(): UserDetailProfile.fromJson,
-		(UserDetailProfilePrivacyItemUnlimit).toString(): UserDetailProfilePrivacyItemUnlimit.fromJson,
-		(UserDetailBindings).toString(): UserDetailBindings.fromJson,
-		(UserDetailProfileVillageInfo).toString(): UserDetailProfileVillageInfo.fromJson,
-		(UserFollowedsEntity).toString(): UserFollowedsEntity.fromJson,
-		(UserFollowedsFolloweds).toString(): UserFollowedsFolloweds.fromJson,
-		(UserFollowsEntity).toString(): UserFollowsEntity.fromJson,
-		(UserFollowsFollow).toString(): UserFollowsFollow.fromJson,
-		(UserFollowsFollowVipRights).toString(): UserFollowsFollowVipRights.fromJson,
-		(UserFollowsFollowAvatarDetail).toString(): UserFollowsFollowAvatarDetail.fromJson,
-		(UserPlaylistEntity).toString(): UserPlaylistEntity.fromJson,
-		(UserPlaylistPlaylist).toString(): UserPlaylistPlaylist.fromJson,
-		(UserPlaylistPlaylistCreator).toString(): UserPlaylistPlaylistCreator.fromJson,
-	};
+  static final Map<String, JsonConvertFunction> convertFuncMap = {
+    (AlbumDetailEntity).toString(): AlbumDetailEntity.fromJson,
+    (AlbumDetailSongs).toString(): AlbumDetailSongs.fromJson,
+    (AlbumDetailSongsAr).toString(): AlbumDetailSongsAr.fromJson,
+    (AlbumDetailSongsAl).toString(): AlbumDetailSongsAl.fromJson,
+    (AlbumDetailSongsNoCopyrightRcmd).toString():
+        AlbumDetailSongsNoCopyrightRcmd.fromJson,
+    (AlbumDetailSongsH).toString(): AlbumDetailSongsH.fromJson,
+    (AlbumDetailSongsL).toString(): AlbumDetailSongsL.fromJson,
+    (AlbumDetailSongsSq).toString(): AlbumDetailSongsSq.fromJson,
+    (AlbumDetailSongsM).toString(): AlbumDetailSongsM.fromJson,
+    (AlbumDetailSongsPrivilege).toString(): AlbumDetailSongsPrivilege.fromJson,
+    (AlbumDetailSongsPrivilegeFreeTrialPrivilege).toString():
+        AlbumDetailSongsPrivilegeFreeTrialPrivilege.fromJson,
+    (AlbumDetailSongsPrivilegeChargeInfoList).toString():
+        AlbumDetailSongsPrivilegeChargeInfoList.fromJson,
+    (AlbumDetailAlbum).toString(): AlbumDetailAlbum.fromJson,
+    (AlbumDetailAlbumArtists).toString(): AlbumDetailAlbumArtists.fromJson,
+    (AlbumDetailAlbumArtist).toString(): AlbumDetailAlbumArtist.fromJson,
+    (AlbumDetailAlbumInfo).toString(): AlbumDetailAlbumInfo.fromJson,
+    (AlbumDetailAlbumInfoCommentThread).toString():
+        AlbumDetailAlbumInfoCommentThread.fromJson,
+    (AlbumDetailAlbumInfoCommentThreadResourceInfo).toString():
+        AlbumDetailAlbumInfoCommentThreadResourceInfo.fromJson,
+    (AlbumDynamicEntity).toString(): AlbumDynamicEntity.fromJson,
+    (AllMvEntity).toString(): AllMvEntity.fromJson,
+    (AllMvData).toString(): AllMvData.fromJson,
+    (AllMvDataArtists).toString(): AllMvDataArtists.fromJson,
+    (ArtistAlbumEntity).toString(): ArtistAlbumEntity.fromJson,
+    (ArtistAlbumArtist).toString(): ArtistAlbumArtist.fromJson,
+    (ArtistAlbumHotAlbums).toString(): ArtistAlbumHotAlbums.fromJson,
+    (ArtistAlbumHotAlbumsArtists).toString():
+        ArtistAlbumHotAlbumsArtists.fromJson,
+    (ArtistAlbumHotAlbumsArtist).toString():
+        ArtistAlbumHotAlbumsArtist.fromJson,
+    (ArtistDescEntity).toString(): ArtistDescEntity.fromJson,
+    (ArtistDescIntroduction).toString(): ArtistDescIntroduction.fromJson,
+    (ArtistDescTopicData).toString(): ArtistDescTopicData.fromJson,
+    (ArtistDescTopicDataTopic).toString(): ArtistDescTopicDataTopic.fromJson,
+    (ArtistDescTopicDataTopicContent).toString():
+        ArtistDescTopicDataTopicContent.fromJson,
+    (ArtistDescTopicDataCreator).toString():
+        ArtistDescTopicDataCreator.fromJson,
+    (ArtistListEntity).toString(): ArtistListEntity.fromJson,
+    (ArtistListArtists).toString(): ArtistListArtists.fromJson,
+    (ArtistMvEntity).toString(): ArtistMvEntity.fromJson,
+    (ArtistMvMvs).toString(): ArtistMvMvs.fromJson,
+    (ArtistMvMvsArtist).toString(): ArtistMvMvsArtist.fromJson,
+    (ArtistSongsEntity).toString(): ArtistSongsEntity.fromJson,
+    (ArtistSongsArtist).toString(): ArtistSongsArtist.fromJson,
+    (ArtistSongsHotSongs).toString(): ArtistSongsHotSongs.fromJson,
+    (ArtistSongsHotSongsAr).toString(): ArtistSongsHotSongsAr.fromJson,
+    (ArtistSongsHotSongsAl).toString(): ArtistSongsHotSongsAl.fromJson,
+    (ArtistSongsHotSongsH).toString(): ArtistSongsHotSongsH.fromJson,
+    (ArtistSongsHotSongsL).toString(): ArtistSongsHotSongsL.fromJson,
+    (ArtistSongsHotSongsSq).toString(): ArtistSongsHotSongsSq.fromJson,
+    (ArtistSongsHotSongsHr).toString(): ArtistSongsHotSongsHr.fromJson,
+    (ArtistSongsHotSongsM).toString(): ArtistSongsHotSongsM.fromJson,
+    (ArtistSongsHotSongsPrivilege).toString():
+        ArtistSongsHotSongsPrivilege.fromJson,
+    (ArtistSongsHotSongsPrivilegeFreeTrialPrivilege).toString():
+        ArtistSongsHotSongsPrivilegeFreeTrialPrivilege.fromJson,
+    (ArtistSongsHotSongsPrivilegeChargeInfoList).toString():
+        ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson,
+    (CloudSongEntity).toString(): CloudSongEntity.fromJson,
+    (CloudSongData).toString(): CloudSongData.fromJson,
+    (CloudSongDataSimpleSong).toString(): CloudSongDataSimpleSong.fromJson,
+    (CloudSongDataSimpleSongAr).toString(): CloudSongDataSimpleSongAr.fromJson,
+    (CloudSongDataSimpleSongAl).toString(): CloudSongDataSimpleSongAl.fromJson,
+    (CloudSongDataSimpleSongH).toString(): CloudSongDataSimpleSongH.fromJson,
+    (CloudSongDataSimpleSongM).toString(): CloudSongDataSimpleSongM.fromJson,
+    (CloudSongDataSimpleSongL).toString(): CloudSongDataSimpleSongL.fromJson,
+    (CloudSongDataSimpleSongPrivilege).toString():
+        CloudSongDataSimpleSongPrivilege.fromJson,
+    (CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege).toString():
+        CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson,
+    (CloudSongDataSimpleSongPrivilegeChargeInfoList).toString():
+        CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson,
+    (CommentResponseEntity).toString(): CommentResponseEntity.fromJson,
+    (CommentResponseHotComments).toString():
+        CommentResponseHotComments.fromJson,
+    (CommentResponseHotCommentsUser).toString():
+        CommentResponseHotCommentsUser.fromJson,
+    (CommentResponseHotCommentsUserVipRights).toString():
+        CommentResponseHotCommentsUserVipRights.fromJson,
+    (CommentResponseHotCommentsDecoration).toString():
+        CommentResponseHotCommentsDecoration.fromJson,
+    (CommentResponseHotCommentsIpLocation).toString():
+        CommentResponseHotCommentsIpLocation.fromJson,
+    (CommentResponseComments).toString(): CommentResponseComments.fromJson,
+    (CommentResponseCommentsUser).toString():
+        CommentResponseCommentsUser.fromJson,
+    (CommentResponseCommentsUserVipRights).toString():
+        CommentResponseCommentsUserVipRights.fromJson,
+    (CommentResponseCommentsUserVipRightsAssociator).toString():
+        CommentResponseCommentsUserVipRightsAssociator.fromJson,
+    (CommentResponseCommentsUserVipRightsMusicPackage).toString():
+        CommentResponseCommentsUserVipRightsMusicPackage.fromJson,
+    (CommentResponseCommentsPendantData).toString():
+        CommentResponseCommentsPendantData.fromJson,
+    (CommentResponseCommentsIpLocation).toString():
+        CommentResponseCommentsIpLocation.fromJson,
+    (LoginStatusEntity).toString(): LoginStatusEntity.fromJson,
+    (LoginStatusData).toString(): LoginStatusData.fromJson,
+    (LoginStatusDataAccount).toString(): LoginStatusDataAccount.fromJson,
+    (LoginStatusDataProfile).toString(): LoginStatusDataProfile.fromJson,
+    (MessageListEntity).toString(): MessageListEntity.fromJson,
+    (MessageListMsgs).toString(): MessageListMsgs.fromJson,
+    (MessageListMsgsUser).toString(): MessageListMsgsUser.fromJson,
+    (MessageListMsgsFromUser).toString(): MessageListMsgsFromUser.fromJson,
+    (MessageListMsgsFromUserAvatarDetail).toString():
+        MessageListMsgsFromUserAvatarDetail.fromJson,
+    (MessageListMsgsToUser).toString(): MessageListMsgsToUser.fromJson,
+    (MvDetailEntity).toString(): MvDetailEntity.fromJson,
+    (MvDetailMp).toString(): MvDetailMp.fromJson,
+    (MvDetailData).toString(): MvDetailData.fromJson,
+    (MvDetailDataBrs).toString(): MvDetailDataBrs.fromJson,
+    (MvDetailDataArtists).toString(): MvDetailDataArtists.fromJson,
+    (MvDetailInfoEntity).toString(): MvDetailInfoEntity.fromJson,
+    (NewestAlbumEntity).toString(): NewestAlbumEntity.fromJson,
+    (NewestAlbumAlbums).toString(): NewestAlbumAlbums.fromJson,
+    (NewestAlbumAlbumsArtist).toString(): NewestAlbumAlbumsArtist.fromJson,
+    (NewestAlbumAlbumsArtists).toString(): NewestAlbumAlbumsArtists.fromJson,
+    (PersonalizedMvEntity).toString(): PersonalizedMvEntity.fromJson,
+    (PersonalizedMvResult).toString(): PersonalizedMvResult.fromJson,
+    (PersonalizedMvResultArtists).toString():
+        PersonalizedMvResultArtists.fromJson,
+    (PlaylistCategoryEntity).toString(): PlaylistCategoryEntity.fromJson,
+    (PlaylistCategoryAll).toString(): PlaylistCategoryAll.fromJson,
+    (PlaylistCategorySub).toString(): PlaylistCategorySub.fromJson,
+    (PlaylistCategoryCategories).toString():
+        PlaylistCategoryCategories.fromJson,
+    (PlaylistDetailDynamicEntity).toString():
+        PlaylistDetailDynamicEntity.fromJson,
+    (PlaylistDetailEntity).toString(): PlaylistDetailEntity.fromJson,
+    (PlaylistDetailPlaylist).toString(): PlaylistDetailPlaylist.fromJson,
+    (PlaylistDetailPlaylistSubscribers).toString():
+        PlaylistDetailPlaylistSubscribers.fromJson,
+    (PlaylistDetailPlaylistCreator).toString():
+        PlaylistDetailPlaylistCreator.fromJson,
+    (PlaylistDetailPlaylistCreatorAvatarDetail).toString():
+        PlaylistDetailPlaylistCreatorAvatarDetail.fromJson,
+    (PlaylistDetailPlaylistTracks).toString():
+        PlaylistDetailPlaylistTracks.fromJson,
+    (PlaylistDetailPlaylistTracksAr).toString():
+        PlaylistDetailPlaylistTracksAr.fromJson,
+    (PlaylistDetailPlaylistTracksAl).toString():
+        PlaylistDetailPlaylistTracksAl.fromJson,
+    (PlaylistDetailPlaylistTracksH).toString():
+        PlaylistDetailPlaylistTracksH.fromJson,
+    (PlaylistDetailPlaylistTracksM).toString():
+        PlaylistDetailPlaylistTracksM.fromJson,
+    (PlaylistDetailPlaylistTracksL).toString():
+        PlaylistDetailPlaylistTracksL.fromJson,
+    (PlaylistDetailPlaylistTracksSq).toString():
+        PlaylistDetailPlaylistTracksSq.fromJson,
+    (PlaylistDetailPlaylistTracksHr).toString():
+        PlaylistDetailPlaylistTracksHr.fromJson,
+    (PlaylistDetailPlaylistTracksNoCopyrightRcmd).toString():
+        PlaylistDetailPlaylistTracksNoCopyrightRcmd.fromJson,
+    (PlaylistDetailPlaylistTrackIds).toString():
+        PlaylistDetailPlaylistTrackIds.fromJson,
+    (PlaylistDetailPrivileges).toString(): PlaylistDetailPrivileges.fromJson,
+    (PlaylistDetailPrivilegesFreeTrialPrivilege).toString():
+        PlaylistDetailPrivilegesFreeTrialPrivilege.fromJson,
+    (PlaylistDetailPrivilegesChargeInfoList).toString():
+        PlaylistDetailPrivilegesChargeInfoList.fromJson,
+    (PlaylistListEntity).toString(): PlaylistListEntity.fromJson,
+    (PlaylistListPlaylists).toString(): PlaylistListPlaylists.fromJson,
+    (PlaylistListPlaylistsCreator).toString():
+        PlaylistListPlaylistsCreator.fromJson,
+    (PlaylistListPlaylistsCreatorAvatarDetail).toString():
+        PlaylistListPlaylistsCreatorAvatarDetail.fromJson,
+    (PlaylistListPlaylistsSubscribers).toString():
+        PlaylistListPlaylistsSubscribers.fromJson,
+    (PlaylistSubscribersEntity).toString(): PlaylistSubscribersEntity.fromJson,
+    (PlaylistSubscribersSubscribers).toString():
+        PlaylistSubscribersSubscribers.fromJson,
+    (PlaylistTagsEntity).toString(): PlaylistTagsEntity.fromJson,
+    (PlaylistTagsTags).toString(): PlaylistTagsTags.fromJson,
+    (PlaylistTracksEntity).toString(): PlaylistTracksEntity.fromJson,
+    (PlaylistTracksSongs).toString(): PlaylistTracksSongs.fromJson,
+    (PlaylistTracksSongsAr).toString(): PlaylistTracksSongsAr.fromJson,
+    (PlaylistTracksSongsAl).toString(): PlaylistTracksSongsAl.fromJson,
+    (PlaylistTracksSongsH).toString(): PlaylistTracksSongsH.fromJson,
+    (PlaylistTracksSongsM).toString(): PlaylistTracksSongsM.fromJson,
+    (PlaylistTracksSongsL).toString(): PlaylistTracksSongsL.fromJson,
+    (PlaylistTracksSongsSq).toString(): PlaylistTracksSongsSq.fromJson,
+    (PlaylistTracksSongsHr).toString(): PlaylistTracksSongsHr.fromJson,
+    (PlaylistTracksSongsNoCopyrightRcmd).toString():
+        PlaylistTracksSongsNoCopyrightRcmd.fromJson,
+    (PlaylistTracksPrivileges).toString(): PlaylistTracksPrivileges.fromJson,
+    (PlaylistTracksPrivilegesFreeTrialPrivilege).toString():
+        PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson,
+    (PlaylistTracksPrivilegesChargeInfoList).toString():
+        PlaylistTracksPrivilegesChargeInfoList.fromJson,
+    (PrivateHistoryEntity).toString(): PrivateHistoryEntity.fromJson,
+    (PrivateHistoryMsgs).toString(): PrivateHistoryMsgs.fromJson,
+    (PrivateHistoryMsgsFromUser).toString():
+        PrivateHistoryMsgsFromUser.fromJson,
+    (PrivateHistoryMsgsToUser).toString(): PrivateHistoryMsgsToUser.fromJson,
+    (RecommendPlaylistEntity).toString(): RecommendPlaylistEntity.fromJson,
+    (RecommendPlaylistRecommend).toString():
+        RecommendPlaylistRecommend.fromJson,
+    (RecommendPlaylistRecommendCreator).toString():
+        RecommendPlaylistRecommendCreator.fromJson,
+    (RecommendSongsEntity).toString(): RecommendSongsEntity.fromJson,
+    (RecommendSongsData).toString(): RecommendSongsData.fromJson,
+    (RecommendSongsDataDailySongs).toString():
+        RecommendSongsDataDailySongs.fromJson,
+    (RecommendSongsDataDailySongsAr).toString():
+        RecommendSongsDataDailySongsAr.fromJson,
+    (RecommendSongsDataDailySongsAl).toString():
+        RecommendSongsDataDailySongsAl.fromJson,
+    (RecommendSongsDataDailySongsH).toString():
+        RecommendSongsDataDailySongsH.fromJson,
+    (RecommendSongsDataDailySongsM).toString():
+        RecommendSongsDataDailySongsM.fromJson,
+    (RecommendSongsDataDailySongsL).toString():
+        RecommendSongsDataDailySongsL.fromJson,
+    (RecommendSongsDataDailySongsSq).toString():
+        RecommendSongsDataDailySongsSq.fromJson,
+    (RecommendSongsDataDailySongsHr).toString():
+        RecommendSongsDataDailySongsHr.fromJson,
+    (RecommendSongsDataDailySongsPrivilege).toString():
+        RecommendSongsDataDailySongsPrivilege.fromJson,
+    (RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege).toString():
+        RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege.fromJson,
+    (RecommendSongsDataDailySongsPrivilegeChargeInfoList).toString():
+        RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson,
+    (RecommendSongsDataRecommendReasons).toString():
+        RecommendSongsDataRecommendReasons.fromJson,
+    (SimiMvEntity).toString(): SimiMvEntity.fromJson,
+    (SimiMvMvs).toString(): SimiMvMvs.fromJson,
+    (SimiMvMvsArtists).toString(): SimiMvMvsArtists.fromJson,
+    (SongDetailEntity).toString(): SongDetailEntity.fromJson,
+    (SongDetailSongs).toString(): SongDetailSongs.fromJson,
+    (SongDetailSongsAr).toString(): SongDetailSongsAr.fromJson,
+    (SongDetailSongsAl).toString(): SongDetailSongsAl.fromJson,
+    (SongDetailSongsH).toString(): SongDetailSongsH.fromJson,
+    (SongDetailSongsM).toString(): SongDetailSongsM.fromJson,
+    (SongDetailSongsL).toString(): SongDetailSongsL.fromJson,
+    (SongDetailSongsSq).toString(): SongDetailSongsSq.fromJson,
+    (SongDetailPrivileges).toString(): SongDetailPrivileges.fromJson,
+    (SongDetailPrivilegesFreeTrialPrivilege).toString():
+        SongDetailPrivilegesFreeTrialPrivilege.fromJson,
+    (SongDetailPrivilegesChargeInfoList).toString():
+        SongDetailPrivilegesChargeInfoList.fromJson,
+    (SongDownloadUrlEntity).toString(): SongDownloadUrlEntity.fromJson,
+    (SongDownloadUrlData).toString(): SongDownloadUrlData.fromJson,
+    (SongDownloadUrlDataFreeTrialPrivilege).toString():
+        SongDownloadUrlDataFreeTrialPrivilege.fromJson,
+    (SongDownloadUrlDataFreeTimeTrialPrivilege).toString():
+        SongDownloadUrlDataFreeTimeTrialPrivilege.fromJson,
+    (SongUrlEntity).toString(): SongUrlEntity.fromJson,
+    (SongUrlData).toString(): SongUrlData.fromJson,
+    (SongUrlDataFreeTrialPrivilege).toString():
+        SongUrlDataFreeTrialPrivilege.fromJson,
+    (SongUrlDataFreeTimeTrialPrivilege).toString():
+        SongUrlDataFreeTimeTrialPrivilege.fromJson,
+    (TopArtistsEntity).toString(): TopArtistsEntity.fromJson,
+    (TopArtistsArtists).toString(): TopArtistsArtists.fromJson,
+    (UserDetailEntity).toString(): UserDetailEntity.fromJson,
+    (UserDetailUserPoint).toString(): UserDetailUserPoint.fromJson,
+    (UserDetailProfile).toString(): UserDetailProfile.fromJson,
+    (UserDetailProfilePrivacyItemUnlimit).toString():
+        UserDetailProfilePrivacyItemUnlimit.fromJson,
+    (UserDetailBindings).toString(): UserDetailBindings.fromJson,
+    (UserDetailProfileVillageInfo).toString():
+        UserDetailProfileVillageInfo.fromJson,
+    (UserFollowedsEntity).toString(): UserFollowedsEntity.fromJson,
+    (UserFollowedsFolloweds).toString(): UserFollowedsFolloweds.fromJson,
+    (UserFollowsEntity).toString(): UserFollowsEntity.fromJson,
+    (UserFollowsFollow).toString(): UserFollowsFollow.fromJson,
+    (UserFollowsFollowVipRights).toString():
+        UserFollowsFollowVipRights.fromJson,
+    (UserFollowsFollowAvatarDetail).toString():
+        UserFollowsFollowAvatarDetail.fromJson,
+    (UserPlaylistEntity).toString(): UserPlaylistEntity.fromJson,
+    (UserPlaylistPlaylist).toString(): UserPlaylistPlaylist.fromJson,
+    (UserPlaylistPlaylistCreator).toString():
+        UserPlaylistPlaylistCreator.fromJson,
+  };
 
   T? convert<T>(dynamic value, {EnumConvertFunction? enumConvert}) {
     if (value == null) {
@@ -252,24 +345,30 @@ class JsonConvert {
     }
   }
 
-  List<T?>? convertList<T>(List<dynamic>? value, {EnumConvertFunction? enumConvert}) {
+  List<T?>? convertList<T>(List<dynamic>? value,
+      {EnumConvertFunction? enumConvert}) {
     if (value == null) {
       return null;
     }
     try {
-      return value.map((dynamic e) => _asT<T>(e,enumConvert: enumConvert)).toList();
+      return value
+          .map((dynamic e) => _asT<T>(e, enumConvert: enumConvert))
+          .toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
       return <T>[];
     }
   }
 
-List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}) {
+  List<T>? convertListNotNull<T>(dynamic value,
+      {EnumConvertFunction? enumConvert}) {
     if (value == null) {
       return null;
     }
     try {
-      return (value as List<dynamic>).map((dynamic e) => _asT<T>(e,enumConvert: enumConvert)!).toList();
+      return (value as List<dynamic>)
+          .map((dynamic e) => _asT<T>(e, enumConvert: enumConvert)!)
+          .toList();
     } catch (e, stackTrace) {
       debugPrint('asT<$T> $e $stackTrace');
       return <T>[];
@@ -311,589 +410,1259 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
     }
   }
 
-	//list is returned by type
-	static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
-		if(<AlbumDetailEntity>[] is M){
-			return data.map<AlbumDetailEntity>((Map<String, dynamic> e) => AlbumDetailEntity.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongs>[] is M){
-			return data.map<AlbumDetailSongs>((Map<String, dynamic> e) => AlbumDetailSongs.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsAr>[] is M){
-			return data.map<AlbumDetailSongsAr>((Map<String, dynamic> e) => AlbumDetailSongsAr.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsAl>[] is M){
-			return data.map<AlbumDetailSongsAl>((Map<String, dynamic> e) => AlbumDetailSongsAl.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsNoCopyrightRcmd>[] is M){
-			return data.map<AlbumDetailSongsNoCopyrightRcmd>((Map<String, dynamic> e) => AlbumDetailSongsNoCopyrightRcmd.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsH>[] is M){
-			return data.map<AlbumDetailSongsH>((Map<String, dynamic> e) => AlbumDetailSongsH.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsL>[] is M){
-			return data.map<AlbumDetailSongsL>((Map<String, dynamic> e) => AlbumDetailSongsL.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsSq>[] is M){
-			return data.map<AlbumDetailSongsSq>((Map<String, dynamic> e) => AlbumDetailSongsSq.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsM>[] is M){
-			return data.map<AlbumDetailSongsM>((Map<String, dynamic> e) => AlbumDetailSongsM.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsPrivilege>[] is M){
-			return data.map<AlbumDetailSongsPrivilege>((Map<String, dynamic> e) => AlbumDetailSongsPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsPrivilegeFreeTrialPrivilege>[] is M){
-			return data.map<AlbumDetailSongsPrivilegeFreeTrialPrivilege>((Map<String, dynamic> e) => AlbumDetailSongsPrivilegeFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailSongsPrivilegeChargeInfoList>[] is M){
-			return data.map<AlbumDetailSongsPrivilegeChargeInfoList>((Map<String, dynamic> e) => AlbumDetailSongsPrivilegeChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbum>[] is M){
-			return data.map<AlbumDetailAlbum>((Map<String, dynamic> e) => AlbumDetailAlbum.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbumArtists>[] is M){
-			return data.map<AlbumDetailAlbumArtists>((Map<String, dynamic> e) => AlbumDetailAlbumArtists.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbumArtist>[] is M){
-			return data.map<AlbumDetailAlbumArtist>((Map<String, dynamic> e) => AlbumDetailAlbumArtist.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbumInfo>[] is M){
-			return data.map<AlbumDetailAlbumInfo>((Map<String, dynamic> e) => AlbumDetailAlbumInfo.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbumInfoCommentThread>[] is M){
-			return data.map<AlbumDetailAlbumInfoCommentThread>((Map<String, dynamic> e) => AlbumDetailAlbumInfoCommentThread.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDetailAlbumInfoCommentThreadResourceInfo>[] is M){
-			return data.map<AlbumDetailAlbumInfoCommentThreadResourceInfo>((Map<String, dynamic> e) => AlbumDetailAlbumInfoCommentThreadResourceInfo.fromJson(e)).toList() as M;
-		}
-		if(<AlbumDynamicEntity>[] is M){
-			return data.map<AlbumDynamicEntity>((Map<String, dynamic> e) => AlbumDynamicEntity.fromJson(e)).toList() as M;
-		}
-		if(<AllMvEntity>[] is M){
-			return data.map<AllMvEntity>((Map<String, dynamic> e) => AllMvEntity.fromJson(e)).toList() as M;
-		}
-		if(<AllMvData>[] is M){
-			return data.map<AllMvData>((Map<String, dynamic> e) => AllMvData.fromJson(e)).toList() as M;
-		}
-		if(<AllMvDataArtists>[] is M){
-			return data.map<AllMvDataArtists>((Map<String, dynamic> e) => AllMvDataArtists.fromJson(e)).toList() as M;
-		}
-		if(<ArtistAlbumEntity>[] is M){
-			return data.map<ArtistAlbumEntity>((Map<String, dynamic> e) => ArtistAlbumEntity.fromJson(e)).toList() as M;
-		}
-		if(<ArtistAlbumArtist>[] is M){
-			return data.map<ArtistAlbumArtist>((Map<String, dynamic> e) => ArtistAlbumArtist.fromJson(e)).toList() as M;
-		}
-		if(<ArtistAlbumHotAlbums>[] is M){
-			return data.map<ArtistAlbumHotAlbums>((Map<String, dynamic> e) => ArtistAlbumHotAlbums.fromJson(e)).toList() as M;
-		}
-		if(<ArtistAlbumHotAlbumsArtists>[] is M){
-			return data.map<ArtistAlbumHotAlbumsArtists>((Map<String, dynamic> e) => ArtistAlbumHotAlbumsArtists.fromJson(e)).toList() as M;
-		}
-		if(<ArtistAlbumHotAlbumsArtist>[] is M){
-			return data.map<ArtistAlbumHotAlbumsArtist>((Map<String, dynamic> e) => ArtistAlbumHotAlbumsArtist.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescEntity>[] is M){
-			return data.map<ArtistDescEntity>((Map<String, dynamic> e) => ArtistDescEntity.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescIntroduction>[] is M){
-			return data.map<ArtistDescIntroduction>((Map<String, dynamic> e) => ArtistDescIntroduction.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescTopicData>[] is M){
-			return data.map<ArtistDescTopicData>((Map<String, dynamic> e) => ArtistDescTopicData.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescTopicDataTopic>[] is M){
-			return data.map<ArtistDescTopicDataTopic>((Map<String, dynamic> e) => ArtistDescTopicDataTopic.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescTopicDataTopicContent>[] is M){
-			return data.map<ArtistDescTopicDataTopicContent>((Map<String, dynamic> e) => ArtistDescTopicDataTopicContent.fromJson(e)).toList() as M;
-		}
-		if(<ArtistDescTopicDataCreator>[] is M){
-			return data.map<ArtistDescTopicDataCreator>((Map<String, dynamic> e) => ArtistDescTopicDataCreator.fromJson(e)).toList() as M;
-		}
-		if(<ArtistListEntity>[] is M){
-			return data.map<ArtistListEntity>((Map<String, dynamic> e) => ArtistListEntity.fromJson(e)).toList() as M;
-		}
-		if(<ArtistListArtists>[] is M){
-			return data.map<ArtistListArtists>((Map<String, dynamic> e) => ArtistListArtists.fromJson(e)).toList() as M;
-		}
-		if(<ArtistMvEntity>[] is M){
-			return data.map<ArtistMvEntity>((Map<String, dynamic> e) => ArtistMvEntity.fromJson(e)).toList() as M;
-		}
-		if(<ArtistMvMvs>[] is M){
-			return data.map<ArtistMvMvs>((Map<String, dynamic> e) => ArtistMvMvs.fromJson(e)).toList() as M;
-		}
-		if(<ArtistMvMvsArtist>[] is M){
-			return data.map<ArtistMvMvsArtist>((Map<String, dynamic> e) => ArtistMvMvsArtist.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsEntity>[] is M){
-			return data.map<ArtistSongsEntity>((Map<String, dynamic> e) => ArtistSongsEntity.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsArtist>[] is M){
-			return data.map<ArtistSongsArtist>((Map<String, dynamic> e) => ArtistSongsArtist.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongs>[] is M){
-			return data.map<ArtistSongsHotSongs>((Map<String, dynamic> e) => ArtistSongsHotSongs.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsAr>[] is M){
-			return data.map<ArtistSongsHotSongsAr>((Map<String, dynamic> e) => ArtistSongsHotSongsAr.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsAl>[] is M){
-			return data.map<ArtistSongsHotSongsAl>((Map<String, dynamic> e) => ArtistSongsHotSongsAl.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsH>[] is M){
-			return data.map<ArtistSongsHotSongsH>((Map<String, dynamic> e) => ArtistSongsHotSongsH.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsL>[] is M){
-			return data.map<ArtistSongsHotSongsL>((Map<String, dynamic> e) => ArtistSongsHotSongsL.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsSq>[] is M){
-			return data.map<ArtistSongsHotSongsSq>((Map<String, dynamic> e) => ArtistSongsHotSongsSq.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsHr>[] is M){
-			return data.map<ArtistSongsHotSongsHr>((Map<String, dynamic> e) => ArtistSongsHotSongsHr.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsM>[] is M){
-			return data.map<ArtistSongsHotSongsM>((Map<String, dynamic> e) => ArtistSongsHotSongsM.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsPrivilege>[] is M){
-			return data.map<ArtistSongsHotSongsPrivilege>((Map<String, dynamic> e) => ArtistSongsHotSongsPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsPrivilegeFreeTrialPrivilege>[] is M){
-			return data.map<ArtistSongsHotSongsPrivilegeFreeTrialPrivilege>((Map<String, dynamic> e) => ArtistSongsHotSongsPrivilegeFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<ArtistSongsHotSongsPrivilegeChargeInfoList>[] is M){
-			return data.map<ArtistSongsHotSongsPrivilegeChargeInfoList>((Map<String, dynamic> e) => ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongEntity>[] is M){
-			return data.map<CloudSongEntity>((Map<String, dynamic> e) => CloudSongEntity.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongData>[] is M){
-			return data.map<CloudSongData>((Map<String, dynamic> e) => CloudSongData.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSong>[] is M){
-			return data.map<CloudSongDataSimpleSong>((Map<String, dynamic> e) => CloudSongDataSimpleSong.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongAr>[] is M){
-			return data.map<CloudSongDataSimpleSongAr>((Map<String, dynamic> e) => CloudSongDataSimpleSongAr.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongAl>[] is M){
-			return data.map<CloudSongDataSimpleSongAl>((Map<String, dynamic> e) => CloudSongDataSimpleSongAl.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongH>[] is M){
-			return data.map<CloudSongDataSimpleSongH>((Map<String, dynamic> e) => CloudSongDataSimpleSongH.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongM>[] is M){
-			return data.map<CloudSongDataSimpleSongM>((Map<String, dynamic> e) => CloudSongDataSimpleSongM.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongL>[] is M){
-			return data.map<CloudSongDataSimpleSongL>((Map<String, dynamic> e) => CloudSongDataSimpleSongL.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongPrivilege>[] is M){
-			return data.map<CloudSongDataSimpleSongPrivilege>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>[] is M){
-			return data.map<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<CloudSongDataSimpleSongPrivilegeChargeInfoList>[] is M){
-			return data.map<CloudSongDataSimpleSongPrivilegeChargeInfoList>((Map<String, dynamic> e) => CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<LoginStatusEntity>[] is M){
-			return data.map<LoginStatusEntity>((Map<String, dynamic> e) => LoginStatusEntity.fromJson(e)).toList() as M;
-		}
-		if(<LoginStatusData>[] is M){
-			return data.map<LoginStatusData>((Map<String, dynamic> e) => LoginStatusData.fromJson(e)).toList() as M;
-		}
-		if(<LoginStatusDataAccount>[] is M){
-			return data.map<LoginStatusDataAccount>((Map<String, dynamic> e) => LoginStatusDataAccount.fromJson(e)).toList() as M;
-		}
-		if(<LoginStatusDataProfile>[] is M){
-			return data.map<LoginStatusDataProfile>((Map<String, dynamic> e) => LoginStatusDataProfile.fromJson(e)).toList() as M;
-		}
-		if(<MessageListEntity>[] is M){
-			return data.map<MessageListEntity>((Map<String, dynamic> e) => MessageListEntity.fromJson(e)).toList() as M;
-		}
-		if(<MessageListMsgs>[] is M){
-			return data.map<MessageListMsgs>((Map<String, dynamic> e) => MessageListMsgs.fromJson(e)).toList() as M;
-		}
-		if(<MessageListMsgsUser>[] is M){
-			return data.map<MessageListMsgsUser>((Map<String, dynamic> e) => MessageListMsgsUser.fromJson(e)).toList() as M;
-		}
-		if(<MessageListMsgsFromUser>[] is M){
-			return data.map<MessageListMsgsFromUser>((Map<String, dynamic> e) => MessageListMsgsFromUser.fromJson(e)).toList() as M;
-		}
-		if(<MessageListMsgsFromUserAvatarDetail>[] is M){
-			return data.map<MessageListMsgsFromUserAvatarDetail>((Map<String, dynamic> e) => MessageListMsgsFromUserAvatarDetail.fromJson(e)).toList() as M;
-		}
-		if(<MessageListMsgsToUser>[] is M){
-			return data.map<MessageListMsgsToUser>((Map<String, dynamic> e) => MessageListMsgsToUser.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailEntity>[] is M){
-			return data.map<MvDetailEntity>((Map<String, dynamic> e) => MvDetailEntity.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailMp>[] is M){
-			return data.map<MvDetailMp>((Map<String, dynamic> e) => MvDetailMp.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailData>[] is M){
-			return data.map<MvDetailData>((Map<String, dynamic> e) => MvDetailData.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailDataBrs>[] is M){
-			return data.map<MvDetailDataBrs>((Map<String, dynamic> e) => MvDetailDataBrs.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailDataArtists>[] is M){
-			return data.map<MvDetailDataArtists>((Map<String, dynamic> e) => MvDetailDataArtists.fromJson(e)).toList() as M;
-		}
-		if(<MvDetailInfoEntity>[] is M){
-			return data.map<MvDetailInfoEntity>((Map<String, dynamic> e) => MvDetailInfoEntity.fromJson(e)).toList() as M;
-		}
-		if(<NewestAlbumEntity>[] is M){
-			return data.map<NewestAlbumEntity>((Map<String, dynamic> e) => NewestAlbumEntity.fromJson(e)).toList() as M;
-		}
-		if(<NewestAlbumAlbums>[] is M){
-			return data.map<NewestAlbumAlbums>((Map<String, dynamic> e) => NewestAlbumAlbums.fromJson(e)).toList() as M;
-		}
-		if(<NewestAlbumAlbumsArtist>[] is M){
-			return data.map<NewestAlbumAlbumsArtist>((Map<String, dynamic> e) => NewestAlbumAlbumsArtist.fromJson(e)).toList() as M;
-		}
-		if(<NewestAlbumAlbumsArtists>[] is M){
-			return data.map<NewestAlbumAlbumsArtists>((Map<String, dynamic> e) => NewestAlbumAlbumsArtists.fromJson(e)).toList() as M;
-		}
-		if(<PersonalizedMvEntity>[] is M){
-			return data.map<PersonalizedMvEntity>((Map<String, dynamic> e) => PersonalizedMvEntity.fromJson(e)).toList() as M;
-		}
-		if(<PersonalizedMvResult>[] is M){
-			return data.map<PersonalizedMvResult>((Map<String, dynamic> e) => PersonalizedMvResult.fromJson(e)).toList() as M;
-		}
-		if(<PersonalizedMvResultArtists>[] is M){
-			return data.map<PersonalizedMvResultArtists>((Map<String, dynamic> e) => PersonalizedMvResultArtists.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistCategoryEntity>[] is M){
-			return data.map<PlaylistCategoryEntity>((Map<String, dynamic> e) => PlaylistCategoryEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistCategoryAll>[] is M){
-			return data.map<PlaylistCategoryAll>((Map<String, dynamic> e) => PlaylistCategoryAll.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistCategorySub>[] is M){
-			return data.map<PlaylistCategorySub>((Map<String, dynamic> e) => PlaylistCategorySub.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistCategoryCategories>[] is M){
-			return data.map<PlaylistCategoryCategories>((Map<String, dynamic> e) => PlaylistCategoryCategories.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailDynamicEntity>[] is M){
-			return data.map<PlaylistDetailDynamicEntity>((Map<String, dynamic> e) => PlaylistDetailDynamicEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailEntity>[] is M){
-			return data.map<PlaylistDetailEntity>((Map<String, dynamic> e) => PlaylistDetailEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylist>[] is M){
-			return data.map<PlaylistDetailPlaylist>((Map<String, dynamic> e) => PlaylistDetailPlaylist.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistSubscribers>[] is M){
-			return data.map<PlaylistDetailPlaylistSubscribers>((Map<String, dynamic> e) => PlaylistDetailPlaylistSubscribers.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistCreator>[] is M){
-			return data.map<PlaylistDetailPlaylistCreator>((Map<String, dynamic> e) => PlaylistDetailPlaylistCreator.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistCreatorAvatarDetail>[] is M){
-			return data.map<PlaylistDetailPlaylistCreatorAvatarDetail>((Map<String, dynamic> e) => PlaylistDetailPlaylistCreatorAvatarDetail.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracks>[] is M){
-			return data.map<PlaylistDetailPlaylistTracks>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracks.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksAr>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksAr>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksAr.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksAl>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksAl>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksAl.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksH>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksH>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksH.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksM>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksM>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksM.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksL>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksL>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksL.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksSq>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksSq>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksSq.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksHr>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksHr>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksHr.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTracksNoCopyrightRcmd>[] is M){
-			return data.map<PlaylistDetailPlaylistTracksNoCopyrightRcmd>((Map<String, dynamic> e) => PlaylistDetailPlaylistTracksNoCopyrightRcmd.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPlaylistTrackIds>[] is M){
-			return data.map<PlaylistDetailPlaylistTrackIds>((Map<String, dynamic> e) => PlaylistDetailPlaylistTrackIds.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPrivileges>[] is M){
-			return data.map<PlaylistDetailPrivileges>((Map<String, dynamic> e) => PlaylistDetailPrivileges.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPrivilegesFreeTrialPrivilege>[] is M){
-			return data.map<PlaylistDetailPrivilegesFreeTrialPrivilege>((Map<String, dynamic> e) => PlaylistDetailPrivilegesFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistDetailPrivilegesChargeInfoList>[] is M){
-			return data.map<PlaylistDetailPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistDetailPrivilegesChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistListEntity>[] is M){
-			return data.map<PlaylistListEntity>((Map<String, dynamic> e) => PlaylistListEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistListPlaylists>[] is M){
-			return data.map<PlaylistListPlaylists>((Map<String, dynamic> e) => PlaylistListPlaylists.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistListPlaylistsCreator>[] is M){
-			return data.map<PlaylistListPlaylistsCreator>((Map<String, dynamic> e) => PlaylistListPlaylistsCreator.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistListPlaylistsCreatorAvatarDetail>[] is M){
-			return data.map<PlaylistListPlaylistsCreatorAvatarDetail>((Map<String, dynamic> e) => PlaylistListPlaylistsCreatorAvatarDetail.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistListPlaylistsSubscribers>[] is M){
-			return data.map<PlaylistListPlaylistsSubscribers>((Map<String, dynamic> e) => PlaylistListPlaylistsSubscribers.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistSubscribersEntity>[] is M){
-			return data.map<PlaylistSubscribersEntity>((Map<String, dynamic> e) => PlaylistSubscribersEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistSubscribersSubscribers>[] is M){
-			return data.map<PlaylistSubscribersSubscribers>((Map<String, dynamic> e) => PlaylistSubscribersSubscribers.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTagsEntity>[] is M){
-			return data.map<PlaylistTagsEntity>((Map<String, dynamic> e) => PlaylistTagsEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTagsTags>[] is M){
-			return data.map<PlaylistTagsTags>((Map<String, dynamic> e) => PlaylistTagsTags.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksEntity>[] is M){
-			return data.map<PlaylistTracksEntity>((Map<String, dynamic> e) => PlaylistTracksEntity.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongs>[] is M){
-			return data.map<PlaylistTracksSongs>((Map<String, dynamic> e) => PlaylistTracksSongs.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsAr>[] is M){
-			return data.map<PlaylistTracksSongsAr>((Map<String, dynamic> e) => PlaylistTracksSongsAr.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsAl>[] is M){
-			return data.map<PlaylistTracksSongsAl>((Map<String, dynamic> e) => PlaylistTracksSongsAl.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsH>[] is M){
-			return data.map<PlaylistTracksSongsH>((Map<String, dynamic> e) => PlaylistTracksSongsH.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsM>[] is M){
-			return data.map<PlaylistTracksSongsM>((Map<String, dynamic> e) => PlaylistTracksSongsM.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsL>[] is M){
-			return data.map<PlaylistTracksSongsL>((Map<String, dynamic> e) => PlaylistTracksSongsL.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsSq>[] is M){
-			return data.map<PlaylistTracksSongsSq>((Map<String, dynamic> e) => PlaylistTracksSongsSq.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsHr>[] is M){
-			return data.map<PlaylistTracksSongsHr>((Map<String, dynamic> e) => PlaylistTracksSongsHr.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksSongsNoCopyrightRcmd>[] is M){
-			return data.map<PlaylistTracksSongsNoCopyrightRcmd>((Map<String, dynamic> e) => PlaylistTracksSongsNoCopyrightRcmd.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksPrivileges>[] is M){
-			return data.map<PlaylistTracksPrivileges>((Map<String, dynamic> e) => PlaylistTracksPrivileges.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksPrivilegesFreeTrialPrivilege>[] is M){
-			return data.map<PlaylistTracksPrivilegesFreeTrialPrivilege>((Map<String, dynamic> e) => PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<PlaylistTracksPrivilegesChargeInfoList>[] is M){
-			return data.map<PlaylistTracksPrivilegesChargeInfoList>((Map<String, dynamic> e) => PlaylistTracksPrivilegesChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<PrivateHistoryEntity>[] is M){
-			return data.map<PrivateHistoryEntity>((Map<String, dynamic> e) => PrivateHistoryEntity.fromJson(e)).toList() as M;
-		}
-		if(<PrivateHistoryMsgs>[] is M){
-			return data.map<PrivateHistoryMsgs>((Map<String, dynamic> e) => PrivateHistoryMsgs.fromJson(e)).toList() as M;
-		}
-		if(<PrivateHistoryMsgsFromUser>[] is M){
-			return data.map<PrivateHistoryMsgsFromUser>((Map<String, dynamic> e) => PrivateHistoryMsgsFromUser.fromJson(e)).toList() as M;
-		}
-		if(<PrivateHistoryMsgsToUser>[] is M){
-			return data.map<PrivateHistoryMsgsToUser>((Map<String, dynamic> e) => PrivateHistoryMsgsToUser.fromJson(e)).toList() as M;
-		}
-		if(<RecommendPlaylistEntity>[] is M){
-			return data.map<RecommendPlaylistEntity>((Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e)).toList() as M;
-		}
-		if(<RecommendPlaylistRecommend>[] is M){
-			return data.map<RecommendPlaylistRecommend>((Map<String, dynamic> e) => RecommendPlaylistRecommend.fromJson(e)).toList() as M;
-		}
-		if(<RecommendPlaylistRecommendCreator>[] is M){
-			return data.map<RecommendPlaylistRecommendCreator>((Map<String, dynamic> e) => RecommendPlaylistRecommendCreator.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsEntity>[] is M){
-			return data.map<RecommendSongsEntity>((Map<String, dynamic> e) => RecommendSongsEntity.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsData>[] is M){
-			return data.map<RecommendSongsData>((Map<String, dynamic> e) => RecommendSongsData.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongs>[] is M){
-			return data.map<RecommendSongsDataDailySongs>((Map<String, dynamic> e) => RecommendSongsDataDailySongs.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsAr>[] is M){
-			return data.map<RecommendSongsDataDailySongsAr>((Map<String, dynamic> e) => RecommendSongsDataDailySongsAr.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsAl>[] is M){
-			return data.map<RecommendSongsDataDailySongsAl>((Map<String, dynamic> e) => RecommendSongsDataDailySongsAl.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsH>[] is M){
-			return data.map<RecommendSongsDataDailySongsH>((Map<String, dynamic> e) => RecommendSongsDataDailySongsH.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsM>[] is M){
-			return data.map<RecommendSongsDataDailySongsM>((Map<String, dynamic> e) => RecommendSongsDataDailySongsM.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsL>[] is M){
-			return data.map<RecommendSongsDataDailySongsL>((Map<String, dynamic> e) => RecommendSongsDataDailySongsL.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsSq>[] is M){
-			return data.map<RecommendSongsDataDailySongsSq>((Map<String, dynamic> e) => RecommendSongsDataDailySongsSq.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsHr>[] is M){
-			return data.map<RecommendSongsDataDailySongsHr>((Map<String, dynamic> e) => RecommendSongsDataDailySongsHr.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsPrivilege>[] is M){
-			return data.map<RecommendSongsDataDailySongsPrivilege>((Map<String, dynamic> e) => RecommendSongsDataDailySongsPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege>[] is M){
-			return data.map<RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege>((Map<String, dynamic> e) => RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataDailySongsPrivilegeChargeInfoList>[] is M){
-			return data.map<RecommendSongsDataDailySongsPrivilegeChargeInfoList>((Map<String, dynamic> e) => RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<RecommendSongsDataRecommendReasons>[] is M){
-			return data.map<RecommendSongsDataRecommendReasons>((Map<String, dynamic> e) => RecommendSongsDataRecommendReasons.fromJson(e)).toList() as M;
-		}
-		if(<SimiMvEntity>[] is M){
-			return data.map<SimiMvEntity>((Map<String, dynamic> e) => SimiMvEntity.fromJson(e)).toList() as M;
-		}
-		if(<SimiMvMvs>[] is M){
-			return data.map<SimiMvMvs>((Map<String, dynamic> e) => SimiMvMvs.fromJson(e)).toList() as M;
-		}
-		if(<SimiMvMvsArtists>[] is M){
-			return data.map<SimiMvMvsArtists>((Map<String, dynamic> e) => SimiMvMvsArtists.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailEntity>[] is M){
-			return data.map<SongDetailEntity>((Map<String, dynamic> e) => SongDetailEntity.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongs>[] is M){
-			return data.map<SongDetailSongs>((Map<String, dynamic> e) => SongDetailSongs.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsAr>[] is M){
-			return data.map<SongDetailSongsAr>((Map<String, dynamic> e) => SongDetailSongsAr.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsAl>[] is M){
-			return data.map<SongDetailSongsAl>((Map<String, dynamic> e) => SongDetailSongsAl.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsH>[] is M){
-			return data.map<SongDetailSongsH>((Map<String, dynamic> e) => SongDetailSongsH.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsM>[] is M){
-			return data.map<SongDetailSongsM>((Map<String, dynamic> e) => SongDetailSongsM.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsL>[] is M){
-			return data.map<SongDetailSongsL>((Map<String, dynamic> e) => SongDetailSongsL.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailSongsSq>[] is M){
-			return data.map<SongDetailSongsSq>((Map<String, dynamic> e) => SongDetailSongsSq.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailPrivileges>[] is M){
-			return data.map<SongDetailPrivileges>((Map<String, dynamic> e) => SongDetailPrivileges.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailPrivilegesFreeTrialPrivilege>[] is M){
-			return data.map<SongDetailPrivilegesFreeTrialPrivilege>((Map<String, dynamic> e) => SongDetailPrivilegesFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<SongDetailPrivilegesChargeInfoList>[] is M){
-			return data.map<SongDetailPrivilegesChargeInfoList>((Map<String, dynamic> e) => SongDetailPrivilegesChargeInfoList.fromJson(e)).toList() as M;
-		}
-		if(<SongDownloadUrlEntity>[] is M){
-			return data.map<SongDownloadUrlEntity>((Map<String, dynamic> e) => SongDownloadUrlEntity.fromJson(e)).toList() as M;
-		}
-		if(<SongDownloadUrlData>[] is M){
-			return data.map<SongDownloadUrlData>((Map<String, dynamic> e) => SongDownloadUrlData.fromJson(e)).toList() as M;
-		}
-		if(<SongDownloadUrlDataFreeTrialPrivilege>[] is M){
-			return data.map<SongDownloadUrlDataFreeTrialPrivilege>((Map<String, dynamic> e) => SongDownloadUrlDataFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<SongDownloadUrlDataFreeTimeTrialPrivilege>[] is M){
-			return data.map<SongDownloadUrlDataFreeTimeTrialPrivilege>((Map<String, dynamic> e) => SongDownloadUrlDataFreeTimeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<SongUrlEntity>[] is M){
-			return data.map<SongUrlEntity>((Map<String, dynamic> e) => SongUrlEntity.fromJson(e)).toList() as M;
-		}
-		if(<SongUrlData>[] is M){
-			return data.map<SongUrlData>((Map<String, dynamic> e) => SongUrlData.fromJson(e)).toList() as M;
-		}
-		if(<SongUrlDataFreeTrialPrivilege>[] is M){
-			return data.map<SongUrlDataFreeTrialPrivilege>((Map<String, dynamic> e) => SongUrlDataFreeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<SongUrlDataFreeTimeTrialPrivilege>[] is M){
-			return data.map<SongUrlDataFreeTimeTrialPrivilege>((Map<String, dynamic> e) => SongUrlDataFreeTimeTrialPrivilege.fromJson(e)).toList() as M;
-		}
-		if(<TopArtistsEntity>[] is M){
-			return data.map<TopArtistsEntity>((Map<String, dynamic> e) => TopArtistsEntity.fromJson(e)).toList() as M;
-		}
-		if(<TopArtistsArtists>[] is M){
-			return data.map<TopArtistsArtists>((Map<String, dynamic> e) => TopArtistsArtists.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailEntity>[] is M){
-			return data.map<UserDetailEntity>((Map<String, dynamic> e) => UserDetailEntity.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailUserPoint>[] is M){
-			return data.map<UserDetailUserPoint>((Map<String, dynamic> e) => UserDetailUserPoint.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailProfile>[] is M){
-			return data.map<UserDetailProfile>((Map<String, dynamic> e) => UserDetailProfile.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailProfilePrivacyItemUnlimit>[] is M){
-			return data.map<UserDetailProfilePrivacyItemUnlimit>((Map<String, dynamic> e) => UserDetailProfilePrivacyItemUnlimit.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailBindings>[] is M){
-			return data.map<UserDetailBindings>((Map<String, dynamic> e) => UserDetailBindings.fromJson(e)).toList() as M;
-		}
-		if(<UserDetailProfileVillageInfo>[] is M){
-			return data.map<UserDetailProfileVillageInfo>((Map<String, dynamic> e) => UserDetailProfileVillageInfo.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowedsEntity>[] is M){
-			return data.map<UserFollowedsEntity>((Map<String, dynamic> e) => UserFollowedsEntity.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowedsFolloweds>[] is M){
-			return data.map<UserFollowedsFolloweds>((Map<String, dynamic> e) => UserFollowedsFolloweds.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowsEntity>[] is M){
-			return data.map<UserFollowsEntity>((Map<String, dynamic> e) => UserFollowsEntity.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowsFollow>[] is M){
-			return data.map<UserFollowsFollow>((Map<String, dynamic> e) => UserFollowsFollow.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowsFollowVipRights>[] is M){
-			return data.map<UserFollowsFollowVipRights>((Map<String, dynamic> e) => UserFollowsFollowVipRights.fromJson(e)).toList() as M;
-		}
-		if(<UserFollowsFollowAvatarDetail>[] is M){
-			return data.map<UserFollowsFollowAvatarDetail>((Map<String, dynamic> e) => UserFollowsFollowAvatarDetail.fromJson(e)).toList() as M;
-		}
-		if(<UserPlaylistEntity>[] is M){
-			return data.map<UserPlaylistEntity>((Map<String, dynamic> e) => UserPlaylistEntity.fromJson(e)).toList() as M;
-		}
-		if(<UserPlaylistPlaylist>[] is M){
-			return data.map<UserPlaylistPlaylist>((Map<String, dynamic> e) => UserPlaylistPlaylist.fromJson(e)).toList() as M;
-		}
-		if(<UserPlaylistPlaylistCreator>[] is M){
-			return data.map<UserPlaylistPlaylistCreator>((Map<String, dynamic> e) => UserPlaylistPlaylistCreator.fromJson(e)).toList() as M;
-		}
+  //list is returned by type
+  static M? _getListChildType<M>(List<Map<String, dynamic>> data) {
+    if (<AlbumDetailEntity>[] is M) {
+      return data
+          .map<AlbumDetailEntity>(
+              (Map<String, dynamic> e) => AlbumDetailEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongs>[] is M) {
+      return data
+          .map<AlbumDetailSongs>(
+              (Map<String, dynamic> e) => AlbumDetailSongs.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsAr>[] is M) {
+      return data
+          .map<AlbumDetailSongsAr>(
+              (Map<String, dynamic> e) => AlbumDetailSongsAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsAl>[] is M) {
+      return data
+          .map<AlbumDetailSongsAl>(
+              (Map<String, dynamic> e) => AlbumDetailSongsAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsNoCopyrightRcmd>[] is M) {
+      return data
+          .map<AlbumDetailSongsNoCopyrightRcmd>((Map<String, dynamic> e) =>
+              AlbumDetailSongsNoCopyrightRcmd.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsH>[] is M) {
+      return data
+          .map<AlbumDetailSongsH>(
+              (Map<String, dynamic> e) => AlbumDetailSongsH.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsL>[] is M) {
+      return data
+          .map<AlbumDetailSongsL>(
+              (Map<String, dynamic> e) => AlbumDetailSongsL.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsSq>[] is M) {
+      return data
+          .map<AlbumDetailSongsSq>(
+              (Map<String, dynamic> e) => AlbumDetailSongsSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsM>[] is M) {
+      return data
+          .map<AlbumDetailSongsM>(
+              (Map<String, dynamic> e) => AlbumDetailSongsM.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsPrivilege>[] is M) {
+      return data
+          .map<AlbumDetailSongsPrivilege>(
+              (Map<String, dynamic> e) => AlbumDetailSongsPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsPrivilegeFreeTrialPrivilege>[] is M) {
+      return data
+          .map<AlbumDetailSongsPrivilegeFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  AlbumDetailSongsPrivilegeFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailSongsPrivilegeChargeInfoList>[] is M) {
+      return data
+          .map<AlbumDetailSongsPrivilegeChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  AlbumDetailSongsPrivilegeChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbum>[] is M) {
+      return data
+          .map<AlbumDetailAlbum>(
+              (Map<String, dynamic> e) => AlbumDetailAlbum.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbumArtists>[] is M) {
+      return data
+          .map<AlbumDetailAlbumArtists>(
+              (Map<String, dynamic> e) => AlbumDetailAlbumArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbumArtist>[] is M) {
+      return data
+          .map<AlbumDetailAlbumArtist>(
+              (Map<String, dynamic> e) => AlbumDetailAlbumArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbumInfo>[] is M) {
+      return data
+          .map<AlbumDetailAlbumInfo>(
+              (Map<String, dynamic> e) => AlbumDetailAlbumInfo.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbumInfoCommentThread>[] is M) {
+      return data
+          .map<AlbumDetailAlbumInfoCommentThread>((Map<String, dynamic> e) =>
+              AlbumDetailAlbumInfoCommentThread.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDetailAlbumInfoCommentThreadResourceInfo>[] is M) {
+      return data
+          .map<AlbumDetailAlbumInfoCommentThreadResourceInfo>(
+              (Map<String, dynamic> e) =>
+                  AlbumDetailAlbumInfoCommentThreadResourceInfo.fromJson(e))
+          .toList() as M;
+    }
+    if (<AlbumDynamicEntity>[] is M) {
+      return data
+          .map<AlbumDynamicEntity>(
+              (Map<String, dynamic> e) => AlbumDynamicEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<AllMvEntity>[] is M) {
+      return data
+          .map<AllMvEntity>((Map<String, dynamic> e) => AllMvEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<AllMvData>[] is M) {
+      return data
+          .map<AllMvData>((Map<String, dynamic> e) => AllMvData.fromJson(e))
+          .toList() as M;
+    }
+    if (<AllMvDataArtists>[] is M) {
+      return data
+          .map<AllMvDataArtists>(
+              (Map<String, dynamic> e) => AllMvDataArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistAlbumEntity>[] is M) {
+      return data
+          .map<ArtistAlbumEntity>(
+              (Map<String, dynamic> e) => ArtistAlbumEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistAlbumArtist>[] is M) {
+      return data
+          .map<ArtistAlbumArtist>(
+              (Map<String, dynamic> e) => ArtistAlbumArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistAlbumHotAlbums>[] is M) {
+      return data
+          .map<ArtistAlbumHotAlbums>(
+              (Map<String, dynamic> e) => ArtistAlbumHotAlbums.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistAlbumHotAlbumsArtists>[] is M) {
+      return data
+          .map<ArtistAlbumHotAlbumsArtists>((Map<String, dynamic> e) =>
+              ArtistAlbumHotAlbumsArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistAlbumHotAlbumsArtist>[] is M) {
+      return data
+          .map<ArtistAlbumHotAlbumsArtist>((Map<String, dynamic> e) =>
+              ArtistAlbumHotAlbumsArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescEntity>[] is M) {
+      return data
+          .map<ArtistDescEntity>(
+              (Map<String, dynamic> e) => ArtistDescEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescIntroduction>[] is M) {
+      return data
+          .map<ArtistDescIntroduction>(
+              (Map<String, dynamic> e) => ArtistDescIntroduction.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescTopicData>[] is M) {
+      return data
+          .map<ArtistDescTopicData>(
+              (Map<String, dynamic> e) => ArtistDescTopicData.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescTopicDataTopic>[] is M) {
+      return data
+          .map<ArtistDescTopicDataTopic>(
+              (Map<String, dynamic> e) => ArtistDescTopicDataTopic.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescTopicDataTopicContent>[] is M) {
+      return data
+          .map<ArtistDescTopicDataTopicContent>((Map<String, dynamic> e) =>
+              ArtistDescTopicDataTopicContent.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistDescTopicDataCreator>[] is M) {
+      return data
+          .map<ArtistDescTopicDataCreator>((Map<String, dynamic> e) =>
+              ArtistDescTopicDataCreator.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistListEntity>[] is M) {
+      return data
+          .map<ArtistListEntity>(
+              (Map<String, dynamic> e) => ArtistListEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistListArtists>[] is M) {
+      return data
+          .map<ArtistListArtists>(
+              (Map<String, dynamic> e) => ArtistListArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistMvEntity>[] is M) {
+      return data
+          .map<ArtistMvEntity>(
+              (Map<String, dynamic> e) => ArtistMvEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistMvMvs>[] is M) {
+      return data
+          .map<ArtistMvMvs>((Map<String, dynamic> e) => ArtistMvMvs.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistMvMvsArtist>[] is M) {
+      return data
+          .map<ArtistMvMvsArtist>(
+              (Map<String, dynamic> e) => ArtistMvMvsArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsEntity>[] is M) {
+      return data
+          .map<ArtistSongsEntity>(
+              (Map<String, dynamic> e) => ArtistSongsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsArtist>[] is M) {
+      return data
+          .map<ArtistSongsArtist>(
+              (Map<String, dynamic> e) => ArtistSongsArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongs>[] is M) {
+      return data
+          .map<ArtistSongsHotSongs>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongs.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsAr>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsAr>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsAl>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsAl>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsH>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsH>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsH.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsL>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsL>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsL.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsSq>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsSq>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsHr>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsHr>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsHr.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsM>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsM>(
+              (Map<String, dynamic> e) => ArtistSongsHotSongsM.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsPrivilege>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsPrivilege>((Map<String, dynamic> e) =>
+              ArtistSongsHotSongsPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsPrivilegeFreeTrialPrivilege>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsPrivilegeFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  ArtistSongsHotSongsPrivilegeFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<ArtistSongsHotSongsPrivilegeChargeInfoList>[] is M) {
+      return data
+          .map<ArtistSongsHotSongsPrivilegeChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  ArtistSongsHotSongsPrivilegeChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongEntity>[] is M) {
+      return data
+          .map<CloudSongEntity>(
+              (Map<String, dynamic> e) => CloudSongEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongData>[] is M) {
+      return data
+          .map<CloudSongData>(
+              (Map<String, dynamic> e) => CloudSongData.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSong>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSong>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSong.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongAr>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongAr>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSongAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongAl>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongAl>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSongAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongH>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongH>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSongH.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongM>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongM>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSongM.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongL>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongL>(
+              (Map<String, dynamic> e) => CloudSongDataSimpleSongL.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongPrivilege>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongPrivilege>((Map<String, dynamic> e) =>
+              CloudSongDataSimpleSongPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  CloudSongDataSimpleSongPrivilegeFreeTrialPrivilege.fromJson(
+                      e))
+          .toList() as M;
+    }
+    if (<CloudSongDataSimpleSongPrivilegeChargeInfoList>[] is M) {
+      return data
+          .map<CloudSongDataSimpleSongPrivilegeChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  CloudSongDataSimpleSongPrivilegeChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseEntity>[] is M) {
+      return data
+          .map<CommentResponseEntity>(
+              (Map<String, dynamic> e) => CommentResponseEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseHotComments>[] is M) {
+      return data
+          .map<CommentResponseHotComments>((Map<String, dynamic> e) =>
+              CommentResponseHotComments.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseHotCommentsUser>[] is M) {
+      return data
+          .map<CommentResponseHotCommentsUser>((Map<String, dynamic> e) =>
+              CommentResponseHotCommentsUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseHotCommentsUserVipRights>[] is M) {
+      return data
+          .map<CommentResponseHotCommentsUserVipRights>(
+              (Map<String, dynamic> e) =>
+                  CommentResponseHotCommentsUserVipRights.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseHotCommentsDecoration>[] is M) {
+      return data
+          .map<CommentResponseHotCommentsDecoration>((Map<String, dynamic> e) =>
+              CommentResponseHotCommentsDecoration.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseHotCommentsIpLocation>[] is M) {
+      return data
+          .map<CommentResponseHotCommentsIpLocation>((Map<String, dynamic> e) =>
+              CommentResponseHotCommentsIpLocation.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseComments>[] is M) {
+      return data
+          .map<CommentResponseComments>(
+              (Map<String, dynamic> e) => CommentResponseComments.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseCommentsUser>[] is M) {
+      return data
+          .map<CommentResponseCommentsUser>((Map<String, dynamic> e) =>
+              CommentResponseCommentsUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseCommentsUserVipRights>[] is M) {
+      return data
+          .map<CommentResponseCommentsUserVipRights>((Map<String, dynamic> e) =>
+              CommentResponseCommentsUserVipRights.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseCommentsUserVipRightsAssociator>[] is M) {
+      return data
+          .map<CommentResponseCommentsUserVipRightsAssociator>(
+              (Map<String, dynamic> e) =>
+                  CommentResponseCommentsUserVipRightsAssociator.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseCommentsUserVipRightsMusicPackage>[] is M) {
+      return data
+          .map<CommentResponseCommentsUserVipRightsMusicPackage>(
+              (Map<String, dynamic> e) =>
+                  CommentResponseCommentsUserVipRightsMusicPackage.fromJson(e))
+          .toList() as M;
+    }
+    if (<CommentResponseCommentsPendantData>[] is M) {
+      return data
+          .map<CommentResponseCommentsPendantData>((Map<String, dynamic> e) =>
+              CommentResponseCommentsPendantData.fromJson(e))
+          .toList() as M;
+    }
 
-		debugPrint("${M.toString()} not found");
-	
-		return null;
-}
+    if (<CommentResponseCommentsIpLocation>[] is M) {
+      return data
+          .map<CommentResponseCommentsIpLocation>((Map<String, dynamic> e) =>
+              CommentResponseCommentsIpLocation.fromJson(e))
+          .toList() as M;
+    }
+    if (<LoginStatusEntity>[] is M) {
+      return data
+          .map<LoginStatusEntity>(
+              (Map<String, dynamic> e) => LoginStatusEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<LoginStatusData>[] is M) {
+      return data
+          .map<LoginStatusData>(
+              (Map<String, dynamic> e) => LoginStatusData.fromJson(e))
+          .toList() as M;
+    }
+    if (<LoginStatusDataAccount>[] is M) {
+      return data
+          .map<LoginStatusDataAccount>(
+              (Map<String, dynamic> e) => LoginStatusDataAccount.fromJson(e))
+          .toList() as M;
+    }
+    if (<LoginStatusDataProfile>[] is M) {
+      return data
+          .map<LoginStatusDataProfile>(
+              (Map<String, dynamic> e) => LoginStatusDataProfile.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListEntity>[] is M) {
+      return data
+          .map<MessageListEntity>(
+              (Map<String, dynamic> e) => MessageListEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListMsgs>[] is M) {
+      return data
+          .map<MessageListMsgs>(
+              (Map<String, dynamic> e) => MessageListMsgs.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListMsgsUser>[] is M) {
+      return data
+          .map<MessageListMsgsUser>(
+              (Map<String, dynamic> e) => MessageListMsgsUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListMsgsFromUser>[] is M) {
+      return data
+          .map<MessageListMsgsFromUser>(
+              (Map<String, dynamic> e) => MessageListMsgsFromUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListMsgsFromUserAvatarDetail>[] is M) {
+      return data
+          .map<MessageListMsgsFromUserAvatarDetail>((Map<String, dynamic> e) =>
+              MessageListMsgsFromUserAvatarDetail.fromJson(e))
+          .toList() as M;
+    }
+    if (<MessageListMsgsToUser>[] is M) {
+      return data
+          .map<MessageListMsgsToUser>(
+              (Map<String, dynamic> e) => MessageListMsgsToUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailEntity>[] is M) {
+      return data
+          .map<MvDetailEntity>(
+              (Map<String, dynamic> e) => MvDetailEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailMp>[] is M) {
+      return data
+          .map<MvDetailMp>((Map<String, dynamic> e) => MvDetailMp.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailData>[] is M) {
+      return data
+          .map<MvDetailData>(
+              (Map<String, dynamic> e) => MvDetailData.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailDataBrs>[] is M) {
+      return data
+          .map<MvDetailDataBrs>(
+              (Map<String, dynamic> e) => MvDetailDataBrs.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailDataArtists>[] is M) {
+      return data
+          .map<MvDetailDataArtists>(
+              (Map<String, dynamic> e) => MvDetailDataArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<MvDetailInfoEntity>[] is M) {
+      return data
+          .map<MvDetailInfoEntity>(
+              (Map<String, dynamic> e) => MvDetailInfoEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<NewestAlbumEntity>[] is M) {
+      return data
+          .map<NewestAlbumEntity>(
+              (Map<String, dynamic> e) => NewestAlbumEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<NewestAlbumAlbums>[] is M) {
+      return data
+          .map<NewestAlbumAlbums>(
+              (Map<String, dynamic> e) => NewestAlbumAlbums.fromJson(e))
+          .toList() as M;
+    }
+    if (<NewestAlbumAlbumsArtist>[] is M) {
+      return data
+          .map<NewestAlbumAlbumsArtist>(
+              (Map<String, dynamic> e) => NewestAlbumAlbumsArtist.fromJson(e))
+          .toList() as M;
+    }
+    if (<NewestAlbumAlbumsArtists>[] is M) {
+      return data
+          .map<NewestAlbumAlbumsArtists>(
+              (Map<String, dynamic> e) => NewestAlbumAlbumsArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<PersonalizedMvEntity>[] is M) {
+      return data
+          .map<PersonalizedMvEntity>(
+              (Map<String, dynamic> e) => PersonalizedMvEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PersonalizedMvResult>[] is M) {
+      return data
+          .map<PersonalizedMvResult>(
+              (Map<String, dynamic> e) => PersonalizedMvResult.fromJson(e))
+          .toList() as M;
+    }
+    if (<PersonalizedMvResultArtists>[] is M) {
+      return data
+          .map<PersonalizedMvResultArtists>((Map<String, dynamic> e) =>
+              PersonalizedMvResultArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistCategoryEntity>[] is M) {
+      return data
+          .map<PlaylistCategoryEntity>(
+              (Map<String, dynamic> e) => PlaylistCategoryEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistCategoryAll>[] is M) {
+      return data
+          .map<PlaylistCategoryAll>(
+              (Map<String, dynamic> e) => PlaylistCategoryAll.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistCategorySub>[] is M) {
+      return data
+          .map<PlaylistCategorySub>(
+              (Map<String, dynamic> e) => PlaylistCategorySub.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistCategoryCategories>[] is M) {
+      return data
+          .map<PlaylistCategoryCategories>((Map<String, dynamic> e) =>
+              PlaylistCategoryCategories.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailDynamicEntity>[] is M) {
+      return data
+          .map<PlaylistDetailDynamicEntity>((Map<String, dynamic> e) =>
+              PlaylistDetailDynamicEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailEntity>[] is M) {
+      return data
+          .map<PlaylistDetailEntity>(
+              (Map<String, dynamic> e) => PlaylistDetailEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylist>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylist>(
+              (Map<String, dynamic> e) => PlaylistDetailPlaylist.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistSubscribers>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistSubscribers>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistSubscribers.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistCreator>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistCreator>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistCreator.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistCreatorAvatarDetail>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistCreatorAvatarDetail>(
+              (Map<String, dynamic> e) =>
+                  PlaylistDetailPlaylistCreatorAvatarDetail.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracks>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracks>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracks.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksAr>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksAr>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksAl>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksAl>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksH>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksH>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksH.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksM>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksM>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksM.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksL>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksL>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksL.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksSq>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksSq>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksHr>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksHr>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTracksHr.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTracksNoCopyrightRcmd>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTracksNoCopyrightRcmd>(
+              (Map<String, dynamic> e) =>
+                  PlaylistDetailPlaylistTracksNoCopyrightRcmd.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPlaylistTrackIds>[] is M) {
+      return data
+          .map<PlaylistDetailPlaylistTrackIds>((Map<String, dynamic> e) =>
+              PlaylistDetailPlaylistTrackIds.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPrivileges>[] is M) {
+      return data
+          .map<PlaylistDetailPrivileges>(
+              (Map<String, dynamic> e) => PlaylistDetailPrivileges.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPrivilegesFreeTrialPrivilege>[] is M) {
+      return data
+          .map<PlaylistDetailPrivilegesFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  PlaylistDetailPrivilegesFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistDetailPrivilegesChargeInfoList>[] is M) {
+      return data
+          .map<PlaylistDetailPrivilegesChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  PlaylistDetailPrivilegesChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistListEntity>[] is M) {
+      return data
+          .map<PlaylistListEntity>(
+              (Map<String, dynamic> e) => PlaylistListEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistListPlaylists>[] is M) {
+      return data
+          .map<PlaylistListPlaylists>(
+              (Map<String, dynamic> e) => PlaylistListPlaylists.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistListPlaylistsCreator>[] is M) {
+      return data
+          .map<PlaylistListPlaylistsCreator>((Map<String, dynamic> e) =>
+              PlaylistListPlaylistsCreator.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistListPlaylistsCreatorAvatarDetail>[] is M) {
+      return data
+          .map<PlaylistListPlaylistsCreatorAvatarDetail>(
+              (Map<String, dynamic> e) =>
+                  PlaylistListPlaylistsCreatorAvatarDetail.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistListPlaylistsSubscribers>[] is M) {
+      return data
+          .map<PlaylistListPlaylistsSubscribers>((Map<String, dynamic> e) =>
+              PlaylistListPlaylistsSubscribers.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistSubscribersEntity>[] is M) {
+      return data
+          .map<PlaylistSubscribersEntity>(
+              (Map<String, dynamic> e) => PlaylistSubscribersEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistSubscribersSubscribers>[] is M) {
+      return data
+          .map<PlaylistSubscribersSubscribers>((Map<String, dynamic> e) =>
+              PlaylistSubscribersSubscribers.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTagsEntity>[] is M) {
+      return data
+          .map<PlaylistTagsEntity>(
+              (Map<String, dynamic> e) => PlaylistTagsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTagsTags>[] is M) {
+      return data
+          .map<PlaylistTagsTags>(
+              (Map<String, dynamic> e) => PlaylistTagsTags.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksEntity>[] is M) {
+      return data
+          .map<PlaylistTracksEntity>(
+              (Map<String, dynamic> e) => PlaylistTracksEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongs>[] is M) {
+      return data
+          .map<PlaylistTracksSongs>(
+              (Map<String, dynamic> e) => PlaylistTracksSongs.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsAr>[] is M) {
+      return data
+          .map<PlaylistTracksSongsAr>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsAl>[] is M) {
+      return data
+          .map<PlaylistTracksSongsAl>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsH>[] is M) {
+      return data
+          .map<PlaylistTracksSongsH>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsH.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsM>[] is M) {
+      return data
+          .map<PlaylistTracksSongsM>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsM.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsL>[] is M) {
+      return data
+          .map<PlaylistTracksSongsL>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsL.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsSq>[] is M) {
+      return data
+          .map<PlaylistTracksSongsSq>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsHr>[] is M) {
+      return data
+          .map<PlaylistTracksSongsHr>(
+              (Map<String, dynamic> e) => PlaylistTracksSongsHr.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksSongsNoCopyrightRcmd>[] is M) {
+      return data
+          .map<PlaylistTracksSongsNoCopyrightRcmd>((Map<String, dynamic> e) =>
+              PlaylistTracksSongsNoCopyrightRcmd.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksPrivileges>[] is M) {
+      return data
+          .map<PlaylistTracksPrivileges>(
+              (Map<String, dynamic> e) => PlaylistTracksPrivileges.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksPrivilegesFreeTrialPrivilege>[] is M) {
+      return data
+          .map<PlaylistTracksPrivilegesFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  PlaylistTracksPrivilegesFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<PlaylistTracksPrivilegesChargeInfoList>[] is M) {
+      return data
+          .map<PlaylistTracksPrivilegesChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  PlaylistTracksPrivilegesChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<PrivateHistoryEntity>[] is M) {
+      return data
+          .map<PrivateHistoryEntity>(
+              (Map<String, dynamic> e) => PrivateHistoryEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<PrivateHistoryMsgs>[] is M) {
+      return data
+          .map<PrivateHistoryMsgs>(
+              (Map<String, dynamic> e) => PrivateHistoryMsgs.fromJson(e))
+          .toList() as M;
+    }
+    if (<PrivateHistoryMsgsFromUser>[] is M) {
+      return data
+          .map<PrivateHistoryMsgsFromUser>((Map<String, dynamic> e) =>
+              PrivateHistoryMsgsFromUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<PrivateHistoryMsgsToUser>[] is M) {
+      return data
+          .map<PrivateHistoryMsgsToUser>(
+              (Map<String, dynamic> e) => PrivateHistoryMsgsToUser.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendPlaylistEntity>[] is M) {
+      return data
+          .map<RecommendPlaylistEntity>(
+              (Map<String, dynamic> e) => RecommendPlaylistEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendPlaylistRecommend>[] is M) {
+      return data
+          .map<RecommendPlaylistRecommend>((Map<String, dynamic> e) =>
+              RecommendPlaylistRecommend.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendPlaylistRecommendCreator>[] is M) {
+      return data
+          .map<RecommendPlaylistRecommendCreator>((Map<String, dynamic> e) =>
+              RecommendPlaylistRecommendCreator.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsEntity>[] is M) {
+      return data
+          .map<RecommendSongsEntity>(
+              (Map<String, dynamic> e) => RecommendSongsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsData>[] is M) {
+      return data
+          .map<RecommendSongsData>(
+              (Map<String, dynamic> e) => RecommendSongsData.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongs>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongs>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongs.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsAr>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsAr>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsAl>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsAl>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsH>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsH>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsH.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsM>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsM>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsM.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsL>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsL>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsL.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsSq>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsSq>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsHr>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsHr>((Map<String, dynamic> e) =>
+              RecommendSongsDataDailySongsHr.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsPrivilege>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsPrivilege>(
+              (Map<String, dynamic> e) =>
+                  RecommendSongsDataDailySongsPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  RecommendSongsDataDailySongsPrivilegeFreeTrialPrivilege
+                      .fromJson(e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataDailySongsPrivilegeChargeInfoList>[] is M) {
+      return data
+          .map<RecommendSongsDataDailySongsPrivilegeChargeInfoList>(
+              (Map<String, dynamic> e) =>
+                  RecommendSongsDataDailySongsPrivilegeChargeInfoList.fromJson(
+                      e))
+          .toList() as M;
+    }
+    if (<RecommendSongsDataRecommendReasons>[] is M) {
+      return data
+          .map<RecommendSongsDataRecommendReasons>((Map<String, dynamic> e) =>
+              RecommendSongsDataRecommendReasons.fromJson(e))
+          .toList() as M;
+    }
+    if (<SimiMvEntity>[] is M) {
+      return data
+          .map<SimiMvEntity>(
+              (Map<String, dynamic> e) => SimiMvEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<SimiMvMvs>[] is M) {
+      return data
+          .map<SimiMvMvs>((Map<String, dynamic> e) => SimiMvMvs.fromJson(e))
+          .toList() as M;
+    }
+    if (<SimiMvMvsArtists>[] is M) {
+      return data
+          .map<SimiMvMvsArtists>(
+              (Map<String, dynamic> e) => SimiMvMvsArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailEntity>[] is M) {
+      return data
+          .map<SongDetailEntity>(
+              (Map<String, dynamic> e) => SongDetailEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongs>[] is M) {
+      return data
+          .map<SongDetailSongs>(
+              (Map<String, dynamic> e) => SongDetailSongs.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsAr>[] is M) {
+      return data
+          .map<SongDetailSongsAr>(
+              (Map<String, dynamic> e) => SongDetailSongsAr.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsAl>[] is M) {
+      return data
+          .map<SongDetailSongsAl>(
+              (Map<String, dynamic> e) => SongDetailSongsAl.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsH>[] is M) {
+      return data
+          .map<SongDetailSongsH>(
+              (Map<String, dynamic> e) => SongDetailSongsH.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsM>[] is M) {
+      return data
+          .map<SongDetailSongsM>(
+              (Map<String, dynamic> e) => SongDetailSongsM.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsL>[] is M) {
+      return data
+          .map<SongDetailSongsL>(
+              (Map<String, dynamic> e) => SongDetailSongsL.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailSongsSq>[] is M) {
+      return data
+          .map<SongDetailSongsSq>(
+              (Map<String, dynamic> e) => SongDetailSongsSq.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailPrivileges>[] is M) {
+      return data
+          .map<SongDetailPrivileges>(
+              (Map<String, dynamic> e) => SongDetailPrivileges.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailPrivilegesFreeTrialPrivilege>[] is M) {
+      return data
+          .map<SongDetailPrivilegesFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  SongDetailPrivilegesFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDetailPrivilegesChargeInfoList>[] is M) {
+      return data
+          .map<SongDetailPrivilegesChargeInfoList>((Map<String, dynamic> e) =>
+              SongDetailPrivilegesChargeInfoList.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDownloadUrlEntity>[] is M) {
+      return data
+          .map<SongDownloadUrlEntity>(
+              (Map<String, dynamic> e) => SongDownloadUrlEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDownloadUrlData>[] is M) {
+      return data
+          .map<SongDownloadUrlData>(
+              (Map<String, dynamic> e) => SongDownloadUrlData.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDownloadUrlDataFreeTrialPrivilege>[] is M) {
+      return data
+          .map<SongDownloadUrlDataFreeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  SongDownloadUrlDataFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongDownloadUrlDataFreeTimeTrialPrivilege>[] is M) {
+      return data
+          .map<SongDownloadUrlDataFreeTimeTrialPrivilege>(
+              (Map<String, dynamic> e) =>
+                  SongDownloadUrlDataFreeTimeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongUrlEntity>[] is M) {
+      return data
+          .map<SongUrlEntity>(
+              (Map<String, dynamic> e) => SongUrlEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongUrlData>[] is M) {
+      return data
+          .map<SongUrlData>((Map<String, dynamic> e) => SongUrlData.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongUrlDataFreeTrialPrivilege>[] is M) {
+      return data
+          .map<SongUrlDataFreeTrialPrivilege>((Map<String, dynamic> e) =>
+              SongUrlDataFreeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<SongUrlDataFreeTimeTrialPrivilege>[] is M) {
+      return data
+          .map<SongUrlDataFreeTimeTrialPrivilege>((Map<String, dynamic> e) =>
+              SongUrlDataFreeTimeTrialPrivilege.fromJson(e))
+          .toList() as M;
+    }
+    if (<TopArtistsEntity>[] is M) {
+      return data
+          .map<TopArtistsEntity>(
+              (Map<String, dynamic> e) => TopArtistsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<TopArtistsArtists>[] is M) {
+      return data
+          .map<TopArtistsArtists>(
+              (Map<String, dynamic> e) => TopArtistsArtists.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailEntity>[] is M) {
+      return data
+          .map<UserDetailEntity>(
+              (Map<String, dynamic> e) => UserDetailEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailUserPoint>[] is M) {
+      return data
+          .map<UserDetailUserPoint>(
+              (Map<String, dynamic> e) => UserDetailUserPoint.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailProfile>[] is M) {
+      return data
+          .map<UserDetailProfile>(
+              (Map<String, dynamic> e) => UserDetailProfile.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailProfilePrivacyItemUnlimit>[] is M) {
+      return data
+          .map<UserDetailProfilePrivacyItemUnlimit>((Map<String, dynamic> e) =>
+              UserDetailProfilePrivacyItemUnlimit.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailBindings>[] is M) {
+      return data
+          .map<UserDetailBindings>(
+              (Map<String, dynamic> e) => UserDetailBindings.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserDetailProfileVillageInfo>[] is M) {
+      return data
+          .map<UserDetailProfileVillageInfo>((Map<String, dynamic> e) =>
+              UserDetailProfileVillageInfo.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowedsEntity>[] is M) {
+      return data
+          .map<UserFollowedsEntity>(
+              (Map<String, dynamic> e) => UserFollowedsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowedsFolloweds>[] is M) {
+      return data
+          .map<UserFollowedsFolloweds>(
+              (Map<String, dynamic> e) => UserFollowedsFolloweds.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowsEntity>[] is M) {
+      return data
+          .map<UserFollowsEntity>(
+              (Map<String, dynamic> e) => UserFollowsEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowsFollow>[] is M) {
+      return data
+          .map<UserFollowsFollow>(
+              (Map<String, dynamic> e) => UserFollowsFollow.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowsFollowVipRights>[] is M) {
+      return data
+          .map<UserFollowsFollowVipRights>((Map<String, dynamic> e) =>
+              UserFollowsFollowVipRights.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserFollowsFollowAvatarDetail>[] is M) {
+      return data
+          .map<UserFollowsFollowAvatarDetail>((Map<String, dynamic> e) =>
+              UserFollowsFollowAvatarDetail.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserPlaylistEntity>[] is M) {
+      return data
+          .map<UserPlaylistEntity>(
+              (Map<String, dynamic> e) => UserPlaylistEntity.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserPlaylistPlaylist>[] is M) {
+      return data
+          .map<UserPlaylistPlaylist>(
+              (Map<String, dynamic> e) => UserPlaylistPlaylist.fromJson(e))
+          .toList() as M;
+    }
+    if (<UserPlaylistPlaylistCreator>[] is M) {
+      return data
+          .map<UserPlaylistPlaylistCreator>((Map<String, dynamic> e) =>
+              UserPlaylistPlaylistCreator.fromJson(e))
+          .toList() as M;
+    }
 
-	static M? fromJsonAsT<M>(dynamic json) {
-		if (json is List) {
-			return _getListChildType<M>(json.map((e) => e as Map<String, dynamic>).toList());
-		} else {
-			return jsonConvert.convert<M>(json);
-		}
-	}
+    debugPrint("${M.toString()} not found");
+
+    return null;
+  }
+
+  static M? fromJsonAsT<M>(dynamic json) {
+    if (json is List) {
+      return _getListChildType<M>(
+          json.map((e) => e as Map<String, dynamic>).toList());
+    } else {
+      return jsonConvert.convert<M>(json);
+    }
+  }
 }

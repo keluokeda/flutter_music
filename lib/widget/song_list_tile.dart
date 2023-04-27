@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:music/entity/comments_request.dart';
+import 'package:music/entity/comments_type.dart';
 import 'package:music/entity/share_resource_type.dart';
 import 'package:music/entity/song_item.dart';
 import 'package:music/pages/common/music_view_model.dart';
@@ -124,6 +126,10 @@ class SongListTile extends StatelessWidget {
                     }
                     // musicViewModel.playSongNext(songItem);
                     Navigator.of(context).pop();
+
+                    Navigator.of(context).pushNamed('/app/comments',
+                        arguments:
+                            CommentsRequest(songItem.id, CommentsType.song));
                   },
                   leading: const Icon(Icons.comment_outlined),
                   title: const Text('评论'),

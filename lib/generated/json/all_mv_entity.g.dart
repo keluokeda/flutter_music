@@ -1,5 +1,7 @@
 import 'package:music/generated/json/base/json_convert_content.dart';
 import 'package:music/entity/all_mv_entity.dart';
+import 'package:music/entity/mv_item.dart';
+
 
 AllMvEntity $AllMvEntityFromJson(Map<String, dynamic> json) {
 	final AllMvEntity allMvEntity = AllMvEntity();
